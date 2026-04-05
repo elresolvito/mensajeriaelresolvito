@@ -6,20 +6,14 @@
     <title>Mensajería El Resolvito | Tu mensajero en La Habana</title>
     <meta name="description" content="Servicio de mensajería en La Habana Vieja. Recogemos a las 7am y 2pm. Entregas el mismo día. Precios claros.">
     
-    <!-- Favicons -->
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
             font-family: 'Poppins', sans-serif;
@@ -27,111 +21,45 @@
             overflow-x: hidden;
         }
         
-        /* ========== ANIMACIONES ========== */
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         @keyframes fadeInRight {
-            from {
-                opacity: 0;
-                transform: translateX(60px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+            from { opacity: 0; transform: translateX(60px); }
+            to { opacity: 1; transform: translateX(0); }
         }
         
         @keyframes float {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-        
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(255,179,0,0.7);
-            }
-            50% {
-                transform: scale(1.05);
-                box-shadow: 0 0 0 15px rgba(255,179,0,0);
-            }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
         
         @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-8px);
-            }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
         }
         
         @keyframes rotate {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
-        }
-        
-        @keyframes gradientShift {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
         
         @keyframes modalFadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
         }
         
-        .animate-fadeUp {
-            animation: fadeInUp 0.8s ease forwards;
-        }
-        
-        .animate-fadeRight {
-            animation: fadeInRight 0.8s ease forwards;
-        }
-        
+        .animate-fadeUp { animation: fadeInUp 0.8s ease forwards; }
+        .animate-fadeRight { animation: fadeInRight 0.8s ease forwards; }
         .delay-1 { animation-delay: 0.1s; opacity: 0; }
         .delay-2 { animation-delay: 0.2s; opacity: 0; }
         .delay-3 { animation-delay: 0.3s; opacity: 0; }
         .delay-4 { animation-delay: 0.4s; opacity: 0; }
         .delay-5 { animation-delay: 0.5s; opacity: 0; }
-        .delay-6 { animation-delay: 0.6s; opacity: 0; }
         
-        /* ========== ESTILOS PRINCIPALES ========== */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
         
         /* Hero */
         .hero {
@@ -161,9 +89,7 @@
             color: #1B5E20;
         }
         
-        .hero h1 span {
-            color: #FFB300;
-        }
+        .hero h1 span { color: #FFB300; }
         
         .hero p {
             font-size: 1.1rem;
@@ -179,53 +105,13 @@
         
         .hero-image img {
             max-width: 100%;
+            max-height: 450px;
             border-radius: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            background: white;
         }
         
         /* Botones */
-        .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background: #FFB300;
-            color: #1B5E20;
-            padding: 14px 32px;
-            border-radius: 100px;
-            font-weight: 700;
-            font-size: 1rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
-        
-        .btn-primary:hover {
-            background: #FF8F00;
-            transform: translateY(-3px);
-        }
-        
-        .btn-outline {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background: transparent;
-            color: #2E7D32;
-            padding: 12px 28px;
-            border-radius: 100px;
-            font-weight: 600;
-            text-decoration: none;
-            border: 2px solid #2E7D32;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .btn-outline:hover {
-            background: #2E7D32;
-            color: white;
-            transform: translateY(-3px);
-        }
-        
         .btn-whatsapp {
             display: inline-flex;
             align-items: center;
@@ -236,43 +122,58 @@
             border-radius: 100px;
             font-weight: 700;
             font-size: 1.1rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
             border: none;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
         
-        .btn-whatsapp:hover {
-            background: #20b859;
-            transform: scale(1.02);
+        .btn-whatsapp:hover { background: #20b859; transform: scale(1.02); }
+        
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: transparent;
+            color: #2E7D32;
+            padding: 14px 32px;
+            border-radius: 100px;
+            font-weight: 600;
+            text-decoration: none;
+            border: 2px solid #2E7D32;
+            transition: all 0.3s ease;
         }
         
-        /* Tarjeta de horarios */
+        .btn-outline:hover { background: #2E7D32; color: white; transform: translateY(-3px); }
+        
+        .btn-primary {
+            background: #FFB300;
+            color: #1B5E20;
+            padding: 14px 32px;
+            border-radius: 100px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover { background: #FF8F00; transform: translateY(-3px); }
+        
+        /* Tarjeta horarios */
         .horarios-card {
             background: linear-gradient(135deg, #f0fdf4, #dcfce7);
-            border-radius: 20px;
-            padding: 25px;
+            border-radius: 30px;
+            padding: 35px;
             text-align: center;
             border: 1px solid #2E7D32;
         }
         
         .horario-item {
-            display: inline-flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 0 20px;
+            display: inline-block;
+            margin: 0 30px;
         }
         
-        .horario-hora {
-            font-size: 2rem;
-            font-weight: 800;
-            color: #1B5E20;
-        }
-        
-        .horario-entrega {
-            font-size: 0.9rem;
-            color: #4B5563;
-        }
+        .horario-hora { font-size: 2rem; font-weight: 800; color: #1B5E20; display: block; }
+        .horario-entrega { font-size: 0.9rem; color: #4B5563; }
         
         /* Modal */
         .modal {
@@ -289,10 +190,7 @@
             align-items: center;
         }
         
-        .modal.active {
-            display: flex;
-            animation: modalFadeIn 0.3s ease;
-        }
+        .modal.active { display: flex; animation: modalFadeIn 0.3s ease; }
         
         .modal-content {
             background: white;
@@ -301,7 +199,6 @@
             width: 90%;
             max-height: 90vh;
             overflow-y: auto;
-            box-shadow: 0 30px 50px rgba(0,0,0,0.3);
         }
         
         .modal-header {
@@ -314,26 +211,15 @@
             align-items: center;
         }
         
-        .modal-header h3 {
-            font-size: 1.3rem;
-            font-weight: 700;
-        }
-        
         .modal-close {
             background: none;
             border: none;
             color: white;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             cursor: pointer;
         }
         
-        .modal-close:hover {
-            transform: scale(1.1);
-        }
-        
-        .modal-body {
-            padding: 25px;
-        }
+        .modal-body { padding: 25px; }
         
         .info-modal {
             background: #f0fdf4;
@@ -341,49 +227,23 @@
             border-radius: 15px;
             margin-bottom: 20px;
             font-size: 0.85rem;
-            color: #166534;
             border-left: 3px solid #2E7D32;
         }
         
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #1F2937;
-        }
-        
-        .form-group label .required {
-            color: #EF4444;
-        }
-        
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 8px; }
+        .form-group input, .form-group select, .form-group textarea {
             width: 100%;
             padding: 12px 15px;
             border: 1px solid #D1D5DB;
             border-radius: 15px;
             font-family: inherit;
-            font-size: 0.95rem;
         }
-        
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
+        .form-group input:focus, .form-group select:focus {
             outline: none;
             border-color: #2E7D32;
-            box-shadow: 0 0 0 3px rgba(46,125,50,0.1);
         }
-        
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         
         .btn-submit {
             width: 100%;
@@ -393,63 +253,35 @@
             border: none;
             border-radius: 100px;
             font-weight: 700;
-            font-size: 1rem;
             cursor: pointer;
-            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
         }
         
-        .btn-submit:hover {
-            background: #20b859;
-        }
-        
-        /* Tarifas */
+        /* Tabla tarifas */
         .tarifas-table {
             background: white;
             border-radius: 30px;
             overflow: hidden;
             box-shadow: 0 20px 40px rgba(0,0,0,0.08);
         }
+        .tarifas-table table { width: 100%; border-collapse: collapse; }
+        .tarifas-table th { background: linear-gradient(135deg, #2E7D32, #1B5E20); color: white; padding: 18px 20px; text-align: left; }
+        .tarifas-table td { padding: 14px 20px; border-bottom: 1px solid #e5e7eb; }
+        .tarifas-table tr:hover td { background: #f0fdf4; }
         
-        .tarifas-table table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        .tarifas-table th {
-            background: linear-gradient(135deg, #2E7D32, #1B5E20);
-            color: white;
-            padding: 18px 20px;
-            text-align: left;
-        }
-        
-        .tarifas-table td {
-            padding: 14px 20px;
-            border-bottom: 1px solid #e5e7eb;
-        }
-        
-        .tarifas-table tr:hover td {
-            background: #f0fdf4;
-        }
-        
-        /* Pasos */
+        /* Step cards */
         .step-card {
             text-align: center;
-            padding: 30px 20px;
+            padding: 30px;
             background: white;
             border-radius: 30px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
+            transition: transform 0.3s;
         }
-        
-        .step-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }
-        
+        .step-card:hover { transform: translateY(-8px); }
         .step-number {
             width: 60px;
             height: 60px;
@@ -471,16 +303,9 @@
             gap: 15px;
             padding: 15px 0;
             border-bottom: 1px solid #e5e7eb;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
         }
-        
-        .ventaja-item:hover {
-            transform: translateX(10px);
-            background: rgba(46,125,50,0.03);
-            padding-left: 10px;
-            border-radius: 15px;
-        }
-        
+        .ventaja-item:hover { transform: translateX(10px); background: rgba(46,125,50,0.03); padding-left: 10px; border-radius: 15px; }
         .ventaja-icon {
             width: 50px;
             height: 50px;
@@ -493,7 +318,6 @@
             font-size: 1.4rem;
         }
         
-        /* Banner lanzamiento */
         .launch-banner {
             background: linear-gradient(135deg, #FFB300, #FF8F00);
             border-radius: 30px;
@@ -502,24 +326,8 @@
             position: relative;
             overflow: hidden;
         }
+        .launch-banner::after { content: '🚀'; position: absolute; font-size: 180px; opacity: 0.08; bottom: -40px; right: -40px; }
         
-        .launch-banner::after {
-            content: '🚀';
-            position: absolute;
-            font-size: 180px;
-            opacity: 0.08;
-            bottom: -40px;
-            right: -40px;
-        }
-        
-        .launch-banner h3 {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: #1B5E20;
-            margin-bottom: 15px;
-        }
-        
-        /* Return banner */
         .return-banner {
             background: #f0fdf4;
             border-radius: 20px;
@@ -528,7 +336,6 @@
             border: 1px solid #2E7D32;
         }
         
-        /* CTA final */
         .cta-final {
             background: linear-gradient(135deg, #1B5E20, #2E7D32);
             padding: 60px 0;
@@ -537,7 +344,6 @@
             position: relative;
             overflow: hidden;
         }
-        
         .cta-final::before {
             content: '';
             position: absolute;
@@ -549,77 +355,28 @@
             animation: rotate 20s linear infinite;
         }
         
-        /* Footer */
-        .footer {
-            background: #0f172a;
-            color: white;
-            padding: 50px 0 30px;
-        }
+        .footer { background: #0f172a; color: white; padding: 50px 0 30px; }
+        .footer a { color: #94a3b8; text-decoration: none; }
+        .footer a:hover { color: #FFB300; }
         
-        .footer a {
-            color: #94a3b8;
-            text-decoration: none;
-        }
+        .reveal { opacity: 0; transform: translateY(50px); transition: all 0.8s ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
         
-        .footer a:hover {
-            color: #FFB300;
-        }
-        
-        /* Scroll reveal */
-        .reveal {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s ease;
-        }
-        
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        /* Responsive */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-            
-            .hero {
-                text-align: center;
-                padding: 40px 0;
-            }
-            
-            .hero-grid {
-                grid-template-columns: 1fr !important;
-            }
-            
-            .hero-image {
-                order: -1;
-                margin-bottom: 30px;
-            }
-            
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-            
-            .tarifas-table th, 
-            .tarifas-table td {
-                padding: 10px 12px;
-                font-size: 0.8rem;
-            }
-            
-            .launch-banner {
-                padding: 30px 20px;
-            }
-            
-            .launch-banner h3 {
-                font-size: 1.3rem;
-            }
+            .hero h1 { font-size: 2.2rem; }
+            .hero { text-align: center; }
+            .hero-grid { grid-template-columns: 1fr !important; }
+            .hero-image { order: -1; margin-bottom: 30px; }
+            .hero-image img { max-height: 280px; }
+            .form-row { grid-template-columns: 1fr; }
+            .horario-item { margin: 10px; display: block; }
+            .launch-banner { padding: 30px 20px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- MODAL DE SOLICITUD -->
+    <!-- MODAL -->
     <div id="solicitudModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -629,152 +386,75 @@
             <div class="modal-body">
                 <div class="info-modal">
                     <i class="fas fa-clock"></i> <strong>Horarios de recogida:</strong><br>
-                    📦 Turno mañana: recogemos a las 7:00 AM | entregamos antes de 2:00 PM<br>
-                    📦 Turno tarde: recogemos a las 2:00 PM | entregamos antes de 7:00 PM<br>
+                    📦 Mañana: 7:00 AM → entrega antes de 2:00 PM<br>
+                    📦 Tarde: 2:00 PM → entrega antes de 7:00 PM<br>
                     ⏰ Solicita con al menos 2 horas de anticipación.
                 </div>
-                
                 <form id="solicitudForm">
                     <div class="form-row">
-                        <div class="form-group">
-                            <label>Nombre completo <span class="required">*</span></label>
-                            <input type="text" id="nombre" required placeholder="Ej: Juan Pérez">
-                        </div>
-                        <div class="form-group">
-                            <label>Teléfono <span class="required">*</span></label>
-                            <input type="tel" id="telefono" required placeholder="+53 5 XXX XXXX">
-                        </div>
+                        <div class="form-group"><label>Nombre <span style="color:red">*</span></label><input type="text" id="nombre" required></div>
+                        <div class="form-group"><label>Teléfono <span style="color:red">*</span></label><input type="tel" id="telefono" required></div>
                     </div>
-                    
-                    <div class="form-group">
-                        <label>Dirección de RECOGIDA <span class="required">*</span></label>
-                        <input type="text" id="recogida" required placeholder="Calle, número, entre calles">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Dirección de ENTREGA <span class="required">*</span></label>
-                        <input type="text" id="entrega" required placeholder="Calle, número, entre calles">
-                    </div>
-                    
+                    <div class="form-group"><label>Dirección de RECOGIDA <span style="color:red">*</span></label><input type="text" id="recogida" required></div>
+                    <div class="form-group"><label>Dirección de ENTREGA <span style="color:red">*</span></label><input type="text" id="entrega" required></div>
                     <div class="form-row">
-                        <div class="form-group">
-                            <label>Turno preferido</label>
-                            <select id="turno">
-                                <option value="Mañana (recogida 7am, entrega antes 2pm)">Mañana (7am → antes 2pm)</option>
-                                <option value="Tarde (recogida 2pm, entrega antes 7pm)">Tarde (2pm → antes 7pm)</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Tipo de paquete</label>
-                            <select id="tipoPaquete">
-                                <option value="Documento/sobre">Documento / Sobre</option>
-                                <option value="Paquete pequeño (hasta 2kg)">Paquete pequeño (hasta 2kg)</option>
-                                <option value="Paquete mediano (2-5kg)">Paquete mediano (2-5kg)</option>
-                                <option value="Paquete grande (5-8kg)">Paquete grande (5-8kg)</option>
-                            </select>
-                        </div>
+                        <div class="form-group"><label>Turno preferido</label><select id="turno"><option>Mañana (7am → antes 2pm)</option><option>Tarde (2pm → antes 7pm)</option></select></div>
+                        <div class="form-group"><label>Tipo de paquete</label><select id="tipoPaquete"><option>Documento/sobre</option><option>Paquete pequeño (hasta 2kg)</option><option>Paquete mediano (2-5kg)</option></select></div>
                     </div>
-                    
-                    <div class="form-group">
-                        <label>Información adicional</label>
-                        <textarea id="adicional" rows="3" placeholder="Ej: Llamar al llegar, edificio sin ascensor, etc."></textarea>
-                    </div>
-                    
-                    <button type="submit" class="btn-submit">
-                        <i class="fab fa-whatsapp"></i> Enviar solicitud
-                    </button>
+                    <div class="form-group"><label>Información adicional</label><textarea id="adicional" rows="2"></textarea></div>
+                    <button type="submit" class="btn-submit"><i class="fab fa-whatsapp"></i> Enviar solicitud</button>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- HERO SECTION -->
+    <!-- HERO CON IMAGEN DEL MENSAJERO -->
     <section class="hero">
         <div class="container">
             <div class="hero-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center;">
                 <div class="hero-content">
-                    <div class="hero-badge animate-fadeUp delay-1">
-                        <i class="fas fa-motorcycle"></i> ¡LANZAMIENTO OFICIAL!
-                    </div>
-                    <h1 class="animate-fadeUp delay-2">
-                        Mensajería <span>El Resolvito</span>
-                    </h1>
-                    <p class="animate-fadeUp delay-3">
-                        Tu mensajero de confianza en La Habana. Precios claros y entregas el mismo día en La Habana Vieja.
-                    </p>
-                    <div class="hero-buttons" style="display: flex; gap: 16px; flex-wrap: wrap;">
-                        <button onclick="openModal()" class="btn-whatsapp animate-fadeUp delay-4">
-                            <i class="fab fa-whatsapp fa-xl"></i> Solicitar mensajero
-                        </button>
-                        <a href="#tarifas" class="btn-outline animate-fadeUp delay-5">
-                            <i class="fas fa-arrow-down"></i> Ver tarifas
-                        </a>
+                    <div class="hero-badge animate-fadeUp delay-1"><i class="fas fa-motorcycle"></i> ¡LANZAMIENTO OFICIAL!</div>
+                    <h1 class="animate-fadeUp delay-2">Mensajería <span>El Resolvito</span></h1>
+                    <p class="animate-fadeUp delay-3">Tu mensajero de confianza en La Habana. Precios claros y entregas el mismo día en La Habana Vieja.</p>
+                    <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                        <button onclick="openModal()" class="btn-whatsapp animate-fadeUp delay-4"><i class="fab fa-whatsapp fa-xl"></i> Solicitar mensajero</button>
+                        <a href="#tarifas" class="btn-outline animate-fadeUp delay-5"><i class="fas fa-arrow-down"></i> Ver tarifas</a>
                     </div>
                 </div>
                 <div class="hero-image animate-fadeRight delay-2">
-                    <img src="https://i.postimg.cc/d3wFf38p/mensajero_resolvito.png" alt="Mensajero El Resolvito">
+                    <img src="https://i.postimg.cc/d3wFf38p/mensajero_resolvito.png" alt="Mensajero El Resolvito" style="width:100%; max-width:400px; display:block; margin:0 auto;">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- HORARIOS DE RECOGIDA (NUEVO) -->
+    <!-- HORARIOS -->
     <section style="padding: 0 24px 60px;">
         <div class="container">
             <div class="horarios-card reveal">
-                <h3 style="color: #1B5E20; margin-bottom: 20px;"><i class="fas fa-calendar-alt"></i> Horarios de recogida</h3>
-                <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
-                    <div class="horario-item">
-                        <span class="horario-hora">🌅 7:00 AM</span>
-                        <span class="horario-entrega">Entrega antes de 2:00 PM</span>
-                    </div>
-                    <div class="horario-item">
-                        <span class="horario-hora">🌙 2:00 PM</span>
-                        <span class="horario-entrega">Entrega antes de 7:00 PM</span>
-                    </div>
+                <h3 style="color:#1B5E20; margin-bottom:20px;"><i class="fas fa-calendar-alt"></i> Horarios de recogida</h3>
+                <div>
+                    <div class="horario-item"><span class="horario-hora">🌅 7:00 AM</span><span class="horario-entrega">Entrega antes de 2:00 PM</span></div>
+                    <div class="horario-item"><span class="horario-hora">🌙 2:00 PM</span><span class="horario-entrega">Entrega antes de 7:00 PM</span></div>
                 </div>
-                <p style="margin-top: 20px; font-size: 0.85rem; color: #166534;">
-                    ⏰ Solicita con al menos 2 horas de anticipación a la hora de recogida
-                </p>
+                <p style="margin-top:20px; font-size:0.85rem;">⏰ Solicita con al menos 2 horas de anticipación</p>
             </div>
         </div>
     </section>
 
     <!-- QUIÉNES SOMOS -->
-    <section style="padding: 60px 0; background: #f8fafc;">
+    <section style="padding: 60px 0; background:#f8fafc;">
         <div class="container">
-            <div class="reveal" style="text-align: center; max-width: 800px; margin: 0 auto 50px;">
-                <span style="background: rgba(46,125,50,0.1); color: #2E7D32; padding: 5px 15px; border-radius: 100px; font-size: 0.85rem;">
-                    <i class="fas fa-heart"></i> Nuestra historia
-                </span>
-                <h2 style="font-size: 2.2rem; font-weight: 700; margin-top: 16px;">Hecho con esfuerzo y dedicación</h2>
-                <p style="color: #64748b; margin-top: 16px;">
-                    Somos un grupo de personas que, sin ánimo de lucro y con la necesidad de trabajar, 
-                    creamos este servicio para ayudar a nuestra comunidad. Cada entrega la hacemos con 
-                    responsabilidad y el corazón puesto en lo que hacemos.
-                </p>
+            <div class="reveal" style="text-align:center; max-width:800px; margin:0 auto 50px;">
+                <span style="background:rgba(46,125,50,0.1); color:#2E7D32; padding:5px 15px; border-radius:100px;"><i class="fas fa-heart"></i> Nuestra historia</span>
+                <h2 style="font-size:2rem; margin-top:16px;">Hecho con esfuerzo y dedicación</h2>
+                <p>Somos un grupo de personas que, sin ánimo de lucro y con la necesidad de trabajar, creamos este servicio para ayudar a nuestra comunidad.</p>
             </div>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
-                <div class="reveal delay-1" style="text-align: center;">
-                    <div style="font-size: 3rem;">🛵</div>
-                    <h3 style="font-weight: 700; margin: 15px 0 10px;">Servicio Propio</h3>
-                    <p style="color: #64748b;">Sin intermediarios, atendemos directamente.</p>
-                </div>
-                <div class="reveal delay-2" style="text-align: center;">
-                    <div style="font-size: 3rem;">💚</div>
-                    <h3 style="font-weight: 700; margin: 15px 0 10px;">Sin Ánimo de Lucro</h3>
-                    <p style="color: #64748b;">Buscamos un ingreso digno para nuestras familias.</p>
-                </div>
-                <div class="reveal delay-3" style="text-align: center;">
-                    <div style="font-size: 3rem;">🤝</div>
-                    <h3 style="font-weight: 700; margin: 15px 0 10px;">Confianza</h3>
-                    <p style="color: #64748b;">Cuidamos cada envío como si fuera nuestro.</p>
-                </div>
-                <div class="reveal delay-4" style="text-align: center;">
-                    <div style="font-size: 3rem;">📍</div>
-                    <h3 style="font-weight: 700; margin: 15px 0 10px;">La Habana Vieja</h3>
-                    <p style="color: #64748b;">Cobertura local. Pronto expandiremos.</p>
-                </div>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:30px; text-align:center;">
+                <div><div style="font-size:3rem;">🛵</div><h3>Servicio Propio</h3><p>Sin intermediarios</p></div>
+                <div><div style="font-size:3rem;">💚</div><h3>Sin Ánimo de Lucro</h3><p>Ingreso digno</p></div>
+                <div><div style="font-size:3rem;">🤝</div><h3>Confianza</h3><p>Cuidamos tu paquete</p></div>
+                <div><div style="font-size:3rem;">📍</div><h3>La Habana Vieja</h3><p>Cobertura local</p></div>
             </div>
         </div>
     </section>
@@ -782,63 +462,37 @@
     <!-- TARIFAS -->
     <section id="tarifas" style="padding: 80px 0;">
         <div class="container">
-            <div class="reveal" style="text-align: center; margin-bottom: 50px;">
-                <span style="background: rgba(46,125,50,0.1); color: #2E7D32; padding: 5px 15px; border-radius: 100px; font-size: 0.85rem;">
-                    <i class="fas fa-tag"></i> Precios claros
-                </span>
-                <h2 style="font-size: 2.2rem; font-weight: 700; margin-top: 16px;">Tarifas de Mensajería</h2>
-                <p style="color: #64748b;">Sin letra pequeña. Pagas solo la distancia real.</p>
+            <div class="reveal" style="text-align:center; margin-bottom:50px;">
+                <span style="background:rgba(46,125,50,0.1); color:#2E7D32; padding:5px 15px; border-radius:100px;"><i class="fas fa-tag"></i> Precios claros</span>
+                <h2 style="font-size:2rem; margin-top:16px;">Tarifas de Mensajería</h2>
             </div>
-            
             <div class="tarifas-table reveal">
                 <table>
-                    <thead>
-                        <tr><th>Distancia</th><th>Tarifa (cup)</th><th>Ejemplo</th></tr>
-                    </thead>
+                    <thead><tr><th>Distancia</th><th>Tarifa (cup)</th><th>Ejemplo</th></tr></thead>
                     <tbody>
-                        <tr><td>Hasta 1 km</td><td style="font-weight: 700; color: #2E7D32;">300 cup</td><td>Obispo → Plaza Vieja</td></tr>
-                        <tr><td>1 a 2 km</td><td style="font-weight: 700; color: #2E7D32;">400 cup</td><td>Capitolio → Castillo</td></tr>
-                        <tr><td>2 a 3 km</td><td style="font-weight: 700; color: #2E7D32;">450 cup</td><td>Maqueta → Catedral</td></tr>
-                        <tr><td>3 a 4 km</td><td style="font-weight: 700; color: #2E7D32;">500 cup</td><td>Habana Vieja → Vedado</td></tr>
-                        <tr><td>4 a 5 km</td><td style="font-weight: 700; color: #2E7D32;">550 cup</td><td>Habana Vieja → Plaza Rev.</td></tr>
-                        <tr><td>Más de 5 km</td><td style="font-weight: 700; color: #2E7D32;">100 cup x km</td><td>6 km = 600 cup</td></tr>
+                        <tr><td>Hasta 1 km</td><td style="font-weight:700; color:#2E7D32;">300 cup</td><td>Obispo → Plaza Vieja</td></tr>
+                        <tr><td>1 a 2 km</td><td style="font-weight:700; color:#2E7D32;">400 cup</td><td>Capitolio → Castillo</td></tr>
+                        <tr><td>2 a 3 km</td><td style="font-weight:700; color:#2E7D32;">450 cup</td><td>Maqueta → Catedral</td></tr>
+                        <tr><td>3 a 4 km</td><td style="font-weight:700; color:#2E7D32;">500 cup</td><td>Habana Vieja → Vedado</td></tr>
+                        <tr><td>4 a 5 km</td><td style="font-weight:700; color:#2E7D32;">550 cup</td><td>Habana Vieja → Plaza Rev.</td></tr>
+                        <tr><td>Más de 5 km</td><td style="font-weight:700; color:#2E7D32;">100 cup x km</td><td>6 km = 600 cup</td></tr>
                     </tbody>
                 </table>
-            </div>
-            
-            <div class="reveal" style="margin-top: 30px; background: #f0fdf4; border-radius: 20px; padding: 20px; text-align: center;">
-                <i class="fas fa-calculator" style="color: #2E7D32; font-size: 1.5rem;"></i>
-                <p><strong>¿Cómo calculamos?</strong> Usamos la ruta real de Google Maps. No cobramos viaje de vuelta.</p>
             </div>
         </div>
     </section>
 
     <!-- CÓMO FUNCIONA -->
-    <section style="padding: 80px 0; background: #f8fafc;">
+    <section style="padding: 80px 0; background:#f8fafc;">
         <div class="container">
-            <div class="reveal" style="text-align: center; margin-bottom: 50px;">
-                <span style="background: rgba(46,125,50,0.1); color: #2E7D32; padding: 5px 15px; border-radius: 100px;">📋 3 pasos</span>
-                <h2 style="font-size: 2.2rem; font-weight: 700; margin-top: 16px;">¿Cómo funciona?</h2>
+            <div class="reveal" style="text-align:center; margin-bottom:50px;">
+                <span style="background:rgba(46,125,50,0.1); color:#2E7D32; padding:5px 15px; border-radius:100px;">📋 3 pasos</span>
+                <h2 style="font-size:2rem; margin-top:16px;">¿Cómo funciona?</h2>
             </div>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
-                <div class="step-card reveal delay-1">
-                    <div class="step-number">1</div>
-                    <i class="fab fa-whatsapp" style="font-size: 2.5rem; color: #25D366;"></i>
-                    <h3 style="margin: 15px 0 10px;">Solicitas</h3>
-                    <p>Completa el formulario con tus datos.</p>
-                </div>
-                <div class="step-card reveal delay-2">
-                    <div class="step-number">2</div>
-                    <i class="fas fa-clock" style="font-size: 2.5rem; color: #FFB300;"></i>
-                    <h3 style="margin: 15px 0 10px;">Recogemos</h3>
-                    <p>A las 7am o 2pm según tu turno.</p>
-                </div>
-                <div class="step-card reveal delay-3">
-                    <div class="step-number">3</div>
-                    <i class="fas fa-check-circle" style="font-size: 2.5rem; color: #2E7D32;"></i>
-                    <h3 style="margin: 15px 0 10px;">Entregamos</h3>
-                    <p>El mismo día, antes de 2pm o 7pm.</p>
-                </div>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:30px;">
+                <div class="step-card"><div class="step-number">1</div><i class="fab fa-whatsapp" style="font-size:2rem; color:#25D366;"></i><h3>Solicitas</h3><p>Completa el formulario</p></div>
+                <div class="step-card"><div class="step-number">2</div><i class="fas fa-clock" style="font-size:2rem; color:#FFB300;"></i><h3>Recogemos</h3><p>A las 7am o 2pm</p></div>
+                <div class="step-card"><div class="step-number">3</div><i class="fas fa-check-circle" style="font-size:2rem; color:#2E7D32;"></i><h3>Entregamos</h3><p>El mismo día</p></div>
             </div>
         </div>
     </section>
@@ -846,40 +500,36 @@
     <!-- VENTAJAS -->
     <section style="padding: 80px 0;">
         <div class="container">
-            <div class="reveal" style="text-align: center; margin-bottom: 50px;">
-                <span style="background: rgba(46,125,50,0.1); color: #2E7D32; padding: 5px 15px; border-radius: 100px;">✨ Ventajas</span>
-                <h2 style="font-size: 2.2rem; font-weight: 700; margin-top: 16px;">¿Por qué elegirnos?</h2>
+            <div class="reveal" style="text-align:center; margin-bottom:50px;">
+                <span style="background:rgba(46,125,50,0.1); color:#2E7D32; padding:5px 15px; border-radius:100px;">✨ Ventajas</span>
+                <h2 style="font-size:2rem; margin-top:16px;">¿Por qué elegirnos?</h2>
             </div>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px;">
+            <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:15px;">
                 <div class="ventaja-item"><div class="ventaja-icon"><i class="fas fa-clock"></i></div><div><strong>Entregas puntuales</strong><br>Respetamos los horarios</div></div>
                 <div class="ventaja-item"><div class="ventaja-icon"><i class="fas fa-hand-holding-usd"></i></div><div><strong>Pago contra entrega</strong><br>Pagas al recibir</div></div>
                 <div class="ventaja-item"><div class="ventaja-icon"><i class="fas fa-shield-alt"></i></div><div><strong>Paquetes cuidados</strong><br>Tratamos tus cosas con respeto</div></div>
-                <div class="ventaja-item"><div class="ventaja-icon"><i class="fas fa-smile"></i></div><div><strong>Atención personal</strong><br>Hablas con el mensajero</div></div>
-                <div class="ventaja-item"><div class="ventaja-icon"><i class="fas fa-truck"></i></div><div><strong>Entregas mismo día</strong><br>Sin esperar días</div></div>
                 <div class="ventaja-item"><div class="ventaja-icon"><i class="fas fa-tag"></i></div><div><strong>Precios claros</strong><br>Sin letra pequeña</div></div>
             </div>
         </div>
     </section>
 
-    <!-- LANZAMIENTO BANNER -->
+    <!-- BANNER LANZAMIENTO -->
     <section style="padding: 0 24px 60px;">
         <div class="container">
             <div class="launch-banner reveal">
                 <h3>🚀 ¡Estamos empezando!</h3>
-                <p style="color: #1B5E20;">Somos nuevos, pero le ponemos el corazón. ¡Gracias por confiar!</p>
-                <button onclick="openModal()" class="btn-primary" style="background: white; color: #1B5E20; margin-top: 20px;">
-                    <i class="fab fa-whatsapp"></i> Solicitar ahora
-                </button>
+                <p>Somos nuevos, pero le ponemos el corazón. ¡Gracias por confiar!</p>
+                <button onclick="openModal()" class="btn-primary" style="background:white; color:#1B5E20; margin-top:20px;"><i class="fab fa-whatsapp"></i> Solicitar ahora</button>
             </div>
         </div>
     </section>
 
-    <!-- BANNER DE RETORNO -->
+    <!-- BANNER RETORNO -->
     <section style="padding: 0 24px 60px;">
         <div class="container">
             <div class="return-banner reveal">
                 <p>🛍️ ¿Buscas más servicios o productos?</p>
-                <a href="https://elresolvito.github.io" style="color: #2E7D32; font-weight: 700;">Visita la tienda principal El Resolvito →</a>
+                <a href="https://elresolvito.github.io" style="color:#2E7D32; font-weight:700;">Visita la tienda principal El Resolvito →</a>
             </div>
         </div>
     </section>
@@ -888,42 +538,34 @@
     <section class="cta-final">
         <div class="container">
             <div class="reveal">
-                <i class="fas fa-motorcycle" style="font-size: 3rem; animation: bounce 2s infinite; display: inline-block;"></i>
-                <h2 style="font-size: 2rem; margin: 20px 0;">¿Necesitas un mensajero?</h2>
-                <button onclick="openModal()" class="btn-whatsapp" style="background: white; color: #25D366;">
-                    <i class="fab fa-whatsapp"></i> Solicitar ahora
-                </button>
-                <p style="margin-top: 20px;">📞 +53 5 638 2909</p>
+                <i class="fas fa-motorcycle" style="font-size:3rem; animation:bounce 2s infinite; display:inline-block;"></i>
+                <h2 style="font-size:2rem; margin:20px 0;">¿Necesitas un mensajero?</h2>
+                <button onclick="openModal()" class="btn-whatsapp" style="background:white; color:#25D366;"><i class="fab fa-whatsapp"></i> Solicitar ahora</button>
+                <p style="margin-top:20px;">📞 +53 5 638 2909</p>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER -->
     <footer class="footer">
         <div class="container">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px;">
-                <div><h3>El Resolvito</h3><p style="color:#94a3b8;">Tu mensajero en La Habana.</p></div>
-                <div><h4>Contacto</h4><p><i class="fab fa-whatsapp"></i> +53 5 638 2909</p><p><i class="fas fa-map-marker-alt"></i> La Habana, Cuba</p></div>
-                <div><h4>Enlaces</h4><p><a href="https://elresolvito.github.io">🏠 Tienda principal</a></p><p><a href="https://elresolvito.github.io/servicios.html">🛠️ Otros servicios</a></p></div>
-                <div><h4>Horarios</h4><p>Recogidas: 7am y 2pm</p><p>Entregas mismo día</p></div>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:40px;">
+                <div><h3>El Resolvito</h3><p>Tu mensajero en La Habana</p></div>
+                <div><h4>Contacto</h4><p><i class="fab fa-whatsapp"></i> +53 5 638 2909</p></div>
+                <div><h4>Enlaces</h4><p><a href="https://elresolvito.github.io">Tienda principal</a></p></div>
+                <div><h4>Horarios</h4><p>Recogidas: 7am y 2pm</p></div>
             </div>
-            <div style="border-top: 1px solid #1e293b; margin-top: 40px; padding-top: 30px; text-align: center; color: #64748b;">
-                <p>© 2025 Mensajería El Resolvito. Hecho con ❤️ en La Habana.</p>
-            </div>
+            <div style="border-top:1px solid #1e293b; margin-top:40px; padding-top:30px; text-align:center;">© 2025 Mensajería El Resolvito</div>
         </div>
     </footer>
 
     <script>
         const modal = document.getElementById('solicitudModal');
-        
         function openModal() { modal.classList.add('active'); document.body.style.overflow = 'hidden'; }
         function closeModal() { modal.classList.remove('active'); document.body.style.overflow = ''; }
-        
         modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
         
         document.getElementById('solicitudForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
             const nombre = document.getElementById('nombre').value;
             const telefono = document.getElementById('telefono').value;
             const recogida = document.getElementById('recogida').value;
@@ -931,49 +573,15 @@
             const turno = document.getElementById('turno').value;
             const tipoPaquete = document.getElementById('tipoPaquete').value;
             const adicional = document.getElementById('adicional').value;
-            
-            if (!nombre || !telefono || !recogida || !entrega) {
-                alert('Completa todos los campos obligatorios (*)');
-                return;
-            }
-            
-            const mensaje = `🛵 *NUEVA SOLICITUD DE MENSAJERÍA* 🛵
-
-*Datos del cliente:*
-👤 Nombre: ${nombre}
-📱 Teléfono: ${telefono}
-
-*Detalles del envío:*
-📍 Recogida: ${recogida}
-📍 Entrega: ${entrega}
-📦 Tipo: ${tipoPaquete}
-⏰ Turno: ${turno}
-
-${adicional ? `📝 *Info adicional:* ${adicional}` : ''}
-
----
-🌐 Solicitado desde la web El Resolvito
-⏰ Por favor, contactar al cliente para confirmar.`;
-            
-            window.open(`https://wa.me/5356382909?text=${encodeURIComponent(mensaje)}`, '_blank');
+            if (!nombre || !telefono || !recogida || !entrega) { alert('Completa los campos obligatorios'); return; }
+            const msg = `🛵 *NUEVA SOLICITUD DE MENSAJERÍA* 🛵\n\n*Cliente:* ${nombre}\n📱 ${telefono}\n\n*Recogida:* ${recogida}\n*Entrega:* ${entrega}\n📦 ${tipoPaquete}\n⏰ ${turno}\n${adicional ? `\n📝 *Info:* ${adicional}` : ''}\n\n---\nSolicitado desde la web El Resolvito`;
+            window.open(`https://wa.me/5356382909?text=${encodeURIComponent(msg)}`, '_blank');
             closeModal();
             document.getElementById('solicitudForm').reset();
         });
         
-        // Scroll reveal
-        const reveals = document.querySelectorAll('.reveal');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
-        }, { threshold: 0.1 });
-        reveals.forEach(r => observer.observe(r));
-        
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(a => {
-            a.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
-            });
-        });
+        const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); }); }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(r => observer.observe(r));
     </script>
 </body>
 </html>
