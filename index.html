@@ -726,13 +726,13 @@
 </head>
 <body>
 
-    <!-- HERO SECTION -->
+      <!-- HERO SECTION CORREGIDA -->
     <section class="hero">
         <div class="hero-circle circle-1"></div>
         <div class="hero-circle circle-2"></div>
         <div class="hero-circle circle-3"></div>
         <div class="container">
-            <div class="grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center;">
+            <div class="hero-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center;">
                 <div class="hero-content">
                     <div class="hero-badge animate-fadeUp delay-1">
                         <i class="fas fa-motorcycle"></i> ¡LANZAMIENTO OFICIAL!
@@ -754,12 +754,15 @@
                     </div>
                 </div>
                 <div class="hero-image animate-fadeRight delay-2">
-                    <img src="https://i.postimg.cc/tgBh8YZM/mensajero_resolvito_1_11zon.webp" alt="Mensajero El Resolvito">
+                    <!-- Imagen del mensajero - asegurando que se vea -->
+                    <img src="https://i.postimg.cc/tgBh8YZM/mensajero_resolvito_1_11zon.webp" 
+                         alt="Mensajero El Resolvito"
+                         style="width: 100%; max-width: 450px; height: auto; border-radius: 30px; box-shadow: 0 30px 50px rgba(0,0,0,0.3);"
+                         onerror="this.onerror=null; this.src='https://via.placeholder.com/450x450/2E7D32/white?text=El+Resolvito'; this.style.objectFit='cover';">
                 </div>
             </div>
         </div>
     </section>
-
     <!-- QUIÉNES SOMOS -->
     <section style="padding: 80px 0; background: #f8fafc;">
         <div class="container">
