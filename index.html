@@ -31,7 +31,7 @@
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(40px);
+                transform: translateY(50px);
             }
             to {
                 opacity: 1;
@@ -42,7 +42,7 @@
         @keyframes fadeInLeft {
             from {
                 opacity: 0;
-                transform: translateX(-40px);
+                transform: translateX(-60px);
             }
             to {
                 opacity: 1;
@@ -53,7 +53,7 @@
         @keyframes fadeInRight {
             from {
                 opacity: 0;
-                transform: translateX(40px);
+                transform: translateX(60px);
             }
             to {
                 opacity: 1;
@@ -61,32 +61,95 @@
             }
         }
         
-        @keyframes pulse {
+        @keyframes float {
             0%, 100% {
-                transform: scale(1);
-                opacity: 1;
+                transform: translateY(0) rotate(0deg);
             }
             50% {
-                transform: scale(1.05);
-                opacity: 0.9;
+                transform: translateY(-15px) rotate(2deg);
             }
         }
         
-        @keyframes float {
+        @keyframes floatReverse {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(10px) rotate(-2deg);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255,179,0,0.7);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 15px rgba(255,179,0,0);
+            }
+        }
+        
+        @keyframes bounce {
             0%, 100% {
                 transform: translateY(0);
             }
             50% {
-                transform: translateY(-10px);
+                transform: translateY(-8px);
             }
         }
         
-        @keyframes shine {
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-80px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(80px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes gradientShift {
             0% {
-                background-position: -100% 0;
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
             }
             100% {
-                background-position: 200% 0;
+                background-position: 0% 50%;
             }
         }
         
@@ -102,11 +165,24 @@
             animation: fadeInRight 0.8s ease forwards;
         }
         
+        .animate-slideLeft {
+            animation: slideInLeft 0.7s ease forwards;
+        }
+        
+        .animate-slideRight {
+            animation: slideInRight 0.7s ease forwards;
+        }
+        
+        .animate-zoom {
+            animation: zoomIn 0.6s ease forwards;
+        }
+        
         .delay-1 { animation-delay: 0.1s; opacity: 0; }
         .delay-2 { animation-delay: 0.2s; opacity: 0; }
         .delay-3 { animation-delay: 0.3s; opacity: 0; }
         .delay-4 { animation-delay: 0.4s; opacity: 0; }
         .delay-5 { animation-delay: 0.5s; opacity: 0; }
+        .delay-6 { animation-delay: 0.6s; opacity: 0; }
         
         /* ========== ESTILOS PRINCIPALES ========== */
         .container {
@@ -115,16 +191,19 @@
             padding: 0 24px;
         }
         
-        /* Hero */
+        /* Hero con gradiente animado */
         .hero {
             min-height: 90vh;
             background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 50%, #388E3C 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 8s ease infinite;
             position: relative;
             overflow: hidden;
             display: flex;
             align-items: center;
         }
         
+        /* Partículas flotantes */
         .hero::before {
             content: '';
             position: absolute;
@@ -132,9 +211,42 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="https://i.postimg.cc/tgBh8YZM/mensajero_resolvito_1_11zon.webp" viewBox="0 0 200 200"><circle cx="30" cy="30" r="20" fill="rgba(255,255,255,0.05)"/><circle cx="170" cy="80" r="30" fill="rgba(255,255,255,0.05)"/><circle cx="100" cy="180" r="40" fill="rgba(255,255,255,0.03)"/><circle cx="50" cy="150" r="15" fill="rgba(255,255,255,0.04)"/><circle cx="160" cy="160" r="25" fill="rgba(255,255,255,0.04)"/></svg>');
-            background-repeat: repeat;
-            opacity: 0.3;
+            background-image: radial-gradient(circle at 20% 40%, rgba(255,255,255,0.08) 1px, transparent 1px);
+            background-size: 30px 30px;
+            pointer-events: none;
+        }
+        
+        /* Círculos decorativos animados */
+        .hero-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,179,0,0.15), transparent);
+            pointer-events: none;
+        }
+        
+        .circle-1 {
+            width: 300px;
+            height: 300px;
+            top: -100px;
+            right: -100px;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .circle-2 {
+            width: 200px;
+            height: 200px;
+            bottom: 50px;
+            left: -80px;
+            animation: floatReverse 6s ease-in-out infinite;
+        }
+        
+        .circle-3 {
+            width: 150px;
+            height: 150px;
+            bottom: 30%;
+            right: 20%;
+            animation: float 7s ease-in-out infinite;
+            background: radial-gradient(circle, rgba(255,255,255,0.08), transparent);
         }
         
         .hero-content {
@@ -145,7 +257,7 @@
         
         .hero-badge {
             display: inline-block;
-            background: rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.15);
             backdrop-filter: blur(10px);
             padding: 8px 20px;
             border-radius: 100px;
@@ -153,25 +265,28 @@
             font-weight: 500;
             margin-bottom: 24px;
             border: 1px solid rgba(255,255,255,0.3);
+            animation: pulse 2s infinite;
         }
         
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: 3.8rem;
             font-weight: 800;
             line-height: 1.2;
             margin-bottom: 20px;
         }
         
         .hero h1 span {
-            background: linear-gradient(135deg, #FFB300, #FF8F00);
+            background: linear-gradient(135deg, #FFB300, #FF8F00, #FFD54F);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
         }
         
         .hero p {
             font-size: 1.2rem;
-            opacity: 0.9;
+            opacity: 0.95;
             margin-bottom: 32px;
             max-width: 550px;
         }
@@ -179,12 +294,17 @@
         .hero-image {
             position: relative;
             animation: float 4s ease-in-out infinite;
+            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.3));
         }
         
         .hero-image img {
             max-width: 100%;
             border-radius: 30px;
-            box-shadow: 0 30px 50px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .hero-image:hover img {
+            transform: scale(1.02);
         }
         
         .hero-image::before {
@@ -194,9 +314,10 @@
             left: -20px;
             right: -20px;
             bottom: -20px;
-            background: radial-gradient(circle, rgba(255,179,0,0.2), transparent);
+            background: radial-gradient(circle, rgba(255,179,0,0.25), transparent);
             border-radius: 50%;
             z-index: -1;
+            animation: pulse 3s infinite;
         }
         
         /* Botones */
@@ -213,11 +334,28 @@
             text-decoration: none;
             transition: all 0.3s ease;
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
         }
         
         .btn-primary:hover {
             background: #FF8F00;
-            transform: translateY(-3px);
+            transform: translateY(-3px) scale(1.02);
             box-shadow: 0 15px 30px rgba(0,0,0,0.25);
         }
         
@@ -233,6 +371,23 @@
             text-decoration: none;
             border: 2px solid white;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-outline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .btn-outline:hover::before {
+            left: 100%;
         }
         
         .btn-outline:hover {
@@ -254,6 +409,23 @@
             text-decoration: none;
             transition: all 0.3s ease;
             box-shadow: 0 10px 25px rgba(37,211,102,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-whatsapp::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .btn-whatsapp:hover::before {
+            left: 100%;
         }
         
         .btn-whatsapp:hover {
@@ -262,51 +434,18 @@
             box-shadow: 0 15px 35px rgba(37,211,102,0.4);
         }
         
-        /* Sección de tarifas */
-        .pricing-card {
-            background: white;
-            border-radius: 30px;
-            padding: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-        
-        .pricing-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 30px 50px rgba(0,0,0,0.12);
-        }
-        
-        .pricing-card.featured {
-            background: linear-gradient(135deg, #2E7D32, #1B5E20);
-            color: white;
-        }
-        
-        .pricing-card.featured .price {
-            color: #FFB300;
-        }
-        
-        .pricing-card.featured .price small {
-            color: rgba(255,255,255,0.7);
-        }
-        
-        .price {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #2E7D32;
-        }
-        
-        .price small {
-            font-size: 0.9rem;
-            font-weight: 400;
-        }
-        
         /* Tabla de tarifas */
         .tarifas-table {
             background: white;
             border-radius: 30px;
             overflow: hidden;
             box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .tarifas-table:hover {
+            box-shadow: 0 30px 50px rgba(0,0,0,0.15);
+            transform: translateY(-5px);
         }
         
         .tarifas-table table {
@@ -315,7 +454,7 @@
         }
         
         .tarifas-table th {
-            background: #2E7D32;
+            background: linear-gradient(135deg, #2E7D32, #1B5E20);
             color: white;
             padding: 18px 20px;
             text-align: left;
@@ -325,14 +464,12 @@
         .tarifas-table td {
             padding: 14px 20px;
             border-bottom: 1px solid #e5e7eb;
-        }
-        
-        .tarifas-table tr:last-child td {
-            border-bottom: none;
+            transition: all 0.2s ease;
         }
         
         .tarifas-table tr:hover td {
-            background: #f9fafb;
+            background: #f0fdf4;
+            transform: scale(1.01);
         }
         
         /* Pasos */
@@ -342,12 +479,30 @@
             background: white;
             border-radius: 30px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .step-card::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #FFB300, #FF8F00);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .step-card:hover::before {
+            transform: scaleX(1);
         }
         
         .step-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 45px rgba(0,0,0,0.12);
         }
         
         .step-number {
@@ -362,6 +517,11 @@
             align-items: center;
             justify-content: center;
             margin: 0 auto 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .step-card:hover .step-number {
+            transform: scale(1.1) rotate(5deg);
         }
         
         /* Ventajas */
@@ -371,6 +531,15 @@
             gap: 15px;
             padding: 15px 0;
             border-bottom: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .ventaja-item:hover {
+            transform: translateX(10px);
+            background: rgba(46,125,50,0.03);
+            padding-left: 10px;
+            border-radius: 15px;
         }
         
         .ventaja-icon {
@@ -383,25 +552,59 @@
             justify-content: center;
             color: #2E7D32;
             font-size: 1.4rem;
+            transition: all 0.3s ease;
+        }
+        
+        .ventaja-item:hover .ventaja-icon {
+            background: #2E7D32;
+            color: white;
+            transform: scale(1.1);
         }
         
         /* Lanzamiento banner */
         .launch-banner {
             background: linear-gradient(135deg, #FFB300, #FF8F00);
             border-radius: 30px;
-            padding: 40px;
+            padding: 50px;
             text-align: center;
             position: relative;
             overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .launch-banner:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
         
         .launch-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .launch-banner:hover::before {
+            left: 100%;
+        }
+        
+        .launch-banner::after {
             content: '🚀';
             position: absolute;
-            font-size: 150px;
-            opacity: 0.1;
-            bottom: -30px;
-            right: -30px;
+            font-size: 180px;
+            opacity: 0.08;
+            bottom: -40px;
+            right: -40px;
+            transition: all 0.3s ease;
+        }
+        
+        .launch-banner:hover::after {
+            transform: translate(-10px, -10px);
+            opacity: 0.12;
         }
         
         .launch-banner h3 {
@@ -411,11 +614,70 @@
             margin-bottom: 15px;
         }
         
+        /* Banner de retorno a tienda principal */
+        .return-banner {
+            background: #f0fdf4;
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #2E7D32;
+            transition: all 0.3s ease;
+        }
+        
+        .return-banner:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+        
+        /* CTA final */
+        .cta-final {
+            background: linear-gradient(135deg, #1B5E20, #2E7D32);
+            background-size: 200% 200%;
+            animation: gradientShift 8s ease infinite;
+            padding: 60px 0;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-final::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.05), transparent);
+            animation: rotate 20s linear infinite;
+        }
+        
         /* Footer */
         .footer {
-            background: #1a1a2e;
+            background: #0f172a;
             color: white;
             padding: 50px 0 30px;
+            position: relative;
+        }
+        
+        .footer a {
+            transition: color 0.3s ease;
+        }
+        
+        .footer a:hover {
+            color: #FFB300;
+        }
+        
+        /* Efecto de scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         /* Responsive */
@@ -437,10 +699,19 @@
                 justify-content: center;
             }
             
+            .grid {
+                grid-template-columns: 1fr !important;
+            }
+            
+            .hero-image {
+                order: -1;
+                margin-bottom: 30px;
+            }
+            
             .tarifas-table th, 
             .tarifas-table td {
                 padding: 10px 12px;
-                font-size: 0.85rem;
+                font-size: 0.8rem;
             }
             
             .launch-banner h3 {
@@ -451,24 +722,15 @@
                 padding: 30px 20px;
             }
         }
-        
-        /* Efecto de scroll reveal */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-        
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
     </style>
 </head>
 <body>
 
     <!-- HERO SECTION -->
     <section class="hero">
+        <div class="hero-circle circle-1"></div>
+        <div class="hero-circle circle-2"></div>
+        <div class="hero-circle circle-3"></div>
         <div class="container">
             <div class="grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center;">
                 <div class="hero-content">
@@ -492,7 +754,7 @@
                     </div>
                 </div>
                 <div class="hero-image animate-fadeRight delay-2">
-                    <img src="https://i.postimg.cc/tgBh8YZM/mensajero-resolvito-1-11zon.webp" alt="Mensajero El Resolvito">
+                    <img src="https://i.postimg.cc/tgBh8YZM/mensajero_resolvito_1_11zon.webp" alt="Mensajero El Resolvito">
                 </div>
             </div>
         </div>
@@ -513,23 +775,23 @@
                 </p>
             </div>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
-                <div class="reveal" style="text-align: center;">
-                    <div style="font-size: 3rem;">🛵</div>
+                <div class="reveal delay-1" style="text-align: center; padding: 20px; border-radius: 20px; transition: all 0.3s ease; cursor: pointer;">
+                    <div style="font-size: 3rem; transition: transform 0.3s ease;">🛵</div>
                     <h3 style="font-weight: 700; margin: 15px 0 10px;">Servicio Propio</h3>
                     <p style="color: #64748b;">Somos nosotros mismos quienes entregamos, sin intermediarios.</p>
                 </div>
-                <div class="reveal" style="text-align: center;">
-                    <div style="font-size: 3rem;">💚</div>
+                <div class="reveal delay-2" style="text-align: center; padding: 20px; border-radius: 20px; transition: all 0.3s ease; cursor: pointer;">
+                    <div style="font-size: 3rem; transition: transform 0.3s ease;">💚</div>
                     <h3 style="font-weight: 700; margin: 15px 0 10px;">Sin Ánimo de Lucro</h3>
                     <p style="color: #64748b;">Solo buscamos generar un ingreso digno para nuestras familias.</p>
                 </div>
-                <div class="reveal" style="text-align: center;">
-                    <div style="font-size: 3rem;">🤝</div>
+                <div class="reveal delay-3" style="text-align: center; padding: 20px; border-radius: 20px; transition: all 0.3s ease; cursor: pointer;">
+                    <div style="font-size: 3rem; transition: transform 0.3s ease;">🤝</div>
                     <h3 style="font-weight: 700; margin: 15px 0 10px;">Confianza</h3>
                     <p style="color: #64748b;">Tu paquete está en buenas manos. Cuidamos cada envío como si fuera nuestro.</p>
                 </div>
-                <div class="reveal" style="text-align: center;">
-                    <div style="font-size: 3rem;">📍</div>
+                <div class="reveal delay-4" style="text-align: center; padding: 20px; border-radius: 20px; transition: all 0.3s ease; cursor: pointer;">
+                    <div style="font-size: 3rem; transition: transform 0.3s ease;">📍</div>
                     <h3 style="font-weight: 700; margin: 15px 0 10px;">Cobertura Local</h3>
                     <p style="color: #64748b;">La Habana Vieja y zonas cercanas. Pronto expandiremos.</p>
                 </div>
@@ -558,19 +820,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>Hasta 1 km</td><td style="font-weight: 700; color: #2E7D32;">300 cup</td><td>Calle Obispo → Plaza Vieja</td></tr>
-                        <tr><td>1 a 2 km</td><td style="font-weight: 700; color: #2E7D32;">400 cup</td><td>Capitolio → Castillo de la Real Fuerza</td></tr>
-                        <tr><td>2 a 3 km</td><td style="font-weight: 700; color: #2E7D32;">450 cup</td><td>Maqueta → Plaza de la Catedral</td></tr>
-                        <tr><td>3 a 4 km</td><td style="font-weight: 700; color: #2E7D32;">500 cup</td><td>Habana Vieja → Vedado (Línea)</td></tr>
-                        <tr><td>4 a 5 km</td><td style="font-weight: 700; color: #2E7D32;">550 cup</td><td>Habana Vieja → Plaza de la Revolución</td></tr>
-                        <tr><td>Más de 5 km</td><td style="font-weight: 700; color: #2E7D32;">100 cup x km adicional</td><td>Ejemplo: 6 km = 600 cup</td></tr>
+                        <tr><td style="font-weight: 600;">Hasta 1 km</td><td style="font-weight: 700; color: #2E7D32; font-size: 1.1rem;">300 cup</td><td style="color: #64748b;">Calle Obispo → Plaza Vieja</td></tr>
+                        <tr><td style="font-weight: 600;">1 a 2 km</td><td style="font-weight: 700; color: #2E7D32; font-size: 1.1rem;">400 cup</td><td style="color: #64748b;">Capitolio → Castillo de la Real Fuerza</td></tr>
+                        <tr><td style="font-weight: 600;">2 a 3 km</td><td style="font-weight: 700; color: #2E7D32; font-size: 1.1rem;">450 cup</td><td style="color: #64748b;">Maqueta → Plaza de la Catedral</td></tr>
+                        <tr><td style="font-weight: 600;">3 a 4 km</td><td style="font-weight: 700; color: #2E7D32; font-size: 1.1rem;">500 cup</td><td style="color: #64748b;">Habana Vieja → Vedado (Línea)</td></tr>
+                        <tr><td style="font-weight: 600;">4 a 5 km</td><td style="font-weight: 700; color: #2E7D32; font-size: 1.1rem;">550 cup</td><td style="color: #64748b;">Habana Vieja → Plaza de la Revolución</td></tr>
+                        <tr><td style="font-weight: 600;">Más de 5 km</td><td style="font-weight: 700; color: #2E7D32; font-size: 1.1rem;">100 cup x km</td><td style="color: #64748b;">Ejemplo: 6 km = 600 cup</td></tr>
                     </tbody>
                 </table>
             </div>
             
-            <div class="reveal" style="margin-top: 30px; background: #f0fdf4; border-radius: 20px; padding: 20px; text-align: center;">
-                <i class="fas fa-calculator" style="color: #2E7D32; font-size: 1.5rem;"></i>
-                <p style="margin-top: 10px;"><strong>¿Cómo calculamos la distancia?</strong> Usamos la ruta real que marca Google Maps desde la dirección de recogida hasta la dirección de entrega. No cobramos el viaje de vuelta.</p>
+            <div class="reveal" style="margin-top: 30px; background: linear-gradient(135deg, #f0fdf4, #dcfce7); border-radius: 20px; padding: 20px; text-align: center; transition: all 0.3s ease;">
+                <i class="fas fa-calculator" style="color: #2E7D32; font-size: 1.8rem; margin-bottom: 10px; display: inline-block;"></i>
+                <p style="margin-top: 5px;"><strong>¿Cómo calculamos la distancia?</strong> Usamos la ruta real que marca Google Maps desde la dirección de recogida hasta la dirección de entrega. No cobramos el viaje de vuelta.</p>
             </div>
         </div>
     </section>
@@ -589,19 +851,19 @@
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
                 <div class="step-card reveal delay-1">
                     <div class="step-number">1</div>
-                    <i class="fab fa-whatsapp" style="font-size: 2.5rem; color: #25D366; margin-bottom: 15px; display: block;"></i>
+                    <i class="fab fa-whatsapp" style="font-size: 2.8rem; color: #25D366; margin-bottom: 15px; display: block;"></i>
                     <h3 style="font-weight: 700; margin-bottom: 10px;">Contáctanos por WhatsApp</h3>
                     <p style="color: #64748b;">Escríbenos al <strong>+53 5 638 2909</strong> con las direcciones de recogida y entrega.</p>
                 </div>
                 <div class="step-card reveal delay-2">
                     <div class="step-number">2</div>
-                    <i class="fas fa-calculator" style="font-size: 2.5rem; color: #2E7D32; margin-bottom: 15px; display: block;"></i>
+                    <i class="fas fa-calculator" style="font-size: 2.8rem; color: #2E7D32; margin-bottom: 15px; display: block;"></i>
                     <h3 style="font-weight: 700; margin-bottom: 10px;">Confirmamos precio y hora</h3>
                     <p style="color: #64748b;">Te decimos el costo exacto según la distancia y coordinamos la recogida.</p>
                 </div>
                 <div class="step-card reveal delay-3">
                     <div class="step-number">3</div>
-                    <i class="fas fa-check-circle" style="font-size: 2.5rem; color: #2E7D32; margin-bottom: 15px; display: block;"></i>
+                    <i class="fas fa-check-circle" style="font-size: 2.8rem; color: #2E7D32; margin-bottom: 15px; display: block;"></i>
                     <h3 style="font-weight: 700; margin-bottom: 10px;">Recibes tu paquete</h3>
                     <p style="color: #64748b;">El mensajero recoge y entrega. Pagas contra entrega. ¡Listo!</p>
                 </div>
@@ -619,7 +881,7 @@
                 <h2 style="font-size: 2.2rem; font-weight: 700;">Ventajas de nuestro servicio</h2>
             </div>
             
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 15px;">
                 <div class="ventaja-item reveal delay-1">
                     <div class="ventaja-icon"><i class="fas fa-clock"></i></div>
                     <div><strong>Tiempo de espera normal: 30 min</strong><br><small style="color: #64748b;">Exprés disponible: 15 min (+50 cup)</small></div>
@@ -640,7 +902,7 @@
                     <div class="ventaja-icon"><i class="fas fa-smile"></i></div>
                     <div><strong>Atención personalizada</strong><br><small style="color: #64748b;">Hablas directamente con el mensajero</small></div>
                 </div>
-                <div class="ventaja-item reveal delay-5">
+                <div class="ventaja-item reveal delay-6">
                     <div class="ventaja-icon"><i class="fas fa-truck"></i></div>
                     <div><strong>Entregas el mismo día</strong><br><small style="color: #64748b;">Pide antes de las 2:00 PM y recibe antes de las 6:00 PM</small></div>
                 </div>
@@ -664,17 +926,30 @@
         </div>
     </section>
 
-    <!-- CTA FINAL -->
-    <section style="background: linear-gradient(135deg, #1B5E20, #2E7D32); padding: 60px 0; text-align: center; color: white;">
+    <!-- BANNER DE RETORNO A LA TIENDA PRINCIPAL (OPCIÓN B) -->
+    <section style="padding: 0 24px 60px;">
         <div class="container">
-            <div class="reveal">
-                <i class="fas fa-motorcycle" style="font-size: 3rem; margin-bottom: 20px;"></i>
+            <div class="return-banner reveal">
+                <p style="color: #1B5E20; margin-bottom: 10px;">🛍️ ¿Buscas más servicios o productos?</p>
+                <a href="https://elresolvito.github.io" style="color: #2E7D32; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+                    Visita la tienda principal El Resolvito 
+                    <i class="fas fa-arrow-right" style="transition: transform 0.3s ease;"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="cta-final">
+        <div class="container">
+            <div class="reveal" style="position: relative; z-index: 1;">
+                <i class="fas fa-motorcycle" style="font-size: 3.5rem; margin-bottom: 20px; display: inline-block; animation: bounce 2s ease infinite;"></i>
                 <h2 style="font-size: 2rem; margin-bottom: 16px;">¿Necesitas un mensajero hoy?</h2>
-                <p style="margin-bottom: 30px; opacity: 0.9;">Escríbenos por WhatsApp y coordina tu entrega en minutos.</p>
+                <p style="margin-bottom: 30px; opacity: 0.95; font-size: 1.1rem;">Escríbenos por WhatsApp y coordina tu entrega en minutos.</p>
                 <a href="https://wa.me/5356382909?text=Hola,%20quiero%20solicitar%20un%20mensajero%20para%20un%20recado%20en%20La%20Habana" class="btn-whatsapp" style="background: white; color: #25D366; box-shadow: none;">
                     <i class="fab fa-whatsapp fa-xl"></i> Contactar por WhatsApp
                 </a>
-                <p style="margin-top: 20px; font-size: 0.9rem; opacity: 0.8;">📞 +53 5 638 2909</p>
+                <p style="margin-top: 25px; font-size: 0.95rem; opacity: 0.9;">📞 +53 5 638 2909</p>
             </div>
         </div>
     </section>
@@ -693,12 +968,17 @@
                     <p><i class="fas fa-map-marker-alt"></i> La Habana, Cuba</p>
                 </div>
                 <div>
+                    <h4 style="margin-bottom: 15px;">Enlaces</h4>
+                    <p><a href="https://elresolvito.github.io" style="color: #94a3b8; text-decoration: none;">🏠 Tienda principal</a></p>
+                    <p><a href="https://elresolvito.github.io/servicios.html" style="color: #94a3b8; text-decoration: none;">🛠️ Otros servicios</a></p>
+                </div>
+                <div>
                     <h4 style="margin-bottom: 15px;">Horarios</h4>
                     <p>Lunes a Domingo: 8:00 AM - 6:00 PM</p>
                     <p>Entregas el mismo día</p>
                 </div>
             </div>
-            <div style="border-top: 1px solid #334155; margin-top: 40px; padding-top: 30px; text-align: center; color: #64748b;">
+            <div style="border-top: 1px solid #1e293b; margin-top: 40px; padding-top: 30px; text-align: center; color: #64748b;">
                 <p>© 2025 Mensajería El Resolvito. Un proyecto con ❤️ para La Habana.</p>
             </div>
         </div>
@@ -712,7 +992,7 @@
             reveals.forEach(element => {
                 const windowHeight = window.innerHeight;
                 const elementTop = element.getBoundingClientRect().top;
-                const revealPoint = 100;
+                const revealPoint = 80;
                 
                 if (elementTop < windowHeight - revealPoint) {
                     element.classList.add('active');
@@ -733,6 +1013,31 @@
                 }
             });
         });
+        
+        // Efecto hover en tarjetas de quiénes somos
+        document.querySelectorAll('section:first-of-type + section .reveal > div').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px)';
+                this.style.boxShadow = '0 15px 30px rgba(0,0,0,0.1)';
+                this.style.background = 'white';
+            });
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = 'none';
+                this.style.background = 'transparent';
+            });
+        });
+        
+        // Efecto hover en el enlace del banner de retorno
+        const returnLink = document.querySelector('.return-banner a');
+        if (returnLink) {
+            returnLink.addEventListener('mouseenter', function() {
+                this.querySelector('i').style.transform = 'translateX(5px)';
+            });
+            returnLink.addEventListener('mouseleave', function() {
+                this.querySelector('i').style.transform = 'translateX(0)';
+            });
+        }
     </script>
 </body>
 </html>
