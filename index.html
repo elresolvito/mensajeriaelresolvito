@@ -26,8 +26,13 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
         @keyframes fadeInRight {
-            from { opacity: 0; transform: translateX(60px); }
+            from { opacity: 0; transform: translateX(50px); }
             to { opacity: 1; transform: translateX(0); }
         }
         
@@ -52,6 +57,7 @@
         }
         
         .animate-fadeUp { animation: fadeInUp 0.8s ease forwards; }
+        .animate-fadeLeft { animation: fadeInLeft 0.8s ease forwards; }
         .animate-fadeRight { animation: fadeInRight 0.8s ease forwards; }
         .delay-1 { animation-delay: 0.1s; opacity: 0; }
         .delay-2 { animation-delay: 0.2s; opacity: 0; }
@@ -61,13 +67,19 @@
         
         .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
         
-        /* Hero */
+        /* HERO REESTRUCTURADO */
         .hero {
-            background: white;
-            min-height: 90vh;
-            display: flex;
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
             align-items: center;
-            padding: 60px 0;
         }
         
         .hero-badge {
@@ -95,23 +107,36 @@
             font-size: 1.1rem;
             color: #4B5563;
             margin-bottom: 32px;
-            max-width: 550px;
+            line-height: 1.6;
         }
         
-        .hero-image {
-            animation: float 4s ease-in-out infinite;
+        /* Contenedor de la imagen - más robusto */
+        .hero-image-container {
             text-align: center;
+            background: linear-gradient(135deg, #e8f5e9, #ffffff);
+            border-radius: 40px;
+            padding: 30px;
+            box-shadow: 0 25px 45px rgba(0,0,0,0.1);
+            animation: float 4s ease-in-out infinite;
         }
         
-        .hero-image img {
+        .hero-image-container img {
             max-width: 100%;
-            max-height: 450px;
-            border-radius: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            background: white;
+            width: 100%;
+            max-height: 400px;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.15));
         }
         
-        /* Botones */
+        .hero-image-caption {
+            margin-top: 15px;
+            font-size: 0.85rem;
+            color: #2E7D32;
+            font-weight: 500;
+        }
+        
         .btn-whatsapp {
             display: inline-flex;
             align-items: center;
@@ -260,7 +285,6 @@
             gap: 10px;
         }
         
-        /* Tabla tarifas */
         .tarifas-table {
             background: white;
             border-radius: 30px;
@@ -272,7 +296,6 @@
         .tarifas-table td { padding: 14px 20px; border-bottom: 1px solid #e5e7eb; }
         .tarifas-table tr:hover td { background: #f0fdf4; }
         
-        /* Step cards */
         .step-card {
             text-align: center;
             padding: 30px;
@@ -296,7 +319,6 @@
             margin: 0 auto 20px;
         }
         
-        /* Ventajas */
         .ventaja-item {
             display: flex;
             align-items: center;
@@ -363,11 +385,14 @@
         .reveal.active { opacity: 1; transform: translateY(0); }
         
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.2rem; }
-            .hero { text-align: center; }
-            .hero-grid { grid-template-columns: 1fr !important; }
-            .hero-image { order: -1; margin-bottom: 30px; }
-            .hero-image img { max-height: 280px; }
+            .hero { padding: 50px 0; }
+            .hero h1 { font-size: 2rem; }
+            .hero-grid { grid-template-columns: 1fr !important; gap: 30px; }
+            .hero-image-container { order: -1; padding: 20px; }
+            .hero-image-container img { max-height: 250px; }
+            .hero-buttons { justify-content: center; }
+            .hero-content { text-align: center; }
+            .hero p { margin-left: auto; margin-right: auto; }
             .form-row { grid-template-columns: 1fr; }
             .horario-item { margin: 10px; display: block; }
             .launch-banner { padding: 30px 20px; }
@@ -395,34 +420,50 @@
                         <div class="form-group"><label>Nombre <span style="color:red">*</span></label><input type="text" id="nombre" required></div>
                         <div class="form-group"><label>Teléfono <span style="color:red">*</span></label><input type="tel" id="telefono" required></div>
                     </div>
-                    <div class="form-group"><label>Dirección de RECOGIDA <span style="color:red">*</span></label><input type="text" id="recogida" required></div>
-                    <div class="form-group"><label>Dirección de ENTREGA <span style="color:red">*</span></label><input type="text" id="entrega" required></div>
+                    <div class="form-group"><label>Dirección de RECOGIDA <span style="color:red">*</span></label><input type="text" id="recogida" required placeholder="Calle, número, entre calles"></div>
+                    <div class="form-group"><label>Dirección de ENTREGA <span style="color:red">*</span></label><input type="text" id="entrega" required placeholder="Calle, número, entre calles"></div>
                     <div class="form-row">
                         <div class="form-group"><label>Turno preferido</label><select id="turno"><option>Mañana (7am → antes 2pm)</option><option>Tarde (2pm → antes 7pm)</option></select></div>
-                        <div class="form-group"><label>Tipo de paquete</label><select id="tipoPaquete"><option>Documento/sobre</option><option>Paquete pequeño (hasta 2kg)</option><option>Paquete mediano (2-5kg)</option></select></div>
+                        <div class="form-group"><label>Tipo de paquete</label><select id="tipoPaquete"><option>Documento/sobre</option><option>Paquete pequeño (hasta 2kg)</option><option>Paquete mediano (2-5kg)</option><option>Paquete grande (5-8kg)</option></select></div>
                     </div>
-                    <div class="form-group"><label>Información adicional</label><textarea id="adicional" rows="2"></textarea></div>
+                    <div class="form-group"><label>Información adicional</label><textarea id="adicional" rows="2" placeholder="Ej: Llamar al llegar, edificio sin ascensor, etc."></textarea></div>
                     <button type="submit" class="btn-submit"><i class="fab fa-whatsapp"></i> Enviar solicitud</button>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- HERO CON IMAGEN DEL MENSAJERO -->
+    <!-- HERO REESTRUCTURADO CON IMAGEN VISIBLE -->
     <section class="hero">
         <div class="container">
-            <div class="hero-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center;">
-                <div class="hero-content">
-                    <div class="hero-badge animate-fadeUp delay-1"><i class="fas fa-motorcycle"></i> ¡LANZAMIENTO OFICIAL!</div>
-                    <h1 class="animate-fadeUp delay-2">Mensajería <span>El Resolvito</span></h1>
-                    <p class="animate-fadeUp delay-3">Tu mensajero de confianza en La Habana. Precios claros y entregas el mismo día en La Habana Vieja.</p>
-                    <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-                        <button onclick="openModal()" class="btn-whatsapp animate-fadeUp delay-4"><i class="fab fa-whatsapp fa-xl"></i> Solicitar mensajero</button>
-                        <a href="#tarifas" class="btn-outline animate-fadeUp delay-5"><i class="fas fa-arrow-down"></i> Ver tarifas</a>
+            <div class="hero-grid">
+                <!-- Texto a la izquierda -->
+                <div class="hero-content animate-fadeLeft">
+                    <div class="hero-badge">
+                        <i class="fas fa-motorcycle"></i> ¡LANZAMIENTO OFICIAL!
+                    </div>
+                    <h1>Mensajería <span>El Resolvito</span></h1>
+                    <p>
+                        Tu mensajero de confianza en La Habana. Precios claros y entregas el mismo día en La Habana Vieja y zonas cercanas.
+                    </p>
+                    <div class="hero-buttons" style="display: flex; gap: 16px; flex-wrap: wrap;">
+                        <button onclick="openModal()" class="btn-whatsapp">
+                            <i class="fab fa-whatsapp fa-xl"></i> Solicitar mensajero
+                        </button>
+                        <a href="#tarifas" class="btn-outline">
+                            <i class="fas fa-arrow-down"></i> Ver tarifas
+                        </a>
                     </div>
                 </div>
-                <div class="hero-image animate-fadeRight delay-2">
-                    <img src="https://i.postimg.cc/d3wFf38p/mensajero_resolvito.png" alt="Mensajero El Resolvito" style="width:100%; max-width:400px; display:block; margin:0 auto;">
+                
+                <!-- Imagen a la derecha - REESTRUCTURADA -->
+                <div class="hero-image-container animate-fadeRight">
+                    <img src="https://i.postimg.cc/d3wFf38p/mensajero_resolvito.png" 
+                         alt="Mensajero El Resolvito"
+                         onerror="this.src='https://cdn-icons-png.flaticon.com/512/1067/1067983.png'">
+                    <div class="hero-image-caption">
+                        <i class="fas fa-check-circle"></i> Entregas rápidas y seguras
+                    </div>
                 </div>
             </div>
         </div>
@@ -437,7 +478,9 @@
                     <div class="horario-item"><span class="horario-hora">🌅 7:00 AM</span><span class="horario-entrega">Entrega antes de 2:00 PM</span></div>
                     <div class="horario-item"><span class="horario-hora">🌙 2:00 PM</span><span class="horario-entrega">Entrega antes de 7:00 PM</span></div>
                 </div>
-                <p style="margin-top:20px; font-size:0.85rem;">⏰ Solicita con al menos 2 horas de anticipación</p>
+                <p style="margin-top:20px; font-size:0.85rem; color:#166534;">
+                    ⏰ Solicita con al menos 2 horas de anticipación a la hora de recogida
+                </p>
             </div>
         </div>
     </section>
@@ -448,7 +491,7 @@
             <div class="reveal" style="text-align:center; max-width:800px; margin:0 auto 50px;">
                 <span style="background:rgba(46,125,50,0.1); color:#2E7D32; padding:5px 15px; border-radius:100px;"><i class="fas fa-heart"></i> Nuestra historia</span>
                 <h2 style="font-size:2rem; margin-top:16px;">Hecho con esfuerzo y dedicación</h2>
-                <p>Somos un grupo de personas que, sin ánimo de lucro y con la necesidad de trabajar, creamos este servicio para ayudar a nuestra comunidad.</p>
+                <p style="color:#4B5563;">Somos un grupo de personas que, sin ánimo de lucro y con la necesidad de trabajar, creamos este servicio para ayudar a nuestra comunidad. Cada entrega la hacemos con responsabilidad y el corazón puesto en lo que hacemos.</p>
             </div>
             <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:30px; text-align:center;">
                 <div><div style="font-size:3rem;">🛵</div><h3>Servicio Propio</h3><p>Sin intermediarios</p></div>
@@ -465,19 +508,24 @@
             <div class="reveal" style="text-align:center; margin-bottom:50px;">
                 <span style="background:rgba(46,125,50,0.1); color:#2E7D32; padding:5px 15px; border-radius:100px;"><i class="fas fa-tag"></i> Precios claros</span>
                 <h2 style="font-size:2rem; margin-top:16px;">Tarifas de Mensajería</h2>
+                <p style="color:#64748b;">Sin letra pequeña. Pagas solo la distancia real.</p>
             </div>
             <div class="tarifas-table reveal">
                 <table>
-                    <thead><tr><th>Distancia</th><th>Tarifa (cup)</th><th>Ejemplo</th></tr></thead>
+                    <thead><tr><th>Distancia</th><th>Tarifa (cup)</th><th>Ejemplo en La Habana</th></tr></thead>
                     <tbody>
-                        <tr><td>Hasta 1 km</td><td style="font-weight:700; color:#2E7D32;">300 cup</td><td>Obispo → Plaza Vieja</td></tr>
-                        <tr><td>1 a 2 km</td><td style="font-weight:700; color:#2E7D32;">400 cup</td><td>Capitolio → Castillo</td></tr>
-                        <tr><td>2 a 3 km</td><td style="font-weight:700; color:#2E7D32;">450 cup</td><td>Maqueta → Catedral</td></tr>
-                        <tr><td>3 a 4 km</td><td style="font-weight:700; color:#2E7D32;">500 cup</td><td>Habana Vieja → Vedado</td></tr>
-                        <tr><td>4 a 5 km</td><td style="font-weight:700; color:#2E7D32;">550 cup</td><td>Habana Vieja → Plaza Rev.</td></tr>
-                        <tr><td>Más de 5 km</td><td style="font-weight:700; color:#2E7D32;">100 cup x km</td><td>6 km = 600 cup</td></tr>
+                        <tr><td style="font-weight:600;">Hasta 1 km</td><td style="font-weight:700; color:#2E7D32;">300 cup</td><td style="color:#64748b;">Calle Obispo → Plaza Vieja</td></tr>
+                        <tr><td style="font-weight:600;">1 a 2 km</td><td style="font-weight:700; color:#2E7D32;">400 cup</td><td style="color:#64748b;">Capitolio → Castillo de la Real Fuerza</td></tr>
+                        <tr><td style="font-weight:600;">2 a 3 km</td><td style="font-weight:700; color:#2E7D32;">450 cup</td><td style="color:#64748b;">Maqueta → Plaza de la Catedral</td></tr>
+                        <tr><td style="font-weight:600;">3 a 4 km</td><td style="font-weight:700; color:#2E7D32;">500 cup</td><td style="color:#64748b;">Habana Vieja → Vedado (Línea)</td></tr>
+                        <tr><td style="font-weight:600;">4 a 5 km</td><td style="font-weight:700; color:#2E7D32;">550 cup</td><td style="color:#64748b;">Habana Vieja → Plaza de la Revolución</td></tr>
+                        <tr><td style="font-weight:600;">Más de 5 km</td><td style="font-weight:700; color:#2E7D32;">100 cup x km</td><td style="color:#64748b;">Ejemplo: 6 km = 600 cup</td></tr>
                     </tbody>
                 </table>
+            </div>
+            <div class="reveal" style="margin-top:30px; background:#f0fdf4; border-radius:20px; padding:20px; text-align:center;">
+                <i class="fas fa-calculator" style="color:#2E7D32; font-size:1.5rem;"></i>
+                <p style="margin-top:5px;"><strong>¿Cómo calculamos la distancia?</strong> Usamos la ruta real que marca Google Maps desde la dirección de recogida hasta la dirección de entrega. No cobramos el viaje de vuelta.</p>
             </div>
         </div>
     </section>
@@ -486,13 +534,14 @@
     <section style="padding: 80px 0; background:#f8fafc;">
         <div class="container">
             <div class="reveal" style="text-align:center; margin-bottom:50px;">
-                <span style="background:rgba(46,125,50,0.1); color:#2E7D32; padding:5px 15px; border-radius:100px;">📋 3 pasos</span>
+                <span style="background:rgba(46,125,50,0.1); color:#2E7D32; padding:5px 15px; border-radius:100px;">📋 Rápido y sencillo</span>
                 <h2 style="font-size:2rem; margin-top:16px;">¿Cómo funciona?</h2>
+                <p style="color:#64748b;">Solo 3 pasos y tu paquete está en camino</p>
             </div>
             <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:30px;">
-                <div class="step-card"><div class="step-number">1</div><i class="fab fa-whatsapp" style="font-size:2rem; color:#25D366;"></i><h3>Solicitas</h3><p>Completa el formulario</p></div>
-                <div class="step-card"><div class="step-number">2</div><i class="fas fa-clock" style="font-size:2rem; color:#FFB300;"></i><h3>Recogemos</h3><p>A las 7am o 2pm</p></div>
-                <div class="step-card"><div class="step-number">3</div><i class="fas fa-check-circle" style="font-size:2rem; color:#2E7D32;"></i><h3>Entregamos</h3><p>El mismo día</p></div>
+                <div class="step-card"><div class="step-number">1</div><i class="fab fa-whatsapp" style="font-size:2rem; color:#25D366;"></i><h3>Contáctanos</h3><p>Completa el formulario con tus datos</p></div>
+                <div class="step-card"><div class="step-number">2</div><i class="fas fa-clock" style="font-size:2rem; color:#FFB300;"></i><h3>Recogemos</h3><p>A las 7am o 2pm según tu turno</p></div>
+                <div class="step-card"><div class="step-number">3</div><i class="fas fa-check-circle" style="font-size:2rem; color:#2E7D32;"></i><h3>Entregamos</h3><p>El mismo día antes de 2pm o 7pm</p></div>
             </div>
         </div>
     </section>
@@ -501,24 +550,26 @@
     <section style="padding: 80px 0;">
         <div class="container">
             <div class="reveal" style="text-align:center; margin-bottom:50px;">
-                <span style="background:rgba(46,125,50,0.1); color:#2E7D32; padding:5px 15px; border-radius:100px;">✨ Ventajas</span>
-                <h2 style="font-size:2rem; margin-top:16px;">¿Por qué elegirnos?</h2>
+                <span style="background:rgba(46,125,50,0.1); color:#2E7D32; padding:5px 15px; border-radius:100px;"><i class="fas fa-star"></i> ¿Por qué elegirnos?</span>
+                <h2 style="font-size:2rem; margin-top:16px;">Ventajas de nuestro servicio</h2>
             </div>
             <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:15px;">
-                <div class="ventaja-item"><div class="ventaja-icon"><i class="fas fa-clock"></i></div><div><strong>Entregas puntuales</strong><br>Respetamos los horarios</div></div>
-                <div class="ventaja-item"><div class="ventaja-icon"><i class="fas fa-hand-holding-usd"></i></div><div><strong>Pago contra entrega</strong><br>Pagas al recibir</div></div>
-                <div class="ventaja-item"><div class="ventaja-icon"><i class="fas fa-shield-alt"></i></div><div><strong>Paquetes cuidados</strong><br>Tratamos tus cosas con respeto</div></div>
-                <div class="ventaja-item"><div class="ventaja-icon"><i class="fas fa-tag"></i></div><div><strong>Precios claros</strong><br>Sin letra pequeña</div></div>
+                <div class="ventaja-item"><div class="ventaja-icon"><i class="fas fa-clock"></i></div><div><strong>Entregas puntuales</strong><br>Respetamos los horarios establecidos</div></div>
+                <div class="ventaja-item"><div class="ventaja-icon"><i class="fas fa-hand-holding-usd"></i></div><div><strong>Pago contra entrega</strong><br>Pagas en efectivo o transferencia al recibir</div></div>
+                <div class="ventaja-item"><div class="ventaja-icon"><i class="fas fa-map-marked-alt"></i></div><div><strong>Seguimiento en vivo</strong><br>Te enviamos la ubicación del mensajero</div></div>
+                <div class="ventaja-item"><div class="ventaja-icon"><i class="fas fa-shield-alt"></i></div><div><strong>Paquetes cuidados</strong><br>Tratamos tus pertenencias con respeto</div></div>
+                <div class="ventaja-item"><div class="ventaja-icon"><i class="fas fa-smile"></i></div><div><strong>Atención personalizada</strong><br>Hablas directamente con el mensajero</div></div>
+                <div class="ventaja-item"><div class="ventaja-icon"><i class="fas fa-tag"></i></div><div><strong>Precios claros</strong><br>Sin letra pequeña ni sorpresas</div></div>
             </div>
         </div>
     </section>
 
-    <!-- BANNER LANZAMIENTO -->
+    <!-- LANZAMIENTO BANNER -->
     <section style="padding: 0 24px 60px;">
         <div class="container">
             <div class="launch-banner reveal">
                 <h3>🚀 ¡Estamos empezando!</h3>
-                <p>Somos nuevos, pero le ponemos el corazón. ¡Gracias por confiar!</p>
+                <p style="color:#1B5E20; font-size:1.1rem;">Somos nuevos en esto, pero le ponemos el corazón. Cada pedido nos ayuda a crecer. ¡Gracias por confiar en nosotros!</p>
                 <button onclick="openModal()" class="btn-primary" style="background:white; color:#1B5E20; margin-top:20px;"><i class="fab fa-whatsapp"></i> Solicitar ahora</button>
             </div>
         </div>
@@ -528,7 +579,7 @@
     <section style="padding: 0 24px 60px;">
         <div class="container">
             <div class="return-banner reveal">
-                <p>🛍️ ¿Buscas más servicios o productos?</p>
+                <p style="color:#1B5E20;">🛍️ ¿Buscas más servicios o productos?</p>
                 <a href="https://elresolvito.github.io" style="color:#2E7D32; font-weight:700;">Visita la tienda principal El Resolvito →</a>
             </div>
         </div>
@@ -539,22 +590,26 @@
         <div class="container">
             <div class="reveal">
                 <i class="fas fa-motorcycle" style="font-size:3rem; animation:bounce 2s infinite; display:inline-block;"></i>
-                <h2 style="font-size:2rem; margin:20px 0;">¿Necesitas un mensajero?</h2>
+                <h2 style="font-size:2rem; margin:20px 0;">¿Necesitas un mensajero hoy?</h2>
+                <p style="margin-bottom:30px;">Completa el formulario y te contactaremos para confirmar la recogida.</p>
                 <button onclick="openModal()" class="btn-whatsapp" style="background:white; color:#25D366;"><i class="fab fa-whatsapp"></i> Solicitar ahora</button>
                 <p style="margin-top:20px;">📞 +53 5 638 2909</p>
             </div>
         </div>
     </section>
 
+    <!-- FOOTER -->
     <footer class="footer">
         <div class="container">
             <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:40px;">
-                <div><h3>El Resolvito</h3><p>Tu mensajero en La Habana</p></div>
-                <div><h4>Contacto</h4><p><i class="fab fa-whatsapp"></i> +53 5 638 2909</p></div>
-                <div><h4>Enlaces</h4><p><a href="https://elresolvito.github.io">Tienda principal</a></p></div>
-                <div><h4>Horarios</h4><p>Recogidas: 7am y 2pm</p></div>
+                <div><h3 style="font-size:1.3rem;">El Resolvito</h3><p style="color:#94a3b8;">Tu mensajero de confianza en La Habana.</p></div>
+                <div><h4>Contacto</h4><p><i class="fab fa-whatsapp"></i> +53 5 638 2909</p><p><i class="fas fa-map-marker-alt"></i> La Habana, Cuba</p></div>
+                <div><h4>Enlaces</h4><p><a href="https://elresolvito.github.io">🏠 Tienda principal</a></p><p><a href="https://elresolvito.github.io/servicios.html">🛠️ Otros servicios</a></p></div>
+                <div><h4>Horarios</h4><p>Recogidas: 7am y 2pm</p><p>Entregas mismo día</p></div>
             </div>
-            <div style="border-top:1px solid #1e293b; margin-top:40px; padding-top:30px; text-align:center;">© 2025 Mensajería El Resolvito</div>
+            <div style="border-top:1px solid #1e293b; margin-top:40px; padding-top:30px; text-align:center; color:#64748b;">
+                <p>© 2025 Mensajería El Resolvito. Un proyecto con ❤️ para La Habana.</p>
+            </div>
         </div>
     </footer>
 
@@ -573,15 +628,47 @@
             const turno = document.getElementById('turno').value;
             const tipoPaquete = document.getElementById('tipoPaquete').value;
             const adicional = document.getElementById('adicional').value;
-            if (!nombre || !telefono || !recogida || !entrega) { alert('Completa los campos obligatorios'); return; }
-            const msg = `🛵 *NUEVA SOLICITUD DE MENSAJERÍA* 🛵\n\n*Cliente:* ${nombre}\n📱 ${telefono}\n\n*Recogida:* ${recogida}\n*Entrega:* ${entrega}\n📦 ${tipoPaquete}\n⏰ ${turno}\n${adicional ? `\n📝 *Info:* ${adicional}` : ''}\n\n---\nSolicitado desde la web El Resolvito`;
+            
+            if (!nombre || !telefono || !recogida || !entrega) { 
+                alert('Por favor, completa todos los campos obligatorios (*)'); 
+                return; 
+            }
+            
+            const msg = `🛵 *NUEVA SOLICITUD DE MENSAJERÍA* 🛵
+
+*Datos del cliente:*
+👤 Nombre: ${nombre}
+📱 Teléfono: ${telefono}
+
+*Detalles del envío:*
+📍 Recogida: ${recogida}
+📍 Entrega: ${entrega}
+📦 Tipo de paquete: ${tipoPaquete}
+⏰ Turno: ${turno}
+
+${adicional ? `📝 *Información adicional:* ${adicional}` : ''}
+
+---
+🌐 Solicitado desde la web El Resolvito
+⏰ Por favor, contactar al cliente para confirmar horario.`;
+            
             window.open(`https://wa.me/5356382909?text=${encodeURIComponent(msg)}`, '_blank');
             closeModal();
             document.getElementById('solicitudForm').reset();
         });
         
-        const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); }); }, { threshold: 0.1 });
+        const observer = new IntersectionObserver((entries) => { 
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); }); 
+        }, { threshold: 0.1 });
         document.querySelectorAll('.reveal').forEach(r => observer.observe(r));
+        
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
     </script>
 </body>
 </html>
