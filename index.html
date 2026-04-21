@@ -181,15 +181,18 @@
                     
                     <div class="form-group">
                         <label>Selecciona la distancia aproximada <span style="color:red">*</span></label>
-                        <select id="distanciaSelect" required>
-                            <option value="">-- Selecciona una opción --</option>
-                            <option value="400">Hasta 1 km → 400 CUP (Interior Habana Vieja)</option>
-                            <option value="600">1 a 3 km → 600 CUP (Habana Vieja ↔ Centro Habana)</option>
-                            <option value="800">3 a 5 km → 800 CUP (Habana Vieja ↔ Vedado)</option>
-                            <option value="1000">5 a 8 km → 1,000 CUP (Habana Vieja ↔ Plaza / Cerro)</option>
-                            <option value="1400">8 a 12 km → 1,400 CUP (Habana Vieja ↔ Miramar / Playa)</option>
-                            <option value="custom">Más de 12 km (calcular manual)</option>
-                        </select>
+                       <select id="distanciaSelect" required>
+    <option value="">-- Selecciona una opción --</option>
+    <option value="400">Hasta 1 km → 400 CUP (Interior Habana Vieja)</option>
+    <option value="500">1 a 2 km → 500 CUP (Habana Vieja ↔ Centro Habana cerca)</option>
+    <option value="600">2 a 3 km → 600 CUP (Centro Habana ↔ Vedado inicio)</option>
+    <option value="700">3 a 4 km → 700 CUP (Habana Vieja ↔ Vedado centro)</option>
+    <option value="800">4 a 5 km → 800 CUP (Habana Vieja ↔ Vedado final)</option>
+    <option value="1000">5 a 7 km → 1,000 CUP (Habana Vieja ↔ Plaza)</option>
+    <option value="1200">7 a 10 km → 1,200 CUP (Habana Vieja ↔ Nuevo Vedado)</option>
+    <option value="1400">10 a 12 km → 1,400 CUP (Habana Vieja ↔ Miramar)</option>
+    <option value="custom">Más de 12 km (calcular manual)</option>
+</select>
                     </div>
                     
                     <div id="customDistanciaDiv" style="display: none; margin-bottom: 20px;">
