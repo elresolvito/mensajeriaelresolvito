@@ -46,8 +46,6 @@
         .btn-whatsapp:hover { background: #20b859; transform: scale(1.02); }
         .btn-outline { background: transparent; color: #2E7D32; padding: 12px 28px; border-radius: 50px; font-weight: 600; text-decoration: none; border: 2px solid #2E7D32; display: inline-flex; align-items: center; gap: 10px; transition: all 0.3s; }
         .btn-outline:hover { background: #2E7D32; color: white; }
-        .btn-primary { background: #FFB300; color: #1B5E20; padding: 14px 28px; border-radius: 50px; font-weight: 700; border: none; cursor: pointer; transition: all 0.3s; }
-        .btn-primary:hover { background: #FF8F00; transform: translateY(-2px); }
         
         /* Banner de horarios con imagen */
         .horarios-banner {
@@ -57,15 +55,8 @@
             box-shadow: 0 20px 35px -10px rgba(0,0,0,0.15);
             transition: transform 0.3s ease;
         }
-        .horarios-banner:hover {
-            transform: translateY(-5px);
-        }
-        .horarios-banner img {
-            width: 100%;
-            height: auto;
-            display: block;
-            object-fit: cover;
-        }
+        .horarios-banner:hover { transform: translateY(-5px); }
+        .horarios-banner img { width: 100%; height: auto; display: block; object-fit: cover; }
         
         /* Formulario */
         .form-card {
@@ -101,7 +92,6 @@
             animation: pulse 1.5s infinite;
         }
         .precio-card .precio { font-size: 2.2rem; font-weight: 800; color: #1B5E20; }
-        .precio-card .precio small { font-size: 0.9rem; font-weight: normal; }
         
         /* Tabla de tarifas */
         .tarifas-table {
@@ -155,7 +145,7 @@
     <!-- BANNER DE HORARIOS CON IMAGEN -->
     <div class="container">
         <div class="horarios-banner">
-            <img src="https://i.postimg.cc/CxczYxFM/Gemini-Generated-Image-kwj2eckwj2eckwj2.png" alt="Horarios de recogida - Mensajería El Resolvito">
+            <img src="https://i.postimg.cc/CxczYxFM/Gemini-Generated-Image-kwj2eckwj2eckwj2.png" alt="Horarios de recogida - Mensajería El Resolvito" onerror="this.style.display='none'">
         </div>
     </div>
 
@@ -206,7 +196,6 @@
                         <div class="form-group">
                             <label>Ingresa los kilómetros aproximados</label>
                             <input type="number" id="customKm" step="0.5" placeholder="Ej: 15 km">
-                            <p class="precio-custom" style="margin-top: 10px; font-weight: bold; color: #2E7D32;"></p>
                             <p style="font-size: 0.7rem; color: #6B7280; margin-top: 5px;">Ejemplo: 15 km → 1,400 + (3 × 120) = 1,760 CUP</p>
                         </div>
                     </div>
@@ -267,7 +256,7 @@
                         <tr><td style="font-weight:600;">3 a 5 km</td><td style="font-weight:700; color:#2E7D32;">800 CUP</td><td style="color:#64748b;">Habana Vieja ↔ Vedado (Ej: Malecón ↔ Calle 23)</td></tr>
                         <tr><td style="font-weight:600;">5 a 8 km</td><td style="font-weight:700; color:#2E7D32;">1,000 CUP</td><td style="color:#64748b;">Habana Vieja ↔ Plaza de la Revolución / Cerro</td></tr>
                         <tr><td style="font-weight:600;">8 a 12 km</td><td style="font-weight:700; color:#2E7D32;">1,400 CUP</td><td style="color:#64748b;">Habana Vieja ↔ Miramar / Playa (Ej: Obispo ↔ 5ta Avenida)</td></tr>
-                        <tr><td style="font-weight:600;">Más de 12 km</td><td style="font-weight:700; color:#2E7D32;">+120 CUP x km</td><td style="color:#64748b;">Ejemplo: 18 km (Habana Vieja ↔ Alamar / Santiago de las Vegas) = 2,120 CUP</td></tr>
+                        <tr><td style="font-weight:600;">Más de 12 km</td><td style="font-weight:700; color:#2E7D32;">+120 CUP x km</td><td style="color:#64748b;">Ejemplo: 18 km (Habana Vieja ↔ Alamar) = 2,120 CUP</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -319,7 +308,14 @@
     </footer>
 
     <script>
-        // Precio automático al seleccionar distancia
+        // ============================================
+        // CONFIGURACIÓN - URL DE GOOGLE APPS SCRIPT
+        // ============================================
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw9XhS63ENi4AbTzkcYLhsYlpbRuBwLSD1nTWaPNtm6BAsYDsjTXT0lzrWoq-kioFTKBw/exec';
+        
+        // ============================================
+        // PRECIO AUTOMÁTICO
+        // ============================================
         const distanciaSelect = document.getElementById('distanciaSelect');
         const customDistanciaDiv = document.getElementById('customDistanciaDiv');
         const customKm = document.getElementById('customKm');
@@ -357,8 +353,29 @@
         distanciaSelect.addEventListener('change', actualizarPrecio);
         customKm.addEventListener('input', actualizarPrecio);
         
-        // Envío del formulario
-        document.getElementById('solicitudForm').addEventListener('submit', function(e) {
+        // ============================================
+        // GUARDAR EN GOOGLE SHEETS
+        // ============================================
+        async function guardarEnSheet(datos) {
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(datos)
+                });
+                console.log('✅ Datos guardados en Google Sheets:', datos);
+                return true;
+            } catch (error) {
+                console.error('❌ Error al guardar:', error);
+                return false;
+            }
+        }
+        
+        // ============================================
+        // ENVÍO DEL FORMULARIO
+        // ============================================
+        document.getElementById('solicitudForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const nombre = document.getElementById('nombre').value;
@@ -369,7 +386,7 @@
             const tipoPaquete = document.getElementById('tipoPaquete').value;
             const adicional = document.getElementById('adicional').value;
             
-            // Obtener precio seleccionado
+            // Calcular precio
             let precio = 0;
             let distanciaTexto = '';
             const valor = distanciaSelect.value;
@@ -385,8 +402,7 @@
                 }
             } else if (valor) {
                 precio = parseInt(valor);
-                const optionText = distanciaSelect.options[distanciaSelect.selectedIndex]?.text || '';
-                distanciaTexto = optionText;
+                distanciaTexto = distanciaSelect.options[distanciaSelect.selectedIndex]?.text || '';
             } else {
                 alert('Por favor, selecciona la distancia aproximada');
                 return;
@@ -397,6 +413,20 @@
                 return;
             }
             
+            // Guardar en Google Sheets
+            await guardarEnSheet({
+                nombre: nombre,
+                telefono: telefono,
+                recogida: recogida,
+                entrega: entrega,
+                distanciaKm: distanciaTexto,
+                tarifa: precio,
+                turno: turno,
+                adicional: adicional,
+                tipoPaquete: tipoPaquete
+            });
+            
+            // Mensaje para WhatsApp
             const mensaje = `🛵 *NUEVA SOLICITUD DE MENSAJERÍA* 🛵
 
 *Datos del cliente:*
@@ -406,16 +436,16 @@
 *Detalles del envío:*
 📍 Recogida: ${recogida}
 📍 Entrega: ${entrega}
-📏 Distancia seleccionada: ${distanciaTexto}
+📏 Distancia: ${distanciaTexto}
 💰 *Precio estimado: ${Math.round(precio).toLocaleString()} CUP*
-📦 Tipo de paquete: ${tipoPaquete}
+📦 Tipo: ${tipoPaquete}
 ⏰ Turno: ${turno}
 
-${adicional ? `📝 *Información adicional:* ${adicional}` : ''}
+${adicional ? `📝 *Info adicional:* ${adicional}` : ''}
 
 ---
 🌐 Solicitado desde la web El Resolvito
-⏰ Por favor, contactar al cliente para confirmar horario y calcular la distancia exacta.`;
+✅ Datos guardados en base de clientes`;
             
             window.open(`https://wa.me/5356382909?text=${encodeURIComponent(mensaje)}`, '_blank');
             
@@ -425,7 +455,7 @@ ${adicional ? `📝 *Información adicional:* ${adicional}` : ''}
             customDistanciaDiv.style.display = 'none';
             distanciaSelect.value = '';
             
-            alert('✅ Solicitud enviada. En breve te contactaremos para confirmar los detalles.');
+            alert('✅ Solicitud enviada. Te contactaremos para confirmar los detalles.');
         });
         
         // Smooth scroll
