@@ -20,6 +20,7 @@
         @keyframes fadeInRight { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); } }
+        @keyframes bounceArrow { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
         
         .animate-fadeUp { animation: fadeInUp 0.6s ease forwards; }
         .animate-fadeRight { animation: fadeInRight 0.6s ease forwards; }
@@ -32,7 +33,7 @@
         /* Hero */
         .hero {
             background: linear-gradient(135deg, #f8fafc, #ffffff);
-            padding: 60px 0;
+            padding: 60px 0 40px 0;
         }
         .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
         .hero h1 { font-size: 3rem; font-weight: 800; color: #1B5E20; }
@@ -47,16 +48,74 @@
         .btn-outline { background: transparent; color: #2E7D32; padding: 12px 28px; border-radius: 50px; font-weight: 600; text-decoration: none; border: 2px solid #2E7D32; display: inline-flex; align-items: center; gap: 10px; transition: all 0.3s; }
         .btn-outline:hover { background: #2E7D32; color: white; }
         
-        /* Banner de horarios con imagen */
-        .horarios-banner {
-            margin: 40px 0;
+        /* Banner de imagen - RESPONSIVE Y SIN BOTONES */
+        .banner-imagen {
+            margin: 30px 0;
             border-radius: 28px;
             overflow: hidden;
-            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.15);
-            transition: transform 0.3s ease;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            background: #f0fdf4;
         }
-        .horarios-banner:hover { transform: translateY(-5px); }
-        .horarios-banner img { width: 100%; height: auto; display: block; object-fit: cover; }
+        
+        .banner-imagen img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: contain;
+        }
+        
+        /* Indicador de scroll */
+        .scroll-indicator {
+            text-align: center;
+            padding: 15px 0 25px 0;
+            animation: bounceArrow 1.5s infinite;
+            cursor: pointer;
+        }
+        .scroll-indicator i {
+            font-size: 2rem;
+            color: #2E7D32;
+            background: #e8f5e9;
+            padding: 12px;
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .scroll-indicator p {
+            font-size: 0.8rem;
+            color: #4B5563;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+        
+        /* Barra de progreso */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, #2E7D32, #FFB300);
+            z-index: 1000;
+            transition: width 0.1s ease;
+        }
+        
+        /* Banner informativo */
+        .info-banner {
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            border-radius: 16px;
+            padding: 15px 20px;
+            margin: 20px 0;
+            text-align: center;
+            border-left: 5px solid #FFB300;
+        }
+        .info-banner p {
+            color: #1B5E20;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        .info-banner i {
+            margin-right: 8px;
+            color: #FFB300;
+        }
         
         /* Formulario */
         .form-card {
@@ -111,17 +170,21 @@
         .footer a { color: #94a3b8; text-decoration: none; transition: color 0.3s; }
         .footer a:hover { color: #FFB300; }
         
+        /* Responsive */
         @media (max-width: 768px) {
             .hero-grid { grid-template-columns: 1fr; text-align: center; gap: 30px; }
             .hero-image { order: -1; }
             .hero h1 { font-size: 2rem; }
             .form-card { padding: 20px; margin: 0 10px; }
             .tarifas-table th, .tarifas-table td { padding: 8px 12px; font-size: 0.7rem; }
-            .horarios-banner { margin: 20px 0; }
+            .banner-imagen { margin: 20px 0; border-radius: 20px; }
         }
     </style>
 </head>
 <body>
+
+    <!-- BARRA DE PROGRESO -->
+    <div class="progress-bar" id="progressBar"></div>
 
     <!-- HERO -->
     <section class="hero">
@@ -129,7 +192,7 @@
             <div class="hero-grid">
                 <div class="animate-fadeUp">
                     <h1>Mensajería <span>El Resolvito</span></h1>
-                    <p>Tu mensajero de confianza en La Habana. Calcula tu precio al instante, sin necesidad de esperar respuesta. Cobertura en toda la ciudad.</p>
+                    <p>Tu mensajero de confianza en La Habana. Calcula tu precio al instante. Entregas el mismo día.</p>
                     <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 20px;">
                         <a href="#solicitar" class="btn-whatsapp"><i class="fab fa-whatsapp"></i> Solicitar ahora</a>
                         <a href="#tarifas" class="btn-outline"><i class="fas fa-arrow-down"></i> Ver tarifas</a>
@@ -142,24 +205,34 @@
         </div>
     </section>
 
-      <!-- BANNER PROMOCIONAL CON IMAGEN Y BOTONES SUPERPUESTOS -->
+    <!-- BANNER INFORMATIVO -->
     <div class="container">
-        <div class="promo-banner">
-            <img src="https://i.postimg.cc/7Y57s2Dr/promocion-diaria-mensajeria-1.png" 
-                 alt="Mensajería El Resolvito - Promoción" 
-                 onerror="this.src='https://via.placeholder.com/1200x400/2E7D32/white?text=Mensajeria+El+Resolvito'">
-            <div class="banner-buttons">
-                <a href="#solicitar" class="btn-banner btn-solicitar"><i class="fab fa-whatsapp"></i> Solicitar ahora</a>
-                <a href="#tarifas" class="btn-banner btn-tarifas"><i class="fas fa-arrow-down"></i> Ver tarifas</a>
-            </div>
+        <div class="info-banner">
+            <i class="fas fa-arrow-down"></i>
+            <p>⬇️ ¡Sigue bajando! Aquí abajo encontrarás las tarifas, el formulario para solicitar y más información ⬇️</p>
         </div>
     </div>
 
-    <!-- FORMULARIO INTELIGENTE -->
+    <!-- BANNER DE IMAGEN (TU NUEVA IMAGEN) - RESPONSIVE -->
+    <div class="container">
+        <div class="banner-imagen">
+            <img src="https://i.postimg.cc/7Y57s2Dr/promocion-diaria-mensajeria-1.png" 
+                 alt="Mensajería El Resolvito - Promoción" 
+                 onerror="this.src='https://via.placeholder.com/1200x400/2E7D32/white?text=Mensajeria+El+Resolvito'">
+        </div>
+    </div>
+
+    <!-- INDICADOR DE SCROLL -->
+    <div class="scroll-indicator" id="scrollIndicator">
+        <i class="fas fa-chevron-down"></i>
+        <p>Desliza hacia abajo para ver tarifas y solicitar</p>
+    </div>
+
+    <!-- FORMULARIO -->
     <section id="solicitar" style="padding: 40px 0 60px;">
         <div class="container">
             <div style="text-align: center; margin-bottom: 30px;">
-                <h2 style="font-size: 1.8rem; font-weight: 700;">Solicita tu mensajero</h2>
+                <h2 style="font-size: 1.8rem; font-weight: 700;">📝 Solicita tu mensajero</h2>
                 <p>Completa el formulario y recibe el precio al instante</p>
             </div>
             
@@ -187,18 +260,18 @@
                     
                     <div class="form-group">
                         <label>Selecciona la distancia aproximada <span style="color:red">*</span></label>
-                       <select id="distanciaSelect" required>
-    <option value="">-- Selecciona una opción --</option>
-    <option value="400">Hasta 1 km → 400 CUP (Interior Habana Vieja)</option>
-    <option value="500">1 a 2 km → 500 CUP (Habana Vieja ↔ Centro Habana cerca)</option>
-    <option value="600">2 a 3 km → 600 CUP (Centro Habana ↔ Vedado inicio)</option>
-    <option value="700">3 a 4 km → 700 CUP (Habana Vieja ↔ Vedado centro)</option>
-    <option value="800">4 a 5 km → 800 CUP (Habana Vieja ↔ Vedado final)</option>
-    <option value="1000">5 a 7 km → 1,000 CUP (Habana Vieja ↔ Plaza)</option>
-    <option value="1200">7 a 10 km → 1,200 CUP (Habana Vieja ↔ Nuevo Vedado)</option>
-    <option value="1400">10 a 12 km → 1,400 CUP (Habana Vieja ↔ Miramar)</option>
-    <option value="custom">Más de 12 km (calcular manual)</option>
-</select>
+                        <select id="distanciaSelect" required>
+                            <option value="">-- Selecciona una opción --</option>
+                            <option value="400">Hasta 1 km → 400 CUP (Interior Habana Vieja)</option>
+                            <option value="500">1 a 2 km → 500 CUP (Habana Vieja ↔ Centro Habana cerca)</option>
+                            <option value="600">2 a 3 km → 600 CUP (Centro Habana ↔ Vedado inicio)</option>
+                            <option value="700">3 a 4 km → 700 CUP (Habana Vieja ↔ Vedado centro)</option>
+                            <option value="800">4 a 5 km → 800 CUP (Habana Vieja ↔ Vedado final)</option>
+                            <option value="1000">5 a 7 km → 1,000 CUP (Habana Vieja ↔ Plaza)</option>
+                            <option value="1200">7 a 10 km → 1,200 CUP (Habana Vieja ↔ Nuevo Vedado)</option>
+                            <option value="1400">10 a 12 km → 1,400 CUP (Habana Vieja ↔ Miramar)</option>
+                            <option value="custom">Más de 12 km (calcular manual)</option>
+                        </select>
                     </div>
                     
                     <div id="customDistanciaDiv" style="display: none; margin-bottom: 20px;">
@@ -247,11 +320,11 @@
         </div>
     </section>
 
-    <!-- TABLA DE TARIFAS CON MUNICIPIOS -->
+    <!-- TABLA DE TARIFAS -->
     <section id="tarifas" style="padding: 0 20px 60px;">
         <div class="container">
             <div style="text-align: center; margin-bottom: 20px;">
-                <h2 style="font-size: 1.8rem; font-weight: 700;">Tarifas por distancia</h2>
+                <h2 style="font-size: 1.8rem; font-weight: 700;">💰 Tarifas por distancia</h2>
                 <p>Precios claros según la ruta real. Sin letra pequeña.</p>
             </div>
             <div class="tarifas-table">
@@ -260,12 +333,15 @@
                         <tr><th>Distancia</th><th>Tarifa (CUP)</th><th>Ejemplo de Ruta (Municipios)</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td style="font-weight:600;">Hasta 1 km</td><td style="font-weight:700; color:#2E7D32;">400 CUP</td><td style="color:#64748b;">Interior de Habana Vieja (Ej: Obispo ↔ Plaza Vieja)</td></tr>
-                        <tr><td style="font-weight:600;">1 a 3 km</td><td style="font-weight:700; color:#2E7D32;">600 CUP</td><td style="color:#64748b;">Habana Vieja ↔ Centro Habana (Ej: Capitolio ↔ Parque Maceo)</td></tr>
-                        <tr><td style="font-weight:600;">3 a 5 km</td><td style="font-weight:700; color:#2E7D32;">800 CUP</td><td style="color:#64748b;">Habana Vieja ↔ Vedado (Ej: Malecón ↔ Calle 23)</td></tr>
-                        <tr><td style="font-weight:600;">5 a 8 km</td><td style="font-weight:700; color:#2E7D32;">1,000 CUP</td><td style="color:#64748b;">Habana Vieja ↔ Plaza de la Revolución / Cerro</td></tr>
-                        <tr><td style="font-weight:600;">8 a 12 km</td><td style="font-weight:700; color:#2E7D32;">1,400 CUP</td><td style="color:#64748b;">Habana Vieja ↔ Miramar / Playa (Ej: Obispo ↔ 5ta Avenida)</td></tr>
-                        <tr><td style="font-weight:600;">Más de 12 km</td><td style="font-weight:700; color:#2E7D32;">+120 CUP x km</td><td style="color:#64748b;">Ejemplo: 18 km (Habana Vieja ↔ Alamar) = 2,120 CUP</td></tr>
+                        <tr><td style="font-weight:600;">Hasta 1 km</td><td style="font-weight:700; color:#2E7D32;">400 CUP</td><td style="color:#64748b;">Interior de Habana Vieja</td></tr>
+                        <tr><td style="font-weight:600;">1 a 2 km</td><td style="font-weight:700; color:#2E7D32;">500 CUP</td><td style="color:#64748b;">Habana Vieja ↔ Centro Habana (cerca)</td></tr>
+                        <tr><td style="font-weight:600;">2 a 3 km</td><td style="font-weight:700; color:#2E7D32;">600 CUP</td><td style="color:#64748b;">Centro Habana ↔ Vedado (inicio)</td></tr>
+                        <tr><td style="font-weight:600;">3 a 4 km</td><td style="font-weight:700; color:#2E7D32;">700 CUP</td><td style="color:#64748b;">Habana Vieja ↔ Vedado (centro)</td></tr>
+                        <tr><td style="font-weight:600;">4 a 5 km</td><td style="font-weight:700; color:#2E7D32;">800 CUP</td><td style="color:#64748b;">Habana Vieja ↔ Vedado (final)</td></tr>
+                        <tr><td style="font-weight:600;">5 a 7 km</td><td style="font-weight:700; color:#2E7D32;">1,000 CUP</td><td style="color:#64748b;">Habana Vieja ↔ Plaza</td></tr>
+                        <tr><td style="font-weight:600;">7 a 10 km</td><td style="font-weight:700; color:#2E7D32;">1,200 CUP</td><td style="color:#64748b;">Habana Vieja ↔ Nuevo Vedado</td></tr>
+                        <tr><td style="font-weight:600;">10 a 12 km</td><td style="font-weight:700; color:#2E7D32;">1,400 CUP</td><td style="color:#64748b;">Habana Vieja ↔ Miramar</td></tr>
+                        <tr><td style="font-weight:600;">Más de 12 km</td><td style="font-weight:700; color:#2E7D32;">+120 CUP x km</td><td style="color:#64748b;">Ej: 18 km = 2,120 CUP</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -317,14 +393,23 @@
     </footer>
 
     <script>
-        // ============================================
-        // CONFIGURACIÓN - URL DE GOOGLE APPS SCRIPT
-        // ============================================
+        // Barra de progreso
+        window.addEventListener('scroll', function() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
+        
+        // Clic en indicador de scroll
+        document.getElementById('scrollIndicator').addEventListener('click', function() {
+            document.getElementById('solicitar').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // Configuración
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw9XhS63ENi4AbTzkcYLhsYlpbRuBwLSD1nTWaPNtm6BAsYDsjTXT0lzrWoq-kioFTKBw/exec';
         
-        // ============================================
-        // PRECIO AUTOMÁTICO
-        // ============================================
+        // Precio automático
         const distanciaSelect = document.getElementById('distanciaSelect');
         const customDistanciaDiv = document.getElementById('customDistanciaDiv');
         const customKm = document.getElementById('customKm');
@@ -362,28 +447,24 @@
         distanciaSelect.addEventListener('change', actualizarPrecio);
         customKm.addEventListener('input', actualizarPrecio);
         
-        // ============================================
-        // GUARDAR EN GOOGLE SHEETS
-        // ============================================
+        // Guardar en Google Sheets
         async function guardarEnSheet(datos) {
             try {
-                const response = await fetch(SCRIPT_URL, {
+                await fetch(SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(datos)
                 });
-                console.log('✅ Datos guardados en Google Sheets:', datos);
+                console.log('✅ Datos guardados');
                 return true;
             } catch (error) {
-                console.error('❌ Error al guardar:', error);
+                console.error('Error:', error);
                 return false;
             }
         }
         
-        // ============================================
-        // ENVÍO DEL FORMULARIO
-        // ============================================
+        // Envío del formulario
         document.getElementById('solicitudForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
@@ -395,7 +476,6 @@
             const tipoPaquete = document.getElementById('tipoPaquete').value;
             const adicional = document.getElementById('adicional').value;
             
-            // Calcular precio
             let precio = 0;
             let distanciaTexto = '';
             const valor = distanciaSelect.value;
@@ -404,67 +484,34 @@
                 const km = parseFloat(customKm.value);
                 if (!isNaN(km) && km > 12) {
                     precio = 1400 + (km - 12) * 120;
-                    distanciaTexto = `${km} km (más de 12 km) → ${Math.round(precio)} CUP`;
+                    distanciaTexto = `${km} km → ${Math.round(precio)} CUP`;
                 } else {
-                    alert('Por favor, selecciona una distancia válida');
+                    alert('Selecciona una distancia válida');
                     return;
                 }
             } else if (valor) {
                 precio = parseInt(valor);
                 distanciaTexto = distanciaSelect.options[distanciaSelect.selectedIndex]?.text || '';
             } else {
-                alert('Por favor, selecciona la distancia aproximada');
+                alert('Selecciona la distancia');
                 return;
             }
             
             if (!nombre || !telefono || !recogida || !entrega) {
-                alert('Por favor, completa todos los campos obligatorios (*)');
+                alert('Completa los campos obligatorios');
                 return;
             }
             
-            // Guardar en Google Sheets
-            await guardarEnSheet({
-                nombre: nombre,
-                telefono: telefono,
-                recogida: recogida,
-                entrega: entrega,
-                distanciaKm: distanciaTexto,
-                tarifa: precio,
-                turno: turno,
-                adicional: adicional,
-                tipoPaquete: tipoPaquete
-            });
+            await guardarEnSheet({ nombre, telefono, recogida, entrega, distanciaKm: distanciaTexto, tarifa: precio, turno, adicional, tipoPaquete });
             
-            // Mensaje para WhatsApp
-            const mensaje = `🛵 *NUEVA SOLICITUD DE MENSAJERÍA* 🛵
-
-*Datos del cliente:*
-👤 Nombre: ${nombre}
-📱 Teléfono: ${telefono}
-
-*Detalles del envío:*
-📍 Recogida: ${recogida}
-📍 Entrega: ${entrega}
-📏 Distancia: ${distanciaTexto}
-💰 *Precio estimado: ${Math.round(precio).toLocaleString()} CUP*
-📦 Tipo: ${tipoPaquete}
-⏰ Turno: ${turno}
-
-${adicional ? `📝 *Info adicional:* ${adicional}` : ''}
-
----
-🌐 Solicitado desde la web El Resolvito
-✅ Datos guardados en base de clientes`;
-            
+            const mensaje = `🛵 *NUEVA SOLICITUD* 🛵\n\n👤 ${nombre}\n📱 ${telefono}\n📍 Recogida: ${recogida}\n📍 Entrega: ${entrega}\n💰 Precio: ${precio.toLocaleString()} CUP\n⏰ Turno: ${turno}\n${adicional ? `📝 ${adicional}` : ''}`;
             window.open(`https://wa.me/5356382909?text=${encodeURIComponent(mensaje)}`, '_blank');
             
-            // Resetear formulario
             document.getElementById('solicitudForm').reset();
             precioCard.style.display = 'none';
             customDistanciaDiv.style.display = 'none';
             distanciaSelect.value = '';
-            
-            alert('✅ Solicitud enviada. Te contactaremos para confirmar los detalles.');
+            alert('✅ Solicitud enviada. Te contactaremos.');
         });
         
         // Smooth scroll
