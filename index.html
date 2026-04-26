@@ -98,7 +98,7 @@
                     </div>
                 </div>
                 <div class="hero-image animate-fadeRight">
-                    <img src="https://i.postimg.cc/1XGfTHny/mnesajero.webp" alt="Mensajero El Resolvito" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1067/1067983.png'">
+                    <img src="https://i.postimg.cc/d3wFf38p/mensajero_resolvito.png" alt="Mensajero El Resolvito" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1067/1067983.png'">
                 </div>
             </div>
         </div>
@@ -113,7 +113,7 @@
 
     <div class="container">
         <div class="banner-imagen">
-            <img src="https://i.postimg.cc/bvZXF5Xq/promocion-diaria-mensajeria-1.webp" 
+            <img src="https://i.postimg.cc/7Y57s2Dr/promocion-diaria-mensajeria-1.png" 
                  alt="Mensajería El Resolvito - Promoción" 
                  onerror="this.src='https://via.placeholder.com/1200x400/2E7D32/white?text=Mensajeria+El+Resolvito'">
         </div>
@@ -321,14 +321,14 @@
         });
     </script>
 
-    <!-- ========== RECEPCIONISTA VIRTUAL (BOT QUE PROCESA SOLICITUDES) ========== -->
+    <!-- ========== RECEPCIONISTA VIRTUAL - VIVIAN ========== -->
     <style>
         .chat-bot-button {
             position: fixed;
             bottom: 25px;
             right: 25px;
-            width: 65px;
-            height: 65px;
+            width: 70px;
+            height: 70px;
             background: linear-gradient(135deg, #25D366, #128C7E);
             border-radius: 50%;
             display: flex;
@@ -338,19 +338,25 @@
             z-index: 1000;
             box-shadow: 0 5px 20px rgba(0,0,0,0.2);
             transition: all 0.3s;
+            border: 3px solid white;
         }
         .chat-bot-button:hover { transform: scale(1.05); }
-        .chat-bot-button i { color: white; font-size: 28px; }
+        .chat-bot-button img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
         .chat-bot-window {
             position: fixed;
             bottom: 100px;
             right: 25px;
             width: 380px;
             max-width: calc(100vw - 40px);
-            height: 550px;
+            height: 580px;
             background: white;
             border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.25);
             z-index: 1001;
             display: none;
             flex-direction: column;
@@ -361,12 +367,29 @@
         .chat-header {
             background: linear-gradient(135deg, #075E54, #128C7E);
             color: white;
-            padding: 15px 20px;
+            padding: 12px 20px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 12px;
         }
-        .chat-header .close-chat { background: none; border: none; color: white; font-size: 24px; cursor: pointer; }
+        .chat-header-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+        .chat-header-info { flex: 1; }
+        .chat-header-info h4 { margin: 0; font-size: 1rem; font-weight: 600; }
+        .chat-header-info p { margin: 0; font-size: 0.7rem; opacity: 0.8; }
+        .close-chat {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            opacity: 0.8;
+        }
         .chat-messages {
             flex: 1;
             overflow-y: auto;
@@ -376,7 +399,11 @@
             flex-direction: column;
             gap: 8px;
         }
-        .message { display: flex; flex-direction: column; max-width: 85%; }
+        .message {
+            display: flex;
+            flex-direction: column;
+            max-width: 85%;
+        }
         .message.bot { align-items: flex-start; }
         .message.user { align-items: flex-end; align-self: flex-end; }
         .message-bubble {
@@ -384,16 +411,44 @@
             border-radius: 18px;
             font-size: 0.85rem;
             line-height: 1.4;
+            position: relative;
         }
-        .message.bot .message-bubble { background: white; border-top-left-radius: 4px; }
-        .message.user .message-bubble { background: #DCF8C6; border-bottom-right-radius: 4px; }
-        .message-time { font-size: 0.6rem; color: #8e8e94; margin-top: 4px; margin-left: 10px; }
+        .message.bot .message-bubble {
+            background: white;
+            border-top-left-radius: 4px;
+            color: #1F2937;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+        }
+        .message.user .message-bubble {
+            background: #DCF8C6;
+            color: #1F2937;
+            border-bottom-right-radius: 4px;
+        }
+        .message-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        .message.bot .message-meta {
+            display: flex;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+        .message-time {
+            font-size: 0.6rem;
+            color: #8e8e94;
+            margin-top: 4px;
+            margin-left: 36px;
+        }
         .typing-indicator {
             display: flex;
             gap: 4px;
             padding: 10px 14px;
             background: white;
             border-radius: 18px;
+            border-top-left-radius: 4px;
             width: fit-content;
         }
         .typing-indicator span {
@@ -401,16 +456,45 @@
             height: 8px;
             background: #94a3b8;
             border-radius: 50%;
-            animation: typing 1.4s infinite;
+            animation: typing 1.4s infinite ease-in-out;
         }
         @keyframes typing {
             0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
             30% { transform: translateY(-6px); opacity: 1; }
         }
-        .chat-input-area { display: flex; padding: 12px; background: white; gap: 8px; }
-        .chat-input-area input { flex: 1; padding: 10px 14px; border: 1px solid #e5e7eb; border-radius: 25px; font-family: inherit; }
-        .chat-input-area button { background: #128C7E; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; color: white; }
-        .quick-replies { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+        .chat-input-area {
+            display: flex;
+            padding: 12px;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            gap: 8px;
+        }
+        .chat-input-area input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid #e5e7eb;
+            border-radius: 25px;
+            font-family: inherit;
+            font-size: 0.85rem;
+            outline: none;
+        }
+        .chat-input-area input:focus { border-color: #128C7E; }
+        .chat-input-area button {
+            background: #128C7E;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            color: white;
+            transition: all 0.2s;
+        }
+        .quick-replies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
         .quick-reply-btn {
             background: #f0fdf4;
             border: 1px solid #128C7E;
@@ -419,20 +503,26 @@
             border-radius: 20px;
             font-size: 0.7rem;
             cursor: pointer;
+            transition: all 0.2s;
         }
+        .quick-reply-btn:hover { background: #128C7E; color: white; }
         @media (max-width: 500px) {
-            .chat-bot-window { width: calc(100vw - 40px); right: 20px; height: 500px; }
-            .chat-bot-button { bottom: 20px; right: 20px; width: 55px; height: 55px; }
+            .chat-bot-window { width: calc(100vw - 40px); right: 20px; bottom: 85px; height: 520px; }
+            .chat-bot-button { bottom: 20px; right: 20px; width: 60px; height: 60px; }
         }
     </style>
 
     <div class="chat-bot-button" id="chatBotButton">
-        <i class="fas fa-headset"></i>
+        <img src="https://i.postimg.cc/d3wFf38p/mensajero_resolvito.png" alt="Vivian" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1067/1067983.png'">
     </div>
 
     <div class="chat-bot-window" id="chatBotWindow">
         <div class="chat-header">
-            <h4><i class="fas fa-user-tie"></i> El Resolvito - Recepcionista</h4>
+            <img class="chat-header-avatar" src="https://i.postimg.cc/d3wFf38p/mensajero_resolvito.png" alt="Vivian" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1067/1067983.png'">
+            <div class="chat-header-info">
+                <h4>Vivian</h4>
+                <p>📋 Recepcionista - El Resolvito</p>
+            </div>
             <button class="close-chat" id="closeChatBtn">&times;</button>
         </div>
         <div class="chat-messages" id="chatMessages"></div>
@@ -443,11 +533,11 @@
     </div>
 
     <script>
-        // ========== RECEPCIONISTA VIRTUAL - PROCESA SOLICITUDES ==========
+        // ========== RECEPCIONISTA VIVIAN - PROCESA SOLICITUDES ==========
         
-        // Estado de la conversación (como una recepcionista)
+        // Estado de la conversación
         let estadoRecepcion = {
-            paso: "inicio", // inicio, preguntando_nombre, preguntando_telefono, preguntando_recogida, preguntando_entrega, preguntando_distancia, preguntando_turno, preguntando_paquete, confirmar
+            paso: "inicio",
             datos: {
                 nombre: "",
                 telefono: "",
@@ -459,8 +549,7 @@
                 paquete: "Documento",
                 adicional: ""
             },
-            esperandoRespuesta: false,
-            conversacionActiva: true
+            esperandoRespuesta: false
         };
         
         // Funciones de cálculo de precio
@@ -488,42 +577,40 @@
             return `${km} km`;
         }
         
-        // Función principal que procesa el mensaje como recepcionista
-        function procesarComoRecepcionista(mensaje) {
+        // Función principal de Vivian
+        function procesarComoVivian(mensaje) {
             const msg = mensaje.toLowerCase().trim();
             
-            // Flujo según el paso actual
             switch(estadoRecepcion.paso) {
                 case "inicio":
                     estadoRecepcion.paso = "preguntando_nombre";
-                    return "Buenos días/tardes. Soy la recepcionista de El Resolvito. 🧾 Voy a tomar sus datos para la solicitud del mensajero.\n\n📝 ¿Cuál es su nombre completo?";
+                    return "👋 ¡Hola! Soy Vivian, la recepcionista de El Resolvito. ¿Cómo te llamas?";
                 
                 case "preguntando_nombre":
-                    if (msg.length < 3) return "Por favor, dígame su nombre completo para la solicitud.";
+                    if (msg.length < 3) return "Dime tu nombre completo para la solicitud, por favor.";
                     estadoRecepcion.datos.nombre = mensaje;
                     estadoRecepcion.paso = "preguntando_telefono";
-                    return "Gracias. 📱 ¿Cuál es su número de teléfono de contacto? (con código de área, ej: +53 5XXX XXXX)";
+                    return `Encantada de conocerte, ${mensaje}. 📱 ¿Cuál es tu número de teléfono de contacto? (con código de área, ej: +53 5XXX XXXX)`;
                 
                 case "preguntando_telefono":
-                    if (!msg.match(/[0-9]{5,}/)) return "Necesito un número de teléfono válido para contactarlo. ¿Me lo puede dar?";
+                    if (!msg.match(/[0-9]{5,}/)) return "Necesito un número de teléfono válido para contactarte. ¿Me lo puedes dar?";
                     estadoRecepcion.datos.telefono = mensaje;
                     estadoRecepcion.paso = "preguntando_recogida";
-                    return "📍 ¿Cuál es la dirección de RECOGIDA? (calle, número, municipio, entre calles si puede)";
+                    return "📍 ¿Cuál es la dirección de RECOGIDA? (calle, número, municipio, entre calles si puedes)";
                 
                 case "preguntando_recogida":
-                    if (msg.length < 5) return "Déme más detalles de la dirección de recogida, por favor.";
+                    if (msg.length < 5) return "Dame más detalles de la dirección de recogida, por favor.";
                     estadoRecepcion.datos.recogida = mensaje;
                     estadoRecepcion.paso = "preguntando_entrega";
                     return "📍 ¿Y la dirección de ENTREGA? (calle, número, municipio)";
                 
                 case "preguntando_entrega":
-                    if (msg.length < 5) return "Déme más detalles de la dirección de entrega.";
+                    if (msg.length < 5) return "Dame más detalles de la dirección de entrega.";
                     estadoRecepcion.datos.entrega = mensaje;
                     estadoRecepcion.paso = "preguntando_distancia";
-                    return "📏 ¿Aproximadamente cuántos kilómetros hay entre esas dos direcciones? (Puede decirme un número o decirme 'no sé'). Si no sabe, le ayudo a calcular.\n\nEjemplos: '3 km', 'unos 5 km', 'son como 2 kilómetros'";
+                    return "📏 ¿Aproximadamente cuántos kilómetros hay entre esas dos direcciones? Puedes decirme un número o los municipios. Ejemplo: '3 km' o 'desde Habana Vieja hasta Vedado'.";
                 
                 case "preguntando_distancia":
-                    // Intentar extraer un número de kilómetros
                     let km = null;
                     const kmMatch = msg.match(/([0-9]+(?:\.[0-9]+)?)\s*(?:km|k|kilometros|kilómetros)/i);
                     if (kmMatch) {
@@ -531,8 +618,6 @@
                     } else if (msg.match(/[0-9]+/)) {
                         const soloNum = msg.match(/([0-9]+(?:\.[0-9]+)?)/);
                         if (soloNum) km = parseFloat(soloNum[1]);
-                    } else if (msg.includes("no sé") || msg.includes("no se") || msg.includes("sabe")) {
-                        return "No se preocupe. 🔍 ¿Me puede decir en qué municipio recogemos y en cuál entregamos? Por ejemplo: 'desde Habana Vieja hasta Vedado'. Así le calculo el precio aproximado.";
                     }
                     
                     if (km !== null && !isNaN(km) && km > 0) {
@@ -540,65 +625,36 @@
                         estadoRecepcion.datos.distanciaKm = km;
                         estadoRecepcion.datos.precio = precio;
                         estadoRecepcion.paso = "preguntando_turno";
-                        return `💰 He calculado el precio según la distancia de ${kmATexto(km)}: ${precio.toLocaleString()} CUP.\n\n⏰ ¿En qué turno prefiere la recogida?\n• Mañana (7am, entrega antes 2pm)\n• Tarde (2pm, entrega antes 7pm)\n\n(Escriba 'mañana' o 'tarde')`;
+                        return `💰 Según la distancia de ${kmATexto(km)}, el precio sería de ${precio.toLocaleString()} CUP.\n\n⏰ ¿En qué turno prefieres la recogida?\n• Mañana (7am, entrega antes 2pm)\n• Tarde (2pm, entrega antes 7pm)\n\n(Escribe 'mañana' o 'tarde')`;
                     } else {
-                        estadoRecepcion.paso = "preguntando_distancia_rutas";
-                        return "Dígame los municipios aproximados: ¿dónde recogemos y dónde entregamos? Ejemplo: 'desde Centro Habana hasta Vedado'.";
-                    }
-                
-                case "preguntando_distancia_rutas":
-                    // Tabla simple de distancias entre municipios de La Habana
-                    const rutas = {
-                        "habana vieja centro habana": 1.5,
-                        "habana vieja vedado": 4,
-                        "habana vieja plaza": 6,
-                        "habana vieja nuevo vedado": 8,
-                        "habana vieja miramar": 11,
-                        "centro habana vedado": 2.5,
-                        "centro habana plaza": 4.5,
-                        "centro habana miramar": 9,
-                        "vedado plaza": 2,
-                        "vedado miramar": 5,
-                        "plaza miramar": 3
-                    };
-                    
-                    let kmEncontrado = null;
-                    for (const [ruta, dist] of Object.entries(rutas)) {
-                        if (msg.includes(ruta)) {
-                            kmEncontrado = dist;
-                            break;
+                        // Intentar detectar municipios
+                        const municipios = ["habana vieja", "centro habana", "vedado", "plaza", "nuevo vedado", "miramar"];
+                        let encontrados = municipios.filter(m => msg.includes(m));
+                        if (encontrados.length >= 2) {
+                            let kmEstimado = 5;
+                            if (msg.includes("habana vieja") && msg.includes("vedado")) kmEstimado = 4;
+                            if (msg.includes("habana vieja") && msg.includes("miramar")) kmEstimado = 11;
+                            if (msg.includes("centro") && msg.includes("vedado")) kmEstimado = 2.5;
+                            const precio = calcularPrecio(kmEstimado);
+                            estadoRecepcion.datos.distanciaKm = kmEstimado;
+                            estadoRecepcion.datos.precio = precio;
+                            estadoRecepcion.paso = "preguntando_turno";
+                            return `Por las ubicaciones que me diste, calculo unos ${kmEstimado} km aproximadamente. El precio estimado es de ${precio.toLocaleString()} CUP.\n\n⏰ ¿En qué turno prefieres la recogida? (mañana o tarde)`;
                         }
-                    }
-                    
-                    // Buscar municipios por separado
-                    const municipios = ["habana vieja", "centro habana", "vedado", "plaza", "nuevo vedado", "miramar", "marianao", "cerro", "10 de octubre"];
-                    let encontrados = municipios.filter(m => msg.includes(m));
-                    if (encontrados.length >= 2) {
-                        // Asignar distancia estimada genérica
-                        kmEncontrado = 5;
-                    }
-                    
-                    if (kmEncontrado) {
-                        const precio = calcularPrecio(kmEncontrado);
-                        estadoRecepcion.datos.distanciaKm = kmEncontrado;
-                        estadoRecepcion.datos.precio = precio;
-                        estadoRecepcion.paso = "preguntando_turno";
-                        return `Según las ubicaciones que me dio, la distancia aproximada es de ${kmEncontrado} km. El precio estimado es de ${precio.toLocaleString()} CUP.\n\n⏰ ¿En qué turno prefiere la recogida? (mañana o tarde)`;
-                    } else {
-                        return "No logro ubicar bien las distancias. Le sugiero usar el formulario que está más abajo en la página, que calcula el precio al instante seleccionando los rangos. ¿Quiere que le ayude con otra cosa mientras?";
+                        return "No logro calcular bien la distancia. ¿Me dices los municipios? Por ejemplo: 'desde Centro Habana hasta Vedado'. O usa el formulario de abajo que calcula al instante.";
                     }
                 
                 case "preguntando_turno":
                     if (msg.includes("mañana") || msg.includes("manana")) {
                         estadoRecepcion.datos.turno = "Mañana (7am)";
                         estadoRecepcion.paso = "preguntando_paquete";
-                        return "Perfecto. 📦 ¿Qué tipo de paquete va a enviar?\n• Documento/Sobre\n• Pequeño (hasta 2kg)\n• Mediano (2-5kg)\n• Grande (5-8kg)\n\n¿Cuál es?";
+                        return "Perfecto. 📦 ¿Qué tipo de paquete vas a enviar?\n• Documento/Sobre\n• Pequeño (hasta 2kg)\n• Mediano (2-5kg)\n• Grande (5-8kg)";
                     } else if (msg.includes("tarde")) {
                         estadoRecepcion.datos.turno = "Tarde (2pm)";
                         estadoRecepcion.paso = "preguntando_paquete";
-                        return "Perfecto. 📦 ¿Qué tipo de paquete va a enviar?\n• Documento/Sobre\n• Pequeño (hasta 2kg)\n• Mediano (2-5kg)\n• Grande (5-8kg)\n\n¿Cuál es?";
+                        return "Perfecto. 📦 ¿Qué tipo de paquete vas a enviar?\n• Documento/Sobre\n• Pequeño (hasta 2kg)\n• Mediano (2-5kg)\n• Grande (5-8kg)";
                     } else {
-                        return "Dígame 'mañana' o 'tarde' para continuar con la solicitud.";
+                        return "Dime 'mañana' o 'tarde' para continuar con la solicitud.";
                     }
                 
                 case "preguntando_paquete":
@@ -611,51 +667,48 @@
                     } else if (msg.includes("grande")) {
                         estadoRecepcion.datos.paquete = "Grande (5-8kg)";
                     } else {
-                        return "Dígame el tipo: Documento, Pequeño, Mediano o Grande.";
+                        return "Dime el tipo: Documento, Pequeño, Mediano o Grande.";
                     }
                     estadoRecepcion.paso = "confirmar";
-                    return this.mostrarResumen();
+                    return mostrarResumen();
                 
                 case "confirmar":
                     if (msg.includes("si") || msg.includes("sí") || msg.includes("correcto") || msg.includes("confirmo")) {
-                        return this.enviarSolicitud();
+                        return enviarSolicitud();
                     } else if (msg.includes("no") || msg.includes("cambiar")) {
                         estadoRecepcion.paso = "inicio";
                         estadoRecepcion.datos = { nombre: "", telefono: "", recogida: "", entrega: "", distanciaKm: null, precio: 0, turno: "Mañana", paquete: "Documento", adicional: "" };
-                        return "Está bien, empezamos de nuevo. Escriba 'solicitar' cuando quiera comenzar.";
+                        return "Está bien, empezamos de nuevo. Escribe 'solicitar' cuando quieras comenzar.";
                     } else {
-                        return this.mostrarResumen() + "\n\n¿Confirmamos el envío? Responda 'sí' para enviar o 'no' para corregir.";
+                        return mostrarResumen() + "\n\n¿Confirmamos el envío? Responde 'sí' para enviar o 'no' para corregir.";
                     }
                 
                 default:
-                    return "Escriba 'solicitar' para comenzar una nueva solicitud de mensajería.";
+                    return "Escribe 'solicitar' para comenzar una nueva solicitud de mensajería.";
             }
         }
         
-        // Función para mostrar resumen de la solicitud
         function mostrarResumen() {
             const d = estadoRecepcion.datos;
-            return `📋 **Resumen de su solicitud**\n\n👤 Nombre: ${d.nombre}\n📱 Teléfono: ${d.telefono}\n📍 Recogida: ${d.recogida}\n📍 Entrega: ${d.entrega}\n💰 Precio: ${d.precio.toLocaleString()} CUP\n⏰ Turno: ${d.turno}\n📦 Paquete: ${d.paquete}\n\n¿Confirmamos el envío? (responda 'sí' o 'no')`;
+            return `📋 **Resumen de tu solicitud**\n\n👤 Nombre: ${d.nombre}\n📱 Teléfono: ${d.telefono}\n📍 Recogida: ${d.recogida}\n📍 Entrega: ${d.entrega}\n💰 Precio: ${d.precio.toLocaleString()} CUP\n⏰ Turno: ${d.turno}\n📦 Paquete: ${d.paquete}\n\n¿Confirmamos el envío? (responde 'sí' o 'no')`;
         }
         
-        // Función para enviar la solicitud
         function enviarSolicitud() {
             const d = estadoRecepcion.datos;
-            const mensajeWA = `🛵 *NUEVA SOLICITUD DESDE CHAT*\n\n👤 ${d.nombre}\n📱 ${d.telefono}\n📍 Recogida: ${d.recogida}\n📍 Entrega: ${d.entrega}\n💰 Precio: ${d.precio.toLocaleString()} CUP\n⏰ Turno: ${d.turno}\n📦 Paquete: ${d.paquete}`;
+            const mensajeWA = `🛵 *NUEVA SOLICITUD DESDE CHAT CON VIVIAN*\n\n👤 ${d.nombre}\n📱 ${d.telefono}\n📍 Recogida: ${d.recogida}\n📍 Entrega: ${d.entrega}\n💰 Precio: ${d.precio.toLocaleString()} CUP\n⏰ Turno: ${d.turno}\n📦 Paquete: ${d.paquete}`;
             
-            // Abrir WhatsApp
             window.open(`https://wa.me/5356382909?text=${encodeURIComponent(mensajeWA)}`, '_blank');
             
-            // Guardar en localStorage como respaldo
-            const solicitudes = JSON.parse(localStorage.getItem('solicitudesChat') || '[]');
+            // Guardar respaldo
+            const solicitudes = JSON.parse(localStorage.getItem('solicitudesVivian') || '[]');
             solicitudes.push({ ...d, fecha: new Date().toISOString() });
-            localStorage.setItem('solicitudesChat', JSON.stringify(solicitudes));
+            localStorage.setItem('solicitudesVivian', JSON.stringify(solicitudes));
             
-            // Resetear estado
             estadoRecepcion.paso = "inicio";
+            const datosAntiguos = { ...estadoRecepcion.datos };
             estadoRecepcion.datos = { nombre: "", telefono: "", recogida: "", entrega: "", distanciaKm: null, precio: 0, turno: "Mañana", paquete: "Documento", adicional: "" };
             
-            return "✅ **¡Solicitud enviada!** En breve un mensajero se pondrá en contacto con usted. ¿Necesita algo más? Si quiere, puede escribir 'solicitar' para otro envío.";
+            return `✅ **¡Solicitud enviada, ${datosAntiguos.nombre}!** En breve un mensajero se pondrá en contacto contigo. ¿Necesitas algo más? Si quieres, escribe 'solicitar' para otro envío.`;
         }
         
         // ========== MANEJO DEL CHAT ==========
@@ -666,11 +719,23 @@
         let chatWindow = document.getElementById('chatBotWindow');
         let closeBtn = document.getElementById('closeChatBtn');
         
-        function addMessage(text, isUser = false) {
+        function addMessage(text, isUser = false, withAvatar = false) {
             const div = document.createElement('div');
             div.className = `message ${isUser ? 'user' : 'bot'}`;
             const time = new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
-            div.innerHTML = `<div class="message-bubble">${text.replace(/\n/g, '<br>')}</div><div class="message-time">${time}</div>`;
+            
+            if (!isUser && withAvatar) {
+                div.innerHTML = `
+                    <div class="message-meta">
+                        <img class="message-avatar" src="https://i.postimg.cc/d3wFf38p/mensajero_resolvito.png" alt="Vivian" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1067/1067983.png'">
+                        <span style="font-size:0.7rem; font-weight:600;">Vivian</span>
+                    </div>
+                    <div class="message-bubble">${text.replace(/\n/g, '<br>')}</div>
+                    <div class="message-time">${time}</div>
+                `;
+            } else {
+                div.innerHTML = `<div class="message-bubble">${text.replace(/\n/g, '<br>')}</div><div class="message-time">${time}</div>`;
+            }
             chatMessages.appendChild(div);
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
@@ -690,26 +755,26 @@
         async function sendMessage() {
             const msg = chatInput.value.trim();
             if (!msg || estadoRecepcion.esperandoRespuesta) return;
-            addMessage(msg, true);
+            addMessage(msg, true, false);
             chatInput.value = '';
             estadoRecepcion.esperandoRespuesta = true;
             await showTyping();
+            
             let respuesta = "";
             
-            // Detectar si quiere comenzar una solicitud
+            // Detectar inicio de solicitud
             if (msg.toLowerCase().includes("solicitar") || msg.toLowerCase().includes("quiero un mensajero") || msg.toLowerCase().includes("necesito un mensajero")) {
                 estadoRecepcion.paso = "inicio";
                 estadoRecepcion.datos = { nombre: "", telefono: "", recogida: "", entrega: "", distanciaKm: null, precio: 0, turno: "Mañana", paquete: "Documento", adicional: "" };
-                respuesta = procesarComoRecepcionista(msg);
+                respuesta = procesarComoVivian(msg);
             } else if (estadoRecepcion.paso === "inicio" && !msg.toLowerCase().includes("solicitar")) {
-                respuesta = "Buen día. Si desea solicitar un mensajero, escriba 'solicitar'. Si tiene dudas sobre precios o servicios, puedo ayudarle también. ¿Qué prefiere?";
+                respuesta = "Hola, soy Vivian. Si deseas solicitar un mensajero, escribe 'solicitar'. Si tienes dudas sobre precios o servicios, pregúntame. ¿En qué te ayudo?";
             } else {
-                respuesta = procesarComoRecepcionista(msg);
-                // Si la respuesta es undefined, dar mensaje genérico
-                if (!respuesta) respuesta = "Disculpe, no entendí. ¿Puede repetirlo? O escriba 'solicitar' para empezar de nuevo.";
+                respuesta = procesarComoVivian(msg);
+                if (!respuesta) respuesta = "Disculpa, no entendí. ¿Puedes repetirlo? O escribe 'solicitar' para empezar de nuevo.";
             }
             
-            addMessage(respuesta, false);
+            addMessage(respuesta, false, true);
             estadoRecepcion.esperandoRespuesta = false;
         }
         
@@ -717,7 +782,7 @@
             chatWindow.classList.add('open');
             if (chatMessages.children.length === 0) {
                 setTimeout(() => {
-                    addMessage("📋 Buenos días, soy la recepcionista de El Resolvito. ¿Necesita solicitar un mensajero o tiene alguna pregunta sobre precios y servicios?", false);
+                    addMessage("👋 ¡Hola! Soy Vivian, la recepcionista de El Resolvito. ¿Necesitas solicitar un mensajero o tienes alguna pregunta?", false, true);
                     setTimeout(() => {
                         const quickDiv = document.createElement('div');
                         quickDiv.className = 'quick-replies';
@@ -732,18 +797,18 @@
                             document.querySelectorAll('.quick-reply-btn').forEach(btn => {
                                 btn.addEventListener('click', async (e) => {
                                     const msg = btn.getAttribute('data-msg');
-                                    addMessage(msg, true);
+                                    addMessage(msg, true, false);
                                     await showTyping();
                                     let reply = "";
                                     if (msg === "solicitar") {
                                         estadoRecepcion.paso = "inicio";
-                                        reply = procesarComoRecepcionista(msg);
+                                        reply = procesarComoVivian(msg);
                                     } else if (msg === "precios") {
-                                        reply = "💰 Precios por distancia:\n• ≤1km: 400 CUP\n• 1-2km: 500 CUP\n• 2-3km: 600 CUP\n• 3-4km: 700 CUP\n• 4-5km: 800 CUP\n• 5-7km: 1000 CUP\n• 7-10km: 1200 CUP\n• 10-12km: 1400 CUP\n• +12km: 1400 + 120/km\n\n¿Quiere que le ayude a calcular su envío? Escriba 'solicitar'.";
+                                        reply = "💰 Precios por distancia:\n• ≤1km: 400 CUP\n• 1-2km: 500 CUP\n• 2-3km: 600 CUP\n• 3-4km: 700 CUP\n• 4-5km: 800 CUP\n• 5-7km: 1000 CUP\n• 7-10km: 1200 CUP\n• 10-12km: 1400 CUP\n• +12km: 1400 + 120/km\n\n¿Quieres que te ayude a calcular tu envío? Escribe 'solicitar'.";
                                     } else if (msg === "horarios") {
-                                        reply = "⏰ Recogemos a las 7am (entrega antes 2pm) y a las 2pm (entrega antes 7pm). ¿En qué horario le interesa?";
+                                        reply = "⏰ Recogemos a las 7am (entrega antes 2pm) y a las 2pm (entrega antes 7pm). ¿En qué horario te interesa?";
                                     }
-                                    addMessage(reply, false);
+                                    addMessage(reply, false, true);
                                     quickDiv.remove();
                                 });
                             });
@@ -765,21 +830,7 @@
                 closeChat();
             }
         });
-        
-        // Override para respuestas directas de precio/horario si no está en flujo
-        const originalProcesar = procesarComoRecepcionista;
-        window.procesarComoRecepcionista = function(msg) {
-            if (estadoRecepcion.paso === "inicio") {
-                if (msg.toLowerCase().includes("precio") || msg.toLowerCase().includes("tarifa")) {
-                    return "💰 Las tarifas dependen de la distancia:\n• ≤1km: 400 CUP\n• 1-2km: 500 CUP\n• 2-3km: 600 CUP\n• 3-4km: 700 CUP\n• 4-5km: 800 CUP\n• 5-7km: 1000 CUP\n• 7-10km: 1200 CUP\n• 10-12km: 1400 CUP\n• +12km: 1400 + 120 CUP/km\n\nSi quiere, escriba 'solicitar' y le ayudo a calcular el precio exacto para su ruta.";
-                }
-                if (msg.toLowerCase().includes("horario")) {
-                    return "⏰ Turnos de recogida:\n• Mañana: 7am (entrega antes 2pm)\n• Tarde: 2pm (entrega antes 7pm)\n\n¿Necesita un horario especial? Contáctenos por WhatsApp.";
-                }
-            }
-            return originalProcesar(msg);
-        };
     </script>
-    <!-- ========== FIN RECEPCIONISTA VIRTUAL ========== -->
+    <!-- ========== FIN RECEPCIONISTA VIRTUAL VIVIAN ========== -->
 </body>
 </html>
