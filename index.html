@@ -523,5 +523,408 @@
             });
         });
     </script>
+
+    <!-- ========== CHAT BOT PARA LA WEB ========== -->
+    <style>
+        /* Botón flotante del chat */
+        .chat-bot-button {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 65px;
+            height: 65px;
+            background: linear-gradient(135deg, #2E7D32, #1B5E20);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            border: none;
+        }
+        .chat-bot-button:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #1B5E20, #0d3b0f);
+        }
+        .chat-bot-button i {
+            color: white;
+            font-size: 28px;
+        }
+        .chat-bot-button .notification-dot {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 12px;
+            height: 12px;
+            background: #FFB300;
+            border-radius: 50%;
+            border: 2px solid white;
+            animation: pulse 1.5s infinite;
+        }
+        
+        /* Ventana del chat */
+        .chat-bot-window {
+            position: fixed;
+            bottom: 100px;
+            right: 25px;
+            width: 350px;
+            max-width: calc(100vw - 50px);
+            height: 500px;
+            max-height: 70vh;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            z-index: 1001;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+            animation: fadeInUp 0.3s ease;
+        }
+        .chat-bot-window.open {
+            display: flex;
+        }
+        
+        /* Cabecera del chat */
+        .chat-header {
+            background: linear-gradient(135deg, #2E7D32, #1B5E20);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .chat-header h4 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .chat-header h4 i {
+            margin-right: 8px;
+        }
+        .chat-header .close-chat {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0.8;
+        }
+        .chat-header .close-chat:hover {
+            opacity: 1;
+        }
+        
+        /* Área de mensajes */
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+            background: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        /* Mensajes */
+        .message {
+            display: flex;
+            flex-direction: column;
+            max-width: 85%;
+        }
+        .message.bot {
+            align-items: flex-start;
+        }
+        .message.user {
+            align-items: flex-end;
+            align-self: flex-end;
+        }
+        .message-bubble {
+            padding: 10px 14px;
+            border-radius: 18px;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+        .message.bot .message-bubble {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-bottom-left-radius: 4px;
+            color: #1F2937;
+        }
+        .message.user .message-bubble {
+            background: linear-gradient(135deg, #2E7D32, #1B5E20);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+        .message-time {
+            font-size: 0.65rem;
+            color: #94a3b8;
+            margin-top: 4px;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+        
+        /* Indicador de escritura */
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 10px 14px;
+            background: white;
+            border-radius: 18px;
+            border-bottom-left-radius: 4px;
+            width: fit-content;
+            border: 1px solid #e5e7eb;
+        }
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            background: #94a3b8;
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+        .typing-indicator span:nth-child(1) { animation-delay: 0s; }
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+            30% { transform: translateY(-6px); opacity: 1; }
+        }
+        
+        /* Input del chat */
+        .chat-input-area {
+            display: flex;
+            padding: 12px;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            gap: 8px;
+        }
+        .chat-input-area input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid #e5e7eb;
+            border-radius: 25px;
+            font-family: inherit;
+            font-size: 0.85rem;
+            outline: none;
+        }
+        .chat-input-area input:focus {
+            border-color: #2E7D32;
+        }
+        .chat-input-area button {
+            background: #2E7D32;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            color: white;
+            transition: all 0.2s;
+        }
+        .chat-input-area button:hover {
+            background: #1B5E20;
+        }
+        
+        /* Botones de respuesta rápida */
+        .quick-replies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .quick-reply-btn {
+            background: #f0fdf4;
+            border: 1px solid #2E7D32;
+            color: #2E7D32;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .quick-reply-btn:hover {
+            background: #2E7D32;
+            color: white;
+        }
+        
+        @media (max-width: 500px) {
+            .chat-bot-window {
+                width: calc(100vw - 40px);
+                right: 20px;
+                bottom: 85px;
+                height: 480px;
+            }
+            .chat-bot-button {
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+    </style>
+
+    <div class="chat-bot-button" id="chatBotButton">
+        <i class="fas fa-comment-dots"></i>
+        <div class="notification-dot"></div>
+    </div>
+
+    <div class="chat-bot-window" id="chatBotWindow">
+        <div class="chat-header">
+            <h4><i class="fas fa-robot"></i> El Resolvito Bot</h4>
+            <button class="close-chat" id="closeChatBtn">&times;</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <!-- Los mensajes se agregarán aquí -->
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="Escribe tu mensaje..." autocomplete="off">
+            <button id="sendChatBtn"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <script>
+        // ========== CONFIGURACIÓN DEL BOT ==========
+        const BOT_CONFIG = {
+            respuestas: {
+                "hola": "¡Hola! 👋 Soy el asistente de **El Resolvito**. ¿En qué puedo ayudarte?\n\nPuedes preguntarme sobre:\n💰 Precios\n⏰ Horarios\n📍 Zonas de cobertura\n📝 Cómo solicitar un mensajero",
+                "buenos dias": "¡Buenos días! ☀️ ¿Cómo puedo asistirte hoy?",
+                "buenas tardes": "¡Buenas tardes! 😊 ¿Qué necesitas saber sobre nuestro servicio?",
+                "buenas noches": "¡Buenas noches! 🌙 Aún estamos aquí para ayudarte.",
+                "precio": "💰 Nuestras tarifas por distancia son:\n\n• Hasta 1 km → 400 CUP\n• 1-2 km → 500 CUP\n• 2-3 km → 600 CUP\n• 3-4 km → 700 CUP\n• 4-5 km → 800 CUP\n• 5-7 km → 1000 CUP\n• 7-10 km → 1200 CUP\n• 10-12 km → 1400 CUP\n• +12 km → 1400 + 120 CUP por km extra\n\n¿Quieres que calcule tu precio? Escríbeme 'calcular'.",
+                "calcular": "Para calcular tu precio exacto, ve al **formulario de solicitud** más abajo en la página. Selecciona la distancia o ingresa los kilómetros y verás el precio al instante. 📊",
+                "tarifa": "Las tarifas están detalladas en nuestra tabla. El precio base es desde 400 CUP para distancias cortas dentro de Habana Vieja.",
+                "precios": "Las tarifas dependen de la distancia real medida en Google Maps. No cobramos el viaje de vuelta. 🗺️",
+                "horario": "⏰ Nuestros horarios de recogida son:\n\n🕖 **Mañana**: 7:00 AM (entrega antes de 2:00 PM)\n🕑 **Tarde**: 2:00 PM (entrega antes de 7:00 PM)\n\nLas entregas se realizan el mismo día.",
+                "horarios": "Recogemos a las 7am y 2pm. Las entregas son el mismo día.",
+                "zona": "📍 Cubrimos toda la ciudad de La Habana, incluyendo:\nHabana Vieja, Centro Habana, Vedado, Plaza, Nuevo Vedado, Miramar y más.",
+                "cobertura": "Nuestra cobertura es toda La Habana. Si tienes dudas sobre una zona específica, escríbenos por WhatsApp al +53 5 638 2909.",
+                "habana": "Sí, trabajamos en toda La Habana, desde Habana Vieja hasta Miramar y más allá.",
+                "como pedir": "📝 Para solicitar un mensajero:\n\n1. Desplázate hacia abajo hasta el formulario\n2. Completa tus datos (nombre, teléfono, direcciones)\n3. Selecciona la distancia o ingresa los km\n4. Elige turno y tipo de paquete\n5. Haz clic en 'Enviar solicitud'\n\nTe redirigirá a WhatsApp para confirmar tu pedido.",
+                "solicitar": "Usa el formulario de la página para solicitar tu mensajero. También puedes escribirnos directamente al WhatsApp 📱",
+                "contacto": "Puedes contactarnos por:\n📱 WhatsApp: +53 5 638 2909\n📝 O usando el formulario en esta página",
+                "paquete": "Aceptamos: documentos, sobres, paquetes pequeños (hasta 2kg), medianos (2-5kg) y grandes (5-8kg). Para paquetes más pesados, consulta por WhatsApp.",
+                "peso": "El límite estándar es 8kg. Para paquetes más pesados, contáctanos directamente para evaluar.",
+                "ayuda": "Puedo ayudarte con:\n💰 Precios y tarifas\n⏰ Horarios de recogida\n📍 Zonas de cobertura\n📝 Cómo solicitar un mensajero\n📞 Información de contacto\n\n¿Qué deseas saber?",
+                "gracias": "¡De nada! 😊 Estamos para ayudarte. Si necesitas algo más, aquí estoy. ¡Que tengas un excelente día! ✨",
+                "adios": "¡Hasta luego! 👋 Si necesitas algo más, aquí estoy. ¡Gracias por confiar en El Resolvito!",
+                "quienes son": "Somos Mensajería El Resolvito, un grupo de personas trabajando con dedicación para ayudar a nuestra comunidad en La Habana. Cada entrega la hacemos con responsabilidad y cariño. ❤️",
+                "eres bot": "Soy el asistente virtual de El Resolvito 🤖. Puedo resolver tus dudas sobre precios, horarios y cómo solicitar un mensajero. ¿En qué te ayudo?",
+                "hola bot": "¡Hola! Soy el bot de El Resolvito. ¿Qué información necesitas hoy?"
+            },
+            palabrasClave: {
+                "hola": "hola", "buenos": "buenos dias", "precio": "precio", "tarifa": "tarifa",
+                "cuanto": "precio", "cuesta": "precio", "costo": "precio", "horario": "horario",
+                "entrega": "horario", "recogen": "horario", "zona": "zona", "cobertura": "cobertura",
+                "donde": "zona", "como pedir": "como pedir", "como solicitar": "como pedir",
+                "solicito": "como pedir", "contacto": "contacto", "whatsapp": "contacto",
+                "paquete": "paquete", "peso": "peso", "ayuda": "ayuda", "gracias": "gracias",
+                "adios": "adios", "chao": "adios", "quienes": "quienes son", "eres": "eres bot"
+            }
+        };
+        
+        let chatState = { messages: [], waitingForResponse: false };
+        
+        const chatButton = document.getElementById('chatBotButton');
+        const chatWindow = document.getElementById('chatBotWindow');
+        const closeBtn = document.getElementById('closeChatBtn');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const sendBtn = document.getElementById('sendChatBtn');
+        
+        function getBotResponse(userMessage) {
+            const msgLower = userMessage.toLowerCase().trim();
+            for (let [keyword, responseKey] of Object.entries(BOT_CONFIG.palabrasClave)) {
+                if (msgLower.includes(keyword)) {
+                    return BOT_CONFIG.respuestas[responseKey] || BOT_CONFIG.respuestas.ayuda;
+                }
+            }
+            return "No entendí tu pregunta 🤔. Prueba preguntándome sobre:\n💰 Precios\n⏰ Horarios\n📍 Zonas\n📝 Cómo solicitar\n\nO escríbeme 'ayuda' para más opciones.";
+        }
+        
+        function addMessage(text, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+            messageDiv.innerHTML = `<div class="message-bubble">${text.replace(/\n/g, '<br>')}</div><div class="message-time">${timeStr}</div>`;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            chatState.messages.push({ text, isUser, time: now });
+        }
+        
+        async function showTypingIndicator() {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message bot';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = `<div class="typing-indicator"><span></span><span></span><span></span></div>`;
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            await new Promise(resolve => setTimeout(resolve, 800));
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) indicator.remove();
+        }
+        
+        async function botReply(userMessage) {
+            if (chatState.waitingForResponse) return;
+            chatState.waitingForResponse = true;
+            await showTypingIndicator();
+            const response = getBotResponse(userMessage);
+            addMessage(response, false);
+            chatState.waitingForResponse = false;
+        }
+        
+        async function sendMessage() {
+            const message = chatInput.value.trim();
+            if (!message) return;
+            addMessage(message, true);
+            chatInput.value = '';
+            await botReply(message);
+        }
+        
+        function openChat() {
+            chatWindow.classList.add('open');
+            if (chatState.messages.length === 0) {
+                setTimeout(() => {
+                    addMessage("¡Hola! 👋 Soy el asistente virtual de **Mensajería El Resolvito**.", false);
+                    setTimeout(() => {
+                        addMessage("¿En qué puedo ayudarte hoy?\n\nPuedes preguntarme sobre:\n💰 Precios\n⏰ Horarios\n📍 Cobertura\n📝 Cómo solicitar un mensajero", false);
+                        const quickRepliesDiv = document.createElement('div');
+                        quickRepliesDiv.className = 'quick-replies';
+                        quickRepliesDiv.innerHTML = `
+                            <button class="quick-reply-btn" data-msg="Precios">💰 Precios</button>
+                            <button class="quick-reply-btn" data-msg="Horarios">⏰ Horarios</button>
+                            <button class="quick-reply-btn" data-msg="Cómo solicitar">📝 Cómo solicitar</button>
+                            <button class="quick-reply-btn" data-msg="Cobertura">📍 Cobertura</button>
+                        `;
+                        const lastMessage = chatMessages.lastElementChild;
+                        if (lastMessage && lastMessage.classList.contains('message') && !lastMessage.classList.contains('user')) {
+                            lastMessage.querySelector('.message-bubble').after(quickRepliesDiv);
+                            document.querySelectorAll('.quick-reply-btn').forEach(btn => {
+                                btn.addEventListener('click', async (e) => {
+                                    const msg = btn.getAttribute('data-msg');
+                                    addMessage(msg, true);
+                                    await botReply(msg);
+                                    quickRepliesDiv.remove();
+                                });
+                            });
+                        }
+                    }, 300);
+                }, 200);
+            }
+        }
+        
+        function closeChat() { chatWindow.classList.remove('open'); }
+        
+        chatButton.addEventListener('click', openChat);
+        closeBtn.addEventListener('click', closeChat);
+        sendBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMessage(); });
+        
+        document.addEventListener('click', (e) => {
+            if (chatWindow.classList.contains('open') && !chatWindow.contains(e.target) && !chatButton.contains(e.target)) {
+                closeChat();
+            }
+        });
+    </script>
+    <!-- ========== FIN DEL CHAT BOT ========== -->
 </body>
 </html>
