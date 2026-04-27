@@ -321,224 +321,12 @@
         });
     </script>
 
-   <!-- ========== RECEPCIONISTA VIRTUAL - VIVIAN 2.0 (ULTRA REALISTA) ========== -->
-<style>
-    .chat-bot-button {
-        position: fixed;
-        bottom: 25px;
-        right: 25px;
-        width: 70px;
-        height: 70px;
-        background: linear-gradient(135deg, #25D366, #128C7E);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        z-index: 1000;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-        transition: all 0.3s;
-        border: 3px solid white;
-    }
-    .chat-bot-button:hover { transform: scale(1.05); }
-    .chat-bot-button img {
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        object-fit: cover;
-    }
-    .chat-bot-window {
-        position: fixed;
-        bottom: 100px;
-        right: 25px;
-        width: 380px;
-        max-width: calc(100vw - 40px);
-        height: 580px;
-        background: white;
-        border-radius: 20px;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.25);
-        z-index: 1001;
-        display: none;
-        flex-direction: column;
-        overflow: hidden;
-        font-family: 'Poppins', sans-serif;
-    }
-    .chat-bot-window.open { display: flex; }
-    .chat-header {
-        background: linear-gradient(135deg, #075E54, #128C7E);
-        color: white;
-        padding: 12px 20px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-    .chat-header-avatar {
-        width: 45px;
-        height: 45px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 2px solid white;
-    }
-    .chat-header-info { flex: 1; }
-    .chat-header-info h4 { margin: 0; font-size: 1rem; font-weight: 600; }
-    .chat-header-info p { margin: 0; font-size: 0.7rem; opacity: 0.8; }
-    .close-chat {
-        background: none;
-        border: none;
-        color: white;
-        font-size: 24px;
-        cursor: pointer;
-        opacity: 0.8;
-    }
-    .chat-messages {
-        flex: 1;
-        overflow-y: auto;
-        padding: 15px;
-        background: #ECE5DD;
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-    }
-    .message {
-        display: flex;
-        flex-direction: column;
-        max-width: 85%;
-    }
-    .message.bot { align-items: flex-start; }
-    .message.user { align-items: flex-end; align-self: flex-end; }
-    .message-bubble {
-        padding: 10px 14px;
-        border-radius: 18px;
-        font-size: 0.85rem;
-        line-height: 1.4;
-        position: relative;
-    }
-    .message.bot .message-bubble {
-        background: white;
-        border-top-left-radius: 4px;
-        color: #1F2937;
-        box-shadow: 0 1px 1px rgba(0,0,0,0.05);
-    }
-    .message.user .message-bubble {
-        background: #DCF8C6;
-        color: #1F2937;
-        border-bottom-right-radius: 4px;
-    }
-    .message-avatar {
-        width: 28px;
-        height: 28px;
-        border-radius: 50%;
-        margin-right: 8px;
-        vertical-align: middle;
-    }
-    .message.bot .message-meta {
-        display: flex;
-        align-items: center;
-        margin-bottom: 4px;
-    }
-    .message-time {
-        font-size: 0.6rem;
-        color: #8e8e94;
-        margin-top: 4px;
-        margin-left: 36px;
-    }
-    .typing-indicator {
-        display: flex;
-        gap: 4px;
-        padding: 10px 14px;
-        background: white;
-        border-radius: 18px;
-        border-top-left-radius: 4px;
-        width: fit-content;
-    }
-    .typing-indicator span {
-        width: 8px;
-        height: 8px;
-        background: #94a3b8;
-        border-radius: 50%;
-        animation: typing 1.4s infinite ease-in-out;
-    }
-    @keyframes typing {
-        0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
-        30% { transform: translateY(-6px); opacity: 1; }
-    }
-    .chat-input-area {
-        display: flex;
-        padding: 12px;
-        background: white;
-        border-top: 1px solid #e5e7eb;
-        gap: 8px;
-    }
-    .chat-input-area input {
-        flex: 1;
-        padding: 10px 14px;
-        border: 1px solid #e5e7eb;
-        border-radius: 25px;
-        font-family: inherit;
-        font-size: 0.85rem;
-        outline: none;
-    }
-    .chat-input-area input:focus { border-color: #128C7E; }
-    .chat-input-area button {
-        background: #128C7E;
-        border: none;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        cursor: pointer;
-        color: white;
-        transition: all 0.2s;
-    }
-    .quick-replies {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        margin-top: 8px;
-    }
-    .quick-reply-btn {
-        background: #f0fdf4;
-        border: 1px solid #128C7E;
-        color: #128C7E;
-        padding: 6px 12px;
-        border-radius: 20px;
-        font-size: 0.7rem;
-        cursor: pointer;
-        transition: all 0.2s;
-    }
-    .quick-reply-btn:hover { background: #128C7E; color: white; }
-    @media (max-width: 500px) {
-        .chat-bot-window { width: calc(100vw - 40px); right: 20px; bottom: 85px; height: 520px; }
-        .chat-bot-button { bottom: 20px; right: 20px; width: 60px; height: 60px; }
-    }
-</style>
-
-<div class="chat-bot-button" id="chatBotButton">
-    <img src="https://i.postimg.cc/d3wFf38p/mensajero_resolvito.png" alt="Vivian" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1067/1067983.png'">
-</div>
-
-<div class="chat-bot-window" id="chatBotWindow">
-    <div class="chat-header">
-        <img class="chat-header-avatar" src="https://i.postimg.cc/d3wFf38p/mensajero_resolvito.png" alt="Vivian" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1067/1067983.png'">
-        <div class="chat-header-info">
-            <h4>Vivian</h4>
-            <p>📋 Recepcionista - El Resolvito</p>
-        </div>
-        <button class="close-chat" id="closeChatBtn">&times;</button>
-    </div>
-    <div class="chat-messages" id="chatMessages"></div>
-    <div class="chat-input-area">
-        <input type="text" id="chatInput" placeholder="Escribe aquí..." autocomplete="off">
-        <button id="sendChatBtn"><i class="fas fa-paper-plane"></i></button>
-    </div>
-</div>
-
 <script>
-    // ========== VIVIAN 2.0 - ULTRAREALISTA ==========
+    // ========== VIVIAN CON MAPA Y GUÍA DE DIRECCIONES ==========
     
-    // Variables de personalidad
-    let historialCliente = JSON.parse(localStorage.getItem('historialVivian')) || { ultimoNombre: "", vecesAyudado: 0 };
+    // Memoria simple
+    let historialCliente = JSON.parse(localStorage.getItem('historialVivian')) || { ultimoNombre: "" };
     
-    // Estados de conversación
     let estadoRecepcion = {
         paso: "inicio",
         datos: {
@@ -549,40 +337,73 @@
             distanciaKm: null,
             precio: 0,
             turno: "Mañana",
-            paquete: "Documento",
-            adicional: ""
+            paquete: "Documento"
         },
-        esperandoRespuesta: false,
-        clienteApresurado: false,
-        ultimoComentarioClima: false
+        esperandoRespuesta: false
     };
     
-    // Frases variadas (evita repetición)
-    const frases = {
-        saludos: ["¡Hola! ¿Cómo estás?", "¡Qué bueno verte!", "Dime, ¿en qué te ayudo?", "Cuéntame.", "¡Hola otra vez!", "Encantada de saludarte."],
-        agradecimientos: ["Gracias a ti.", "Qué amable.", "Un placer ayudar.", "Gracias por confiar en nosotros.", "De nada, para eso estamos.", "No hay de qué."],
-        disculpas: ["Perdón, quise decir...", "Ah, disculpa, me equivoqué.", "Un momentito, corrijo.", "Oops, mi error."],
-        clima: ["Hace calor hoy, ¿verdad?", "Qué fresquito está.", "Está lloviendo por acá.", "El sol está fuerte."],
-        empatiaRapido: ["¡Ah, entiendo! Voy a ser más rápida.", "Tranqui, ya mismo te ayudo.", "Dale, voy directo al grano."],
-        sorpresa: ["¡Oh, mira!", "¡Qué curioso!", "¡Ah, ya veo!", "¡Vaya!"]
-    };
-    
-    function obtenerFrase(categoria) {
-        const arr = frases[categoria];
-        if (!arr) return "";
-        return arr[Math.floor(Math.random() * arr.length)];
-    }
-    
-    // Función de tiempo variable (simula que está escribiendo)
-    async function tiempoVariable(baseMs = 800) {
-        let extra = Math.random() * 700; // entre 0 y 700ms extra
-        // A veces "se distrae" y tarda más
-        if (Math.random() < 0.15) extra += 1000;
+    // Función de tiempo variable (simula escritura)
+    async function tiempoVariable(baseMs = 600) {
+        let extra = Math.random() * 500;
         await new Promise(r => setTimeout(r, baseMs + extra));
     }
     
-    // Calcular precio igual que antes
-    function calcularPrecio(km) {
+    let typingIndicatorElement = null;
+    
+    async function showTyping() {
+        if (typingIndicatorElement) {
+            typingIndicatorElement.remove();
+        }
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'message bot';
+        typingDiv.id = 'typing';
+        typingDiv.innerHTML = `<div class="typing-indicator"><span></span><span></span><span></span></div>`;
+        chatMessages.appendChild(typingDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        typingIndicatorElement = typingDiv;
+    }
+    
+    async function hideTyping() {
+        if (typingIndicatorElement) {
+            typingIndicatorElement.remove();
+            typingIndicatorElement = null;
+        }
+    }
+    
+    // Funciones de geolocalización con Nominatim
+    async function geocodeAddress(direccion) {
+        try {
+            const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(direccion + ", La Habana, Cuba")}&format=json&limit=1`;
+            const response = await fetch(url, {
+                headers: { 'User-Agent': 'ElResolvito-Mensajeria/1.0' }
+            });
+            const data = await response.json();
+            if (data && data.length > 0) {
+                return {
+                    lat: parseFloat(data[0].lat),
+                    lon: parseFloat(data[0].lon),
+                    display_name: data[0].display_name
+                };
+            }
+            return null;
+        } catch (error) {
+            console.error("Error en geocoding:", error);
+            return null;
+        }
+    }
+    
+    function calcularDistanciaEnKm(lat1, lon1, lat2, lon2) {
+        const R = 6371;
+        const dLat = (lat2 - lat1) * Math.PI / 180;
+        const dLon = (lon2 - lon1) * Math.PI / 180;
+        const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                  Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                  Math.sin(dLon/2) * Math.sin(dLon/2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        return R * c;
+    }
+    
+    function calcularPrecioPorDistancia(km) {
         if (km <= 1) return 400;
         if (km <= 2) return 500;
         if (km <= 3) return 600;
@@ -594,159 +415,164 @@
         return 1400 + (km - 12) * 120;
     }
     
-    function kmATexto(km) {
-        if (km <= 1) return "menos de 1 km";
-        if (km <= 2) return "entre 1 y 2 km";
-        if (km <= 3) return "entre 2 y 3 km";
-        if (km <= 4) return "entre 3 y 4 km";
-        if (km <= 5) return "entre 4 y 5 km";
-        if (km <= 7) return "entre 5 y 7 km";
-        if (km <= 10) return "entre 7 y 10 km";
-        if (km <= 12) return "entre 10 y 12 km";
-        return `${km} km`;
+    async function calcularDistanciaYPrecio(direccionRecogida, direccionEntrega) {
+        try {
+            const coordRecogida = await geocodeAddress(direccionRecogida);
+            const coordEntrega = await geocodeAddress(direccionEntrega);
+            
+            if (!coordRecogida || !coordEntrega) {
+                return { error: "No pude ubicar una de las direcciones. ¿Puedes ser más específico?" };
+            }
+            
+            const distanciaKm = calcularDistanciaEnKm(coordRecogida.lat, coordRecogida.lon, coordEntrega.lat, coordEntrega.lon);
+            const precio = calcularPrecioPorDistancia(distanciaKm);
+            
+            return {
+                distancia: Math.round(distanciaKm * 10) / 10,
+                precio: precio,
+                recogida_encontrada: coordRecogida.display_name.substring(0, 80),
+                entrega_encontrada: coordEntrega.display_name.substring(0, 80)
+            };
+        } catch (error) {
+            console.error("Error calculando distancia:", error);
+            return { error: "Hubo un problema calculando la distancia. ¿Puedes decirme los kilómetros aproximados?" };
+        }
     }
     
-    // Detectar emociones simples
-    function detectarEmocion(mensaje) {
-        const m = mensaje.toLowerCase();
-        if (m.includes("apurado") || m.includes("prisa") || m.includes("rápido") || m.includes("urgente")) return "apresurado";
-        if (m.includes("gracias") || m.includes("graciass")) return "agradecido";
-        if (m.includes("problema") || m.includes("difícil") || m.includes("ayuda")) return "preocupado";
-        if (m.includes("genial") || m.includes("excelente") || m.includes("perfecto")) return "contento";
-        return "neutral";
-    }
-    
-    // Mostrar resumen con toques humanos
     function mostrarResumen() {
         const d = estadoRecepcion.datos;
-        let comentarioExtra = "";
-        if (Math.random() < 0.3) comentarioExtra = "\n\n" + obtenerFrase("clima");
-        return `📋 **Resumen de tu solicitud**\n\n👤 Nombre: ${d.nombre}\n📱 Teléfono: ${d.telefono}\n📍 Recogida: ${d.recogida}\n📍 Entrega: ${d.entrega}\n💰 Precio: ${d.precio.toLocaleString()} CUP\n⏰ Turno: ${d.turno}\n📦 Paquete: ${d.paquete}\n\n¿Confirmamos el envío? (responde 'sí' o 'no')${comentarioExtra}`;
+        return `📋 **Resumen de tu solicitud**\n\n👤 Nombre: ${d.nombre}\n📱 Teléfono: ${d.telefono}\n📍 Recogida: ${d.recogida}\n📍 Entrega: ${d.entrega}\n💰 Precio: ${d.precio.toLocaleString()} CUP\n⏰ Turno: ${d.turno}\n📦 Paquete: ${d.paquete}\n\n¿Confirmas el envío? Responde **sí** o **no**`;
     }
     
     function enviarSolicitud() {
         const d = estadoRecepcion.datos;
         const mensajeWA = `🛵 *NUEVA SOLICITUD (Vivian)*\n\n👤 ${d.nombre}\n📱 ${d.telefono}\n📍 Recogida: ${d.recogida}\n📍 Entrega: ${d.entrega}\n💰 Precio: ${d.precio.toLocaleString()} CUP\n⏰ Turno: ${d.turno}\n📦 Paquete: ${d.paquete}`;
+        
         window.open(`https://wa.me/5356382909?text=${encodeURIComponent(mensajeWA)}`, '_blank');
         
-        // Guardar historial
         historialCliente.ultimoNombre = d.nombre;
-        historialCliente.vecesAyudado++;
         localStorage.setItem('historialVivian', JSON.stringify(historialCliente));
         
-        estadoRecepcion.paso = "inicio";
-        const nombreTemp = d.nombre;
-        estadoRecepcion.datos = { nombre: "", telefono: "", recogida: "", entrega: "", distanciaKm: null, precio: 0, turno: "Mañana", paquete: "Documento", adicional: "" };
+        const nombreCliente = d.nombre;
+        const turnoCliente = d.turno;
         
-        let despedida = `✅ **¡Listo, ${nombreTemp}!** Ya envié tu solicitud. Un mensajero te contactará pronto. ¡Gracias por contar con El Resolvito! `;
-        if (Math.random() < 0.4) despedida += obtenerFrase("agradecimientos");
-        return despedida;
+        estadoRecepcion.paso = "inicio";
+        estadoRecepcion.datos = { nombre: "", telefono: "", recogida: "", entrega: "", distanciaKm: null, precio: 0, turno: "Mañana", paquete: "Documento" };
+        
+        // Mensaje según el turno seleccionado (honesto y claro)
+        let mensajeHorario = "";
+        if (turnoCliente.includes("Mañana")) {
+            mensajeHorario = `📅 **Horario de mañana:**\n• Recogemos tu paquete a las **7:00 AM**\n• Entregamos antes de las **2:00 PM**\n• Un mensajero te contactará la noche anterior o temprano en la mañana para confirmar.`;
+        } else {
+            mensajeHorario = `📅 **Horario de tarde:**\n• Recogemos tu paquete a las **2:00 PM**\n• Entregamos antes de las **6:00 PM**\n• Un mensajero te contactará antes de la 1:00 PM para coordinar.`;
+        }
+        
+        return `✅ **¡Listo, ${nombreCliente}!**\n\nTu solicitud ha sido recibida.📤\n\n${mensajeHorario}\n\n📌 **Importante:** Tu número registrado es **${d.telefono}**. Por favor tenlo a mano.\n\nGracias por confiar en El Resolvito. ¿Necesitas algo más?`;
     }
     
-    // Procesar como Vivian (con personalidad)
     async function procesarComoVivian(mensaje) {
         const msg = mensaje.toLowerCase().trim();
-        const emocion = detectarEmocion(mensaje);
         
-        // Respuesta a emociones
-        if (emocion === "apresurado" && !estadoRecepcion.clienteApresurado) {
-            estadoRecepcion.clienteApresurado = true;
-            return obtenerFrase("empatiaRapido");
+        // Detectar si el cliente pide ayuda con el formato
+        if (msg.includes("ayuda") || msg.includes("como escribo") || msg.includes("formato")) {
+            return `📌 **Formato para direcciones en La Habana:**\n\n` +
+                   `Escribe la dirección así:\n` +
+                   `"Calle y número, entre calles, municipio"\n\n` +
+                   `✅ Ejemplos correctos:\n` +
+                   `• "Teniente Rey 113 entre Cuba y San Ignacio, Habana Vieja"\n` +
+                   `• "12 entre 15 y 17, Vedado"\n` +
+                   `• "3ra A y 70, Miramar"\n` +
+                   `• "Línea #552 entre 12 y 14, El Vedado"\n\n` +
+                   `¿Quieres solicitar un mensajero? Escribe "solicitar".`;
         }
         
-        if (emocion === "agradecido") {
-            return obtenerFrase("agradecimientos") + " ¿Necesitas algo más?";
+        // Reconocer saludo con memoria
+        if (estadoRecepcion.paso === "inicio" && historialCliente.ultimoNombre && (msg.includes("hola") || msg.includes("buenas") || msg.includes("saludos"))) {
+            return `¡Hola de nuevo, ${historialCliente.ultimoNombre}! ¿Necesitas otro mensajero? Escribe "solicitar" para empezar.`;
         }
         
-        // Si el cliente vuelve después de tiempo (simulación de memoria)
-        if (estadoRecepcion.paso === "inicio" && historialCliente.ultimoNombre && !msg.includes("solicitar") && Math.random() < 0.3) {
-            return `¡Hola de nuevo, ${historialCliente.ultimoNombre}! ¿Cómo te fue con el envío anterior? Si necesitas otro, dime 'solicitar'.`;
-        }
-        
-        // Pequeña digresión de vez en cuando (muy humano)
-        if (estadoRecepcion.paso !== "inicio" && Math.random() < 0.1 && !estadoRecepcion.ultimoComentarioClima) {
-            estadoRecepcion.ultimoComentarioClima = true;
-            await tiempoVariable(400);
-            return obtenerFrase("clima") + " Pero sigamos con tu solicitud, disculpa el comentario.";
-        }
-        
-        // Lógica principal del flujo (similar a antes pero con variaciones)
         switch(estadoRecepcion.paso) {
             case "inicio":
-                if (msg.includes("solicitar") || msg.includes("quiero un mensajero") || msg.includes("necesito")) {
+                if (msg.includes("solicitar") || msg.includes("mensajero") || msg.includes("necesito")) {
                     estadoRecepcion.paso = "preguntando_nombre";
-                    return `¡Perfecto! Voy a tomarte la solicitud. ${obtenerFrase("saludos")} Dime tu nombre completo, por favor.`;
+                    return "Claro, te ayudo. ¿Cuál es tu nombre completo?";
                 }
-                return `Hola, soy Vivian. Si quieres pedir un mensajero, escribe "solicitar". También puedo darte precios o explicarte horarios. ¿En qué te ayudo?`;
+                return "Hola, soy Vivian. Si quieres solicitar un mensajero, escribe **solicitar**.\n\nSi necesitas ayuda con el formato de las direcciones, escribe **ayuda**.";
                 
             case "preguntando_nombre":
-                if (msg.length < 3) return "Dale, escríbeme tu nombre completo para la solicitud.";
+                if (msg.length < 3) return "Dime tu nombre completo, por favor.";
                 estadoRecepcion.datos.nombre = mensaje;
                 estadoRecepcion.paso = "preguntando_telefono";
-                return `Gracias, ${mensaje}. Ahora necesito tu teléfono de contacto (con código, por ejemplo +53 5XXX XXXX).`;
+                return `Gracias, ${mensaje}. ¿Cuál es tu número de teléfono? (ej: +53 5XXX XXXX)`;
                 
             case "preguntando_telefono":
-                if (!msg.match(/[0-9]{5,}/)) return "Tiene que ser un número válido. ¿Me lo das otra vez?";
+                if (!msg.match(/[0-9]{5,}/)) return "Necesito un número válido para contactarte. ¿Me lo das?";
                 estadoRecepcion.datos.telefono = mensaje;
                 estadoRecepcion.paso = "preguntando_recogida";
-                return "📍 Dime la dirección de RECOGIDA (calle, número, municipio).";
+                return `📍 **Dirección de RECOGIDA**\n\n` +
+                       `Escribe la dirección con este formato:\n` +
+                       `"Calle y número, entre calles, municipio"\n\n` +
+                       `📌 Ejemplos:\n` +
+                       `• "Teniente Rey 113 entre Cuba y San Ignacio, Habana Vieja"\n` +
+                       `• "12 entre 15 y 17, Vedado"\n` +
+                       `• "3ra A y 70, Miramar"\n\n` +
+                       `Escribe tu dirección ahora:`;
                 
             case "preguntando_recogida":
-                if (msg.length < 5) return "Dame más detalles de la dirección, por favor.";
+                if (msg.length < 5) return "Dame más detalles de la dirección de recogida. Sigue el formato: calle, número, entre calles, municipio.";
                 estadoRecepcion.datos.recogida = mensaje;
                 estadoRecepcion.paso = "preguntando_entrega";
-                return "📍 Y la dirección de ENTREGA.";
+                return `📍 **Dirección de ENTREGA**\n\n` +
+                       `Ahora la dirección de entrega, con el mismo formato:\n` +
+                       `"Calle y número, entre calles, municipio"\n\n` +
+                       `📌 Ejemplo: "23 entre 10 y 12, Vedado"\n\n` +
+                       `Escribe la dirección:`;
                 
             case "preguntando_entrega":
-                if (msg.length < 5) return "Escríbeme bien la dirección de entrega.";
+                if (msg.length < 5) return "Dame la dirección de entrega completa. Recuerda: calle, número, entre calles, municipio.";
                 estadoRecepcion.datos.entrega = mensaje;
-                estadoRecepcion.paso = "preguntando_distancia";
-                return "📏 ¿Cuántos kilómetros hay entre esos dos puntos? Si no sabes, dime los municipios (ej: 'desde Centro Habana hasta Vedado').";
                 
-            case "preguntando_distancia":
-                let km = null;
-                const kmMatch = msg.match(/([0-9]+(?:\.[0-9]+)?)\s*(?:km|k|kilometros|kilómetros)/i);
-                if (kmMatch) {
-                    km = parseFloat(kmMatch[1]);
-                } else if (msg.match(/[0-9]+/)) {
-                    const soloNum = msg.match(/([0-9]+(?:\.[0-9]+)?)/);
-                    if (soloNum) km = parseFloat(soloNum[1]);
+                await showTyping();
+                const resultado = await calcularDistanciaYPrecio(
+                    estadoRecepcion.datos.recogida,
+                    estadoRecepcion.datos.entrega
+                );
+                await hideTyping();
+                
+                if (resultado.error) {
+                    estadoRecepcion.paso = "preguntando_distancia_manual";
+                    return resultado.error + " ¿Prefieres decirme los kilómetros aproximados o escribir la dirección con más detalles?";
                 }
                 
-                if (km !== null && !isNaN(km) && km > 0) {
-                    const precio = calcularPrecio(km);
+                estadoRecepcion.datos.distanciaKm = resultado.distancia;
+                estadoRecepcion.datos.precio = resultado.precio;
+                estadoRecepcion.paso = "preguntando_turno";
+                
+                return `📍 He localizado:\n📌 Recogida: ${resultado.recogida_encontrada}\n📌 Entrega: ${resultado.entrega_encontrada}\n\n📏 Distancia calculada: ${resultado.distancia} km\n💰 Precio: ${resultado.precio.toLocaleString()} CUP\n\n⏰ ¿Turno: mañana o tarde?`;
+                
+            case "preguntando_distancia_manual":
+                let km = parseFloat(msg);
+                if (!isNaN(km) && km > 0) {
+                    const precio = calcularPrecioPorDistancia(km);
                     estadoRecepcion.datos.distanciaKm = km;
                     estadoRecepcion.datos.precio = precio;
                     estadoRecepcion.paso = "preguntando_turno";
-                    return `💰 Según la distancia de ${kmATexto(km)}, el precio sería ${precio.toLocaleString()} CUP.\n\n⏰ ¿En qué turno prefieres? (mañana o tarde)`;
+                    return `💰 Precio estimado: ${precio.toLocaleString()} CUP para ${km} km.\n\n⏰ ¿Turno: mañana o tarde?`;
                 } else {
-                    const municipios = ["habana vieja", "centro habana", "vedado", "plaza", "nuevo vedado", "miramar", "playa", "mariel"];
-                    let encontrados = municipios.filter(m => msg.includes(m));
-                    if (encontrados.length >= 2) {
-                        let kmEstimado = 5;
-                        if (msg.includes("habana vieja") && msg.includes("vedado")) kmEstimado = 4;
-                        if (msg.includes("habana vieja") && msg.includes("miramar")) kmEstimado = 11;
-                        if (msg.includes("centro") && msg.includes("vedado")) kmEstimado = 2.5;
-                        const precio = calcularPrecio(kmEstimado);
-                        estadoRecepcion.datos.distanciaKm = kmEstimado;
-                        estadoRecepcion.datos.precio = precio;
-                        estadoRecepcion.paso = "preguntando_turno";
-                        return `Por los municipios que me diste, calculo unos ${kmEstimado} km. El precio sería ${precio.toLocaleString()} CUP.\n\n¿Turno: mañana o tarde?`;
-                    }
-                    return "No logro calcular bien la distancia. ¿Puedes darme los municipios exactos? Por ejemplo 'desde Habana Vieja hasta Vedado'. O dime los kilómetros si los sabes.";
+                    return "Dime los kilómetros aproximados, por favor (solo el número).";
                 }
                 
             case "preguntando_turno":
                 if (msg.includes("mañana")) {
                     estadoRecepcion.datos.turno = "Mañana (7am)";
                     estadoRecepcion.paso = "preguntando_paquete";
-                    return "Perfecto. 📦 ¿Qué tipo de paquete? Documento, Pequeño (≤2kg), Mediano (2-5kg) o Grande (5-8kg).";
+                    return "📦 ¿Qué tipo de paquete? Documento, Pequeño (≤2kg), Mediano (2-5kg) o Grande (5-8kg).";
                 } else if (msg.includes("tarde")) {
                     estadoRecepcion.datos.turno = "Tarde (2pm)";
                     estadoRecepcion.paso = "preguntando_paquete";
-                    return "Perfecto. 📦 Dime el tipo de paquete: Documento, Pequeño, Mediano o Grande.";
+                    return "📦 ¿Tipo de paquete? Documento, Pequeño, Mediano o Grande.";
                 } else {
-                    return "Dime 'mañana' o 'tarde' para continuar.";
+                    return "Responde 'mañana' o 'tarde'.";
                 }
                 
             case "preguntando_paquete":
@@ -761,16 +587,17 @@
             case "confirmar":
                 if (msg.includes("si") || msg.includes("sí") || msg.includes("confirmo")) {
                     return enviarSolicitud();
-                } else if (msg.includes("no") || msg.includes("cambiar")) {
+                } else if (msg.includes("no") || msg.includes("cancelar")) {
                     estadoRecepcion.paso = "inicio";
-                    estadoRecepcion.datos = { nombre: "", telefono: "", recogida: "", entrega: "", distanciaKm: null, precio: 0, turno: "Mañana", paquete: "Documento", adicional: "" };
-                    return "Está bien, empezamos de nuevo. Escribe 'solicitar' cuando quieras.";
+                    estadoRecepcion.datos = { nombre: "", telefono: "", recogida: "", entrega: "", distanciaKm: null, precio: 0, turno: "Mañana", paquete: "Documento" };
+                    return "Ok, cancelamos. Si deseas empezar de nuevo, escribe 'solicitar'.";
                 } else {
-                    return mostrarResumen() + "\n\n¿Confirmamos? Responde 'sí' o 'no'.";
+                    return mostrarResumen() + "\n\n¿Confirmas? Responde **sí** o **no**.";
                 }
                 
             default:
-                return "¿Disculpa? Perdí el hilo. Escribe 'solicitar' para empezar de nuevo.";
+                estadoRecepcion.paso = "inicio";
+                return "Disculpa, perdí el hilo. Escribe 'solicitar' para comenzar de nuevo.";
         }
     }
     
@@ -803,18 +630,6 @@
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
     
-    async function showTyping() {
-        const typingDiv = document.createElement('div');
-        typingDiv.className = 'message bot';
-        typingDiv.id = 'typing';
-        typingDiv.innerHTML = `<div class="typing-indicator"><span></span><span></span><span></span></div>`;
-        chatMessages.appendChild(typingDiv);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-        await tiempoVariable(500);
-        const t = document.getElementById('typing');
-        if (t) t.remove();
-    }
-    
     async function sendMessage() {
         const msg = chatInput.value.trim();
         if (!msg || estadoRecepcion.esperandoRespuesta) return;
@@ -824,13 +639,11 @@
         await showTyping();
         
         let respuesta = await procesarComoVivian(msg);
-        if (!respuesta) respuesta = "Perdona, no entendí bien. ¿Puedes repetirlo? Escribe 'solicitar' para empezar.";
+        await hideTyping();
+        if (!respuesta) respuesta = "No entendí. Escribe 'solicitar' para empezar.";
         
         addMessage(respuesta, false, true);
         estadoRecepcion.esperandoRespuesta = false;
-        // Resetear bandera de comentario clima a veces
-        if (Math.random() < 0.5) estadoRecepcion.ultimoComentarioClima = false;
-        estadoRecepcion.clienteApresurado = false;
     }
     
     function openChat() {
@@ -838,14 +651,16 @@
         if (chatMessages.children.length === 0) {
             setTimeout(async () => {
                 await showTyping();
-                addMessage("¡Hola! Soy Vivian, la recepcionista de El Resolvito. ¿Necesitas solicitar un mensajero o tienes alguna duda?", false, true);
+                await hideTyping();
+                addMessage("Hola, soy Vivian. ¿Necesitas solicitar un mensajero? Escribe **solicitar** para comenzar.", false, true);
                 setTimeout(() => {
                     const quickDiv = document.createElement('div');
                     quickDiv.className = 'quick-replies';
                     quickDiv.innerHTML = `
                         <button class="quick-reply-btn" data-msg="solicitar">📝 Solicitar mensajero</button>
-                        <button class="quick-reply-btn" data-msg="precios">💰 Precios</button>
+                        <button class="quick-reply-btn" data-msg="precios">💰 Ver precios</button>
                         <button class="quick-reply-btn" data-msg="horarios">⏰ Horarios</button>
+                        <button class="quick-reply-btn" data-msg="ayuda">❓ Ayuda con direcciones</button>
                     `;
                     const lastMsg = chatMessages.lastElementChild;
                     if (lastMsg && lastMsg.classList.contains('message') && !lastMsg.classList.contains('user')) {
@@ -860,10 +675,13 @@
                                     estadoRecepcion.paso = "inicio";
                                     reply = await procesarComoVivian(msg);
                                 } else if (msg === "precios") {
-                                    reply = "💰 Precios por distancia:\n• ≤1km: 400 CUP\n• 1-2km: 500 CUP\n• 2-3km: 600 CUP\n• 3-4km: 700 CUP\n• 4-5km: 800 CUP\n• 5-7km: 1000 CUP\n• 7-10km: 1200 CUP\n• 10-12km: 1400 CUP\n• +12km: 1400 + 120/km\n\n¿Quieres que te ayude a calcular tu envío? Escribe 'solicitar'.";
+                                    reply = "💰 Tarifas por distancia:\n• ≤1km: 400 CUP\n• 1-2km: 500 CUP\n• 2-3km: 600 CUP\n• 3-4km: 700 CUP\n• 4-5km: 800 CUP\n• 5-7km: 1000 CUP\n• 7-10km: 1200 CUP\n• 10-12km: 1400 CUP\n• +12km: 1400 + 120/km extra\n\n¿Quieres solicitar un mensajero? Escribe 'solicitar'.";
                                 } else if (msg === "horarios") {
-                                    reply = "⏰ Recogemos a las 7am (entrega antes 2pm) y a las 2pm (entrega antes 7pm). ¿En qué horario te interesa?";
+                                    reply = "⏰ **Horarios de El Resolvito:**\n\n**Turno mañana:** Recogida 7am, entrega antes 2pm\n**Turno tarde:** Recogida 2pm, entrega antes 6pm\n\n¿En qué turno te interesa?";
+                                } else if (msg === "ayuda") {
+                                    reply = await procesarComoVivian("ayuda");
                                 }
+                                await hideTyping();
                                 addMessage(reply, false, true);
                                 quickDiv.remove();
                             });
@@ -887,6 +705,5 @@
         }
     });
 </script>
-<!-- ========== FIN VIVIAN 2.0 ========== -->
 </body>
 </html>
