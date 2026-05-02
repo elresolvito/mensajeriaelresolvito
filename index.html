@@ -323,7 +323,7 @@
         });
     </script>
 
-    <!-- ========== RECEPCIONISTA VIRTUAL - VIVIAN ========== -->
+    <!-- ========== RECEPCIONISTA VIRTUAL - VIVIAN (MEJORADA: ORDEN FLEXIBLE + MINI FORMULARIO) ========== -->
     <style>
         .chat-bot-button {
             position: fixed;
@@ -497,7 +497,7 @@
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
-            margin-top: 8px;
+            margin-top: 12px;
         }
         .quick-reply-btn {
             background: #f0fdf4;
@@ -510,6 +510,25 @@
             transition: all 0.2s;
         }
         .quick-reply-btn:hover { background: #128C7E; color: white; }
+        .mini-form-card {
+            background: #f9fafb;
+            border-radius: 16px;
+            padding: 12px;
+            margin: 8px 0;
+            border-left: 3px solid #128C7E;
+            font-size: 0.75rem;
+        }
+        .mini-form-card p { margin: 4px 0; }
+        .btn-chat-form {
+            background: #128C7E;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 6px 12px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            margin-top: 8px;
+        }
         @media (max-width: 500px) {
             .chat-bot-window { width: calc(100vw - 40px); right: 20px; bottom: 85px; height: 520px; }
             .chat-bot-button { bottom: 20px; right: 20px; width: 60px; height: 60px; }
@@ -517,15 +536,15 @@
     </style>
 
     <div class="chat-bot-button" id="chatBotButton">
-        <img src="https://i.postimg.cc/d3wFf38p/mensajero_resolvito.png" alt="Vivian" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1067/1067983.png'">
+        <img src="https://i.postimg.cc/L4ycRvNG/vivian.webp" alt="Vivian" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1067/1067983.png'">
     </div>
 
     <div class="chat-bot-window" id="chatBotWindow">
         <div class="chat-header">
-            <img class="chat-header-avatar" src="https://i.postimg.cc/d3wFf38p/mensajero_resolvito.png" alt="Vivian" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1067/1067983.png'">
+            <img class="chat-header-avatar" src="https://i.postimg.cc/L4ycRvNG/vivian.webp" alt="Vivian" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1067/1067983.png'">
             <div class="chat-header-info">
-                <h4>Vivian ✨</h4>
-                <p>📋 Recepcionista - El Resolvito</p>
+                <h4>Vivian 🤖✨</h4>
+                <p>Asistente virtual - El Resolvito</p>
             </div>
             <button class="close-chat" id="closeChatBtn">&times;</button>
         </div>
@@ -538,10 +557,8 @@
 
     <script>
         // ==================== CONFIGURACIÓN ====================
-        // ✅ TU NUEVA URL DE GOOGLE APPS SCRIPT
         const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbxiilOy-o6i8FGq-d9pC0EfRr6pdy7lYHuK8A0-LTcIoqC-6Wn8jPCVvpuxm1Nr1hOT/exec";
         
-        // Función para calcular precio según kilómetros
         function calcularPrecio(km) {
             if (km <= 1) return 400;
             if (km <= 2) return 500;
@@ -554,34 +571,35 @@
             return 1400 + (km - 12) * 120;
         }
         
-        // ==================== MAPA DE MUNICIPIOS MEJORADO ====================
+        // Normalizar texto para tolerar errores ortográficos habituales
+        function normalizarTexto(texto) {
+            return texto.toLowerCase()
+                .replace(/á/g, 'a').replace(/é/g, 'e').replace(/í/g, 'i')
+                .replace(/ó/g, 'o').replace(/ú/g, 'u')
+                .replace(/v/g, 'b')
+                .replace(/x/g, 'ks')
+                .trim();
+        }
+        
+        // Mapa de municipios mejorado (con sinónimos)
         const mapaMunicipios = {
-            "habana vieja": { lat: 23.139, lng: -82.352, abrev: "Habana Vieja" },
-            "centro habana": { lat: 23.126, lng: -82.383, abrev: "Centro Habana" },
-            "centro": { lat: 23.126, lng: -82.383, abrev: "Centro Habana" },
-            "vedado": { lat: 23.123, lng: -82.398, abrev: "Vedado" },
-            "plaza": { lat: 23.130, lng: -82.415, abrev: "Plaza" },
-            "plaza de la revolucion": { lat: 23.124, lng: -82.386, abrev: "Plaza" },
-            "nuevo vedado": { lat: 23.107, lng: -82.406, abrev: "Nuevo Vedado" },
-            "miramar": { lat: 23.123, lng: -82.430, abrev: "Miramar" },
-            "siboney": { lat: 23.095, lng: -82.455, abrev: "Siboney" },
-            "guanabacoa": { lat: 23.124, lng: -82.301, abrev: "Guanabacoa" },
-            "san miguel del padron": { lat: 23.092, lng: -82.320, abrev: "San Miguel" },
-            "diez de octubre": { lat: 23.088, lng: -82.359, abrev: "Diez de Octubre" },
-            "cerro": { lat: 23.101, lng: -82.374, abrev: "Cerro" },
-            "marianao": { lat: 23.087, lng: -82.404, abrev: "Marianao" },
-            "la lisa": { lat: 23.057, lng: -82.420, abrev: "La Lisa" },
-            "boyeros": { lat: 23.041, lng: -82.363, abrev: "Boyeros" },
-            "arboleda": { lat: 23.056, lng: -82.347, abrev: "Arboleda" },
-            "san francisco de paula": { lat: 23.114, lng: -82.279, abrev: "San Francisco" },
-            "regla": { lat: 23.125, lng: -82.316, abrev: "Regla" },
-            "la habana del este": { lat: 23.157, lng: -82.238, abrev: "Habana del Este" },
-            "alamar": { lat: 23.157, lng: -82.238, abrev: "Alamar" },
-            "cojimar": { lat: 23.163, lng: -82.288, abrev: "Cojímar" },
-            "santiago de las vegas": { lat: 23.000, lng: -82.386, abrev: "Santiago" }
+            "habana vieja": { lat: 23.139, lng: -82.352, abrev: "Habana Vieja", sinonimos: ["casco histórico", "habana vieja"] },
+            "centro habana": { lat: 23.126, lng: -82.383, abrev: "Centro Habana", sinonimos: ["centro", "centro habana"] },
+            "vedado": { lat: 23.123, lng: -82.398, abrev: "Vedado", sinonimos: ["el vedado"] },
+            "plaza": { lat: 23.130, lng: -82.415, abrev: "Plaza", sinonimos: ["plaza de la revolución"] },
+            "nuevo vedado": { lat: 23.107, lng: -82.406, abrev: "Nuevo Vedado", sinonimos: ["nuevo vedado"] },
+            "miramar": { lat: 23.123, lng: -82.430, abrev: "Miramar", sinonimos: ["miramar"] },
+            "siboney": { lat: 23.095, lng: -82.455, abrev: "Siboney", sinonimos: ["siboney"] },
+            "guanabacoa": { lat: 23.124, lng: -82.301, abrev: "Guanabacoa", sinonimos: ["guanabacoa"] },
+            "san miguel del padron": { lat: 23.092, lng: -82.320, abrev: "San Miguel", sinonimos: ["san miguel"] },
+            "diez de octubre": { lat: 23.088, lng: -82.359, abrev: "Diez de Octubre", sinonimos: ["10 de octubre"] },
+            "cerro": { lat: 23.101, lng: -82.374, abrev: "Cerro", sinonimos: ["cerro"] },
+            "marianao": { lat: 23.087, lng: -82.404, abrev: "Marianao", sinonimos: ["marianao"] },
+            "la lisa": { lat: 23.057, lng: -82.420, abrev: "La Lisa", sinonimos: ["la lisa"] },
+            "boyeros": { lat: 23.041, lng: -82.363, abrev: "Boyeros", sinonimos: ["boyeros"] },
+            "alamar": { lat: 23.157, lng: -82.238, abrev: "Alamar", sinonimos: ["alamar"] }
         };
         
-        // Función para calcular distancia entre coordenadas (Haversine)
         function calcularDistanciaKm(lat1, lon1, lat2, lon2) {
             const R = 6371;
             const dLat = (lat2 - lat1) * Math.PI / 180;
@@ -593,27 +611,16 @@
             return Math.round(R * c * 10) / 10;
         }
         
-        // Estado de la conversación
+        // Estado flexible
         let estadoRecepcion = {
             paso: "inicio",
-            datos: {
-                nombre: "",
-                telefono: "",
-                recogida: "",
-                entrega: "",
-                distanciaKm: null,
-                precio: 0,
-                turno: "Mañana",
-                paquete: "Documento",
-                adicional: ""
-            },
-            esperandoRespuesta: false
+            datos: { nombre: "", telefono: "", recogida: "", entrega: "", distanciaKm: null, precio: 0, turno: "Mañana", paquete: "Documento" },
+            esperandoRespuesta: false,
+            intentosFallidos: 0
         };
         
-        // Función para guardar en Google Sheets (SIN BLOQUEAR)
+        // Guardado en segundo plano
         function guardarEnGoogleSheets(datos) {
-            // Método 1: Imagen invisible (NUNCA bloquea)
-            const img = new Image();
             const params = new URLSearchParams({
                 nombre: datos.nombre,
                 telefono: datos.telefono,
@@ -625,177 +632,186 @@
                 paquete: datos.paquete,
                 _t: Date.now()
             });
+            const img = new Image();
             img.src = `${GOOGLE_SHEETS_URL}?${params.toString()}`;
-            
-            // Método 2: fetch sin await (no bloquea)
-            fetch(`${GOOGLE_SHEETS_URL}?${params.toString()}`, {
-                method: 'GET',
-                cache: 'no-store',
-                mode: 'no-cors'
-            }).catch(e => console.log("Background save:", e));
-            
-            console.log("📤 Pedido enviado a Google Sheets (en segundo plano)");
+            fetch(`${GOOGLE_SHEETS_URL}?${params.toString()}`, { method: 'GET', mode: 'no-cors' }).catch(()=>{});
         }
         
-        // Función principal de Vivian
-        function procesarComoVivian(mensaje) {
-            const msg = mensaje.toLowerCase().trim();
+        // Detectar datos sueltos en cualquier mensaje
+        function detectarDatosSueltos(mensaje) {
+            const msg = mensaje.toLowerCase();
+            let cambios = {};
             
+            // Detectar patrón "desde X hasta Y" o "X a Y"
+            const desdeHasta = msg.match(/(?:desde|de)\s+([a-záéíóúñ\s]+?)\s+(?:hasta|a|para)\s+([a-záéíóúñ\s]+)/i);
+            if (desdeHasta && !estadoRecepcion.datos.recogida && !estadoRecepcion.datos.entrega) {
+                cambios.recogida = desdeHasta[1].trim();
+                cambios.entrega = desdeHasta[2].trim();
+            }
+            
+            // Detectar municipios sueltos (si escribe "Vedado a Miramar" sin "desde")
+            const municipiosKeys = Object.keys(mapaMunicipios);
+            let encontrados = [];
+            for (let mun of municipiosKeys) {
+                if (msg.includes(mun)) encontrados.push(mun);
+            }
+            if (encontrados.length >= 2 && !estadoRecepcion.datos.recogida && !estadoRecepcion.datos.entrega) {
+                cambios.recogida = encontrados[0];
+                cambios.entrega = encontrados[1];
+            }
+            
+            // Detectar número de teléfono (mínimo 5 dígitos)
+            const telefonoMatch = msg.match(/(?:5[35]\d{7}|\d{5,})/);
+            if (telefonoMatch && !estadoRecepcion.datos.telefono) {
+                cambios.telefono = telefonoMatch[0];
+            }
+            
+            return cambios;
+        }
+        
+        // Procesar mensaje flexible
+        function procesarComoVivianFlexible(mensaje) {
+            const original = mensaje;
+            const msg = normalizarTexto(original);
+            const datosSueltos = detectarDatosSueltos(original);
+            
+            // Aplicar datos sueltos automáticamente
+            if (datosSueltos.recogida) estadoRecepcion.datos.recogida = datosSueltos.recogida;
+            if (datosSueltos.entrega) estadoRecepcion.datos.entrega = datosSueltos.entrega;
+            if (datosSueltos.telefono) estadoRecepcion.datos.telefono = datosSueltos.telefono;
+            
+            // Si ya tiene recogida y entrega pero no distancia, calcular automáticamente
+            if (estadoRecepcion.datos.recogida && estadoRecepcion.datos.entrega && !estadoRecepcion.datos.distanciaKm && estadoRecepcion.paso !== "confirmar") {
+                let municipioOrigen = null, municipioDestino = null;
+                for (let [nombre, info] of Object.entries(mapaMunicipios)) {
+                    if (estadoRecepcion.datos.recogida.toLowerCase().includes(nombre)) municipioOrigen = info;
+                    if (estadoRecepcion.datos.entrega.toLowerCase().includes(nombre)) municipioDestino = info;
+                }
+                if (municipioOrigen && municipioDestino) {
+                    const km = calcularDistanciaKm(municipioOrigen.lat, municipioOrigen.lng, municipioDestino.lat, municipioDestino.lng);
+                    estadoRecepcion.datos.distanciaKm = km;
+                    estadoRecepcion.datos.precio = calcularPrecio(km);
+                }
+            }
+            
+            // Flujo principal
             switch(estadoRecepcion.paso) {
                 case "inicio":
                     estadoRecepcion.paso = "preguntando_nombre";
-                    return "👋 ¡Hola! Soy Vivian, la recepcionista de El Resolvito. ¿Cómo te llamas?";
+                    return "🤖✨ ¡Hola! Soy **Vivian, la asistente virtual** de El Resolvito (no soy humana, pero te ayudo con gusto). ¿Cómo te llamas?\n\n*Puedes写 tu nombre, teléfono o hasta 'Vedado a Miramar' y lo entiendo*";
                 
                 case "preguntando_nombre":
-                    if (msg.length < 3) return "Dime tu nombre completo para la solicitud, por favor.";
-                    estadoRecepcion.datos.nombre = mensaje;
-                    estadoRecepcion.paso = "preguntando_telefono";
-                    return `Encantada de conocerte, ${mensaje}. 📱 ¿Cuál es tu número de teléfono de contacto? (con código de área, ej: +53 5XXX XXXX)`;
+                    if (msg.length < 2) return "Dime tu nombre para empezar, por favor.";
+                    estadoRecepcion.datos.nombre = original;
+                    estadoRecepcion.paso = estadoRecepcion.datos.telefono ? "preguntando_recogida" : "preguntando_telefono";
+                    if (estadoRecepcion.datos.telefono) return `Gracias ${estadoRecepcion.datos.nombre}. 📍 ¿Dirección de RECOGIDA?`;
+                    return `Encantada, ${estadoRecepcion.datos.nombre}. 📱 ¿Tu teléfono? (ej: 53 5XXX XXXX)`;
                 
                 case "preguntando_telefono":
-                    if (!msg.match(/[0-9]{5,}/)) return "Necesito un número de teléfono válido para contactarte. ¿Me lo puedes dar?";
-                    estadoRecepcion.datos.telefono = mensaje;
+                    if (!msg.match(/\d{5,}/)) return "Necesito un número válido para contactarte. ¿Me lo das?";
+                    estadoRecepcion.datos.telefono = original;
                     estadoRecepcion.paso = "preguntando_recogida";
-                    return "📍 ¿Cuál es la dirección de RECOGIDA? (calle, número, municipio, entre calles si puedes)";
+                    return "📍 ¿Dirección de RECOGIDA? (calle, municipio)";
                 
                 case "preguntando_recogida":
-                    if (msg.length < 5) return "Dame más detalles de la dirección de recogida, por favor.";
-                    estadoRecepcion.datos.recogida = mensaje;
+                    if (msg.length < 3) return "Dime la dirección de recogida, por favor.";
+                    estadoRecepcion.datos.recogida = original;
                     estadoRecepcion.paso = "preguntando_entrega";
-                    return "📍 ¿Y la dirección de ENTREGA? (calle, número, municipio)";
+                    return "📍 ¿Dirección de ENTREGA?";
                 
                 case "preguntando_entrega":
-                    if (msg.length < 5) return "Dame más detalles de la dirección de entrega.";
-                    estadoRecepcion.datos.entrega = mensaje;
+                    if (msg.length < 3) return "Dime la dirección de entrega.";
+                    estadoRecepcion.datos.entrega = original;
+                    if (estadoRecepcion.datos.distanciaKm) {
+                        estadoRecepcion.paso = "preguntando_turno";
+                        return `💰 Detecté ${estadoRecepcion.datos.distanciaKm} km → Precio: ${estadoRecepcion.datos.precio.toLocaleString()} CUP\n\n⏰ ¿Turno? (mañana/tarde)`;
+                    }
                     estadoRecepcion.paso = "preguntando_distancia";
-                    return "📏 ¿Aproximadamente cuántos kilómetros hay entre esas dos direcciones?\n\nPuedes:\n• Decirme los municipios (ej: 'desde Vedado hasta Miramar')\n• Decirme los kilómetros (ej: '7 km')\n• Usar el formulario de abajo si prefieres";
+                    return "📏 ¿Distancia aproximada? Puedes poner los municipios (ej: Vedado a Miramar) o los km.";
                 
                 case "preguntando_distancia":
-                    // Detectar municipios
-                    let municipiosEncontrados = [];
-                    for (let [nombre, info] of Object.entries(mapaMunicipios)) {
-                        if (msg.includes(nombre)) {
-                            municipiosEncontrados.push({
-                                nombre: info.abrev,
-                                lat: info.lat,
-                                lng: info.lng
-                            });
-                        }
-                    }
-                    
                     let km = null;
-                    
-                    if (municipiosEncontrados.length >= 2) {
-                        const origen = municipiosEncontrados[0];
-                        const destino = municipiosEncontrados[1];
-                        km = calcularDistanciaKm(origen.lat, origen.lng, destino.lat, destino.lng);
-                        km = Math.round(km * 10) / 10;
-                    }
-                    
-                    if (km === null) {
-                        const kmMatch = msg.match(/([0-9]+(?:\.[0-9]+)?)\s*(?:km|k|kilometros|kilómetros)/i);
-                        if (kmMatch) {
-                            km = parseFloat(kmMatch[1]);
-                        } else {
-                            const soloNum = msg.match(/([0-9]+(?:\.[0-9]+)?)/);
-                            if (soloNum && parseFloat(soloNum[1]) < 100) {
-                                km = parseFloat(soloNum[1]);
-                            }
+                    const kmMatch = msg.match(/(\d+(?:\.\d+)?)\s*(?:km|k)/);
+                    if (kmMatch) km = parseFloat(kmMatch[1]);
+                    else {
+                        let municipiosEncontrados = [];
+                        for (let [nombre, info] of Object.entries(mapaMunicipios)) {
+                            if (msg.includes(nombre)) municipiosEncontrados.push(info);
                         }
-                    }
-                    
-                    if (km !== null && !isNaN(km) && km > 0) {
-                        const precio = calcularPrecio(km);
-                        estadoRecepcion.datos.distanciaKm = km;
-                        estadoRecepcion.datos.precio = precio;
-                        estadoRecepcion.paso = "preguntando_turno";
-                        
-                        let textoMunicipios = "";
                         if (municipiosEncontrados.length >= 2) {
-                            textoMunicipios = ` (detecté: ${municipiosEncontrados[0].nombre} → ${municipiosEncontrados[1].nombre})`;
+                            km = calcularDistanciaKm(municipiosEncontrados[0].lat, municipiosEncontrados[0].lng, 
+                                                      municipiosEncontrados[1].lat, municipiosEncontrados[1].lng);
                         }
-                        
-                        return `💰 Distancia: ${km} km${textoMunicipios}\n💵 Precio: ${precio.toLocaleString()} CUP\n\n⏰ ¿En qué turno prefieres la recogida?\n• Mañana (7am, entrega antes 2pm)\n• Tarde (2pm, entrega antes 7pm)\n\n(Escribe 'mañana' o 'tarde')`;
-                    } else {
-                        const listaMunicipios = Object.keys(mapaMunicipios).slice(0, 15).join(", ");
-                        return `🌆 No pude calcular la distancia automáticamente.\n\nPuedes:\n• Escribir los municipios (ej: "desde Vedado hasta Miramar")\n• Escribir los kilómetros (ej: "7 km")\n\nMunicipios que reconozco: ${listaMunicipios}...`;
                     }
+                    if (km && km > 0) {
+                        estadoRecepcion.datos.distanciaKm = km;
+                        estadoRecepcion.datos.precio = calcularPrecio(km);
+                        estadoRecepcion.paso = "preguntando_turno";
+                        return `💰 Distancia: ${km} km → ${estadoRecepcion.datos.precio.toLocaleString()} CUP\n\n⏰ ¿Turno? (mañana/tarde)`;
+                    }
+                    estadoRecepcion.intentosFallidos++;
+                    if (estadoRecepcion.intentosFallidos >= 2) {
+                        estadoRecepcion.intentosFallidos = 0;
+                        return mostrarMiniFormulario();
+                    }
+                    return "No entendí la distancia. Escribe algo como 'Vedado a Miramar' o '7 km'.\n\n" + mostrarMiniFormularioTexto();
                 
                 case "preguntando_turno":
-                    if (msg.includes("mañana") || msg.includes("manana")) {
-                        estadoRecepcion.datos.turno = "Mañana (7am)";
-                        estadoRecepcion.paso = "preguntando_paquete";
-                        return "Perfecto. 📦 ¿Qué tipo de paquete vas a enviar?\n• Documento/Sobre\n• Pequeño (hasta 2kg)\n• Mediano (2-5kg)\n• Grande (5-8kg)";
-                    } else if (msg.includes("tarde")) {
-                        estadoRecepcion.datos.turno = "Tarde (2pm)";
-                        estadoRecepcion.paso = "preguntando_paquete";
-                        return "Perfecto. 📦 ¿Qué tipo de paquete vas a enviar?\n• Documento/Sobre\n• Pequeño (hasta 2kg)\n• Mediano (2-5kg)\n• Grande (5-8kg)";
-                    } else {
-                        return "Dime 'mañana' o 'tarde' para continuar.";
-                    }
+                    if (msg.includes("mañana") || msg.includes("manana")) estadoRecepcion.datos.turno = "Mañana (7am)";
+                    else if (msg.includes("tarde")) estadoRecepcion.datos.turno = "Tarde (2pm)";
+                    else return "Responde 'mañana' o 'tarde'.";
+                    estadoRecepcion.paso = "preguntando_paquete";
+                    return "📦 ¿Tipo de paquete?\n• Documento\n• Pequeño\n• Mediano\n• Grande";
                 
                 case "preguntando_paquete":
-                    if (msg.includes("documento") || msg.includes("sobre")) {
-                        estadoRecepcion.datos.paquete = "Documento/Sobre";
-                    } else if (msg.includes("pequeño") || msg.includes("peque")) {
-                        estadoRecepcion.datos.paquete = "Pequeño (≤2kg)";
-                    } else if (msg.includes("mediano") || msg.includes("med")) {
-                        estadoRecepcion.datos.paquete = "Mediano (2-5kg)";
-                    } else if (msg.includes("grande")) {
-                        estadoRecepcion.datos.paquete = "Grande (5-8kg)";
-                    } else {
-                        return "Dime el tipo: Documento, Pequeño, Mediano o Grande.";
-                    }
+                    if (msg.includes("documento")) estadoRecepcion.datos.paquete = "Documento/Sobre";
+                    else if (msg.includes("pequeño")) estadoRecepcion.datos.paquete = "Pequeño (≤2kg)";
+                    else if (msg.includes("mediano")) estadoRecepcion.datos.paquete = "Mediano (2-5kg)";
+                    else if (msg.includes("grande")) estadoRecepcion.datos.paquete = "Grande (5-8kg)";
+                    else return "Elige: Documento, Pequeño, Mediano o Grande.";
                     estadoRecepcion.paso = "confirmar";
                     return mostrarResumen();
                 
                 case "confirmar":
-                    if (msg.includes("si") || msg.includes("sí") || msg.includes("correcto") || msg.includes("confirmo")) {
-                        return enviarSolicitud();
-                    } else if (msg.includes("no") || msg.includes("cambiar")) {
+                    if (msg.includes("si") || msg.includes("sí") || msg.includes("confirmo")) return enviarSolicitudFinal();
+                    else if (msg.includes("no")) {
                         estadoRecepcion.paso = "inicio";
-                        estadoRecepcion.datos = { nombre: "", telefono: "", recogida: "", entrega: "", distanciaKm: null, precio: 0, turno: "Mañana", paquete: "Documento", adicional: "" };
-                        return "Está bien, empezamos de nuevo. Escribe 'solicitar' cuando quieras comenzar.";
-                    } else {
-                        return mostrarResumen() + "\n\n¿Confirmamos el envío? Responde 'sí' para enviar o 'no' para corregir.";
+                        estadoRecepcion.datos = { nombre: "", telefono: "", recogida: "", entrega: "", distanciaKm: null, precio: 0, turno: "Mañana", paquete: "Documento" };
+                        return "Ok, empezamos de nuevo. Escribe 'solicitar' cuando quieras.";
                     }
+                    return mostrarResumen() + "\n\n¿Confirmas? (sí/no)";
                 
                 default:
-                    return "Escribe 'solicitar' para comenzar una nueva solicitud de mensajería.";
+                    return "Escribe 'solicitar' para comenzar.";
             }
         }
         
         function mostrarResumen() {
             const d = estadoRecepcion.datos;
-            return `📋 **Resumen de tu solicitud**\n\n👤 Nombre: ${d.nombre}\n📱 Teléfono: ${d.telefono}\n📍 Recogida: ${d.recogida}\n📍 Entrega: ${d.entrega}\n💰 Precio: ${d.precio.toLocaleString()} CUP\n⏰ Turno: ${d.turno}\n📦 Paquete: ${d.paquete}\n\n¿Confirmamos el envío? (responde 'sí' o 'no')`;
+            return `📋 **Resumen**\n👤 ${d.nombre}\n📱 ${d.telefono}\n📍 ${d.recogida} → ${d.entrega}\n💰 ${d.precio.toLocaleString()} CUP\n⏰ ${d.turno}\n📦 ${d.paquete}\n\n¿Confirmas? (sí/no)`;
         }
         
-        function enviarSolicitud() {
+        function mostrarMiniFormulario() {
+            return "📝 **Rellena rápido** (copia y pega):\n```\nNombre: \nTeléfono: \nRecogida: \nEntrega: \n```\nO escribe 'solicitar' para guía paso a paso.";
+        }
+        
+        function mostrarMiniFormularioTexto() {
+            return "✏️ **Escríbelo así**:\n`Nombre: Juan, Teléfono: 5555, Recogida: Vedado, Entrega: Miramar`";
+        }
+        
+        function enviarSolicitudFinal() {
             const d = estadoRecepcion.datos;
-            
-            // 1. Guardar en Google Sheets (EN SEGUNDO PLANO - NO BLOQUEA)
             guardarEnGoogleSheets(d);
-            
-            // 2. Enviar por WhatsApp
-            const mensajeWA = `🛵 *NUEVA SOLICITUD DESDE CHAT CON VIVIAN*\n\n👤 ${d.nombre}\n📱 ${d.telefono}\n📍 Recogida: ${d.recogida}\n📍 Entrega: ${d.entrega}\n💰 Precio: ${d.precio.toLocaleString()} CUP\n⏰ Turno: ${d.turno}\n📦 Paquete: ${d.paquete}`;
+            const mensajeWA = `🛵 *SOLICITUD VIVIAN*\n👤 ${d.nombre}\n📱 ${d.telefono}\n📍 ${d.recogida} → ${d.entrega}\n💰 ${d.precio} CUP\n⏰ ${d.turno}\n📦 ${d.paquete}`;
             window.open(`https://wa.me/5356382909?text=${encodeURIComponent(mensajeWA)}`, '_blank');
-            
-            // 3. Guardar backup local
-            try {
-                const solicitudes = JSON.parse(localStorage.getItem('solicitudesVivian') || '[]');
-                solicitudes.push({ ...d, fecha: new Date().toISOString() });
-                localStorage.setItem('solicitudesVivian', JSON.stringify(solicitudes));
-            } catch(e) {}
-            
-            // 4. Resetear estado
+            localStorage.setItem('solicitudesVivian', JSON.stringify([...(JSON.parse(localStorage.getItem('solicitudesVivian')||'[]')), {...d, fecha: new Date()}]));
+            const nombre = d.nombre;
             estadoRecepcion.paso = "inicio";
-            const nombreCliente = d.nombre;
-            estadoRecepcion.datos = { nombre: "", telefono: "", recogida: "", entrega: "", distanciaKm: null, precio: 0, turno: "Mañana", paquete: "Documento", adicional: "" };
-            
-            return `✅ **¡Solicitud enviada, ${nombreCliente}!**\n\nTu pedido ha sido guardado en nuestro sistema y un mensajero se pondrá en contacto contigo pronto.\n\n¿Necesitas algo más? Escribe 'solicitar' para otro envío.`;
+            estadoRecepcion.datos = { nombre: "", telefono: "", recogida: "", entrega: "", distanciaKm: null, precio: 0, turno: "Mañana", paquete: "Documento" };
+            return `✅ **Enviado, ${nombre}!** Un mensajero te contactará. ¿Necesitas algo más? Escribe 'solicitar' para otro.`;
         }
         
-        // ========== MANEJO DEL CHAT ==========
+        // Interfaz del chat
         let chatMessages = document.getElementById('chatMessages');
         let chatInput = document.getElementById('chatInput');
         let sendBtn = document.getElementById('sendChatBtn');
@@ -807,16 +823,8 @@
             const div = document.createElement('div');
             div.className = `message ${isUser ? 'user' : 'bot'}`;
             const time = new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
-            
             if (!isUser && withAvatar) {
-                div.innerHTML = `
-                    <div class="message-meta">
-                        <img class="message-avatar" src="https://i.postimg.cc/d3wFf38p/mensajero_resolvito.png" alt="Vivian" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1067/1067983.png'">
-                        <span style="font-size:0.7rem; font-weight:600;">Vivian ✨</span>
-                    </div>
-                    <div class="message-bubble">${text.replace(/\n/g, '<br>')}</div>
-                    <div class="message-time">${time}</div>
-                `;
+                div.innerHTML = `<div class="message-meta"><img class="message-avatar" src="https://i.postimg.cc/L4ycRvNG/vivian.webp" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1067/1067983.png'"><span>Vivian 🤖</span></div><div class="message-bubble">${text.replace(/\n/g, '<br>')}</div><div class="message-time">${time}</div>`;
             } else {
                 div.innerHTML = `<div class="message-bubble">${text.replace(/\n/g, '<br>')}</div><div class="message-time">${time}</div>`;
             }
@@ -831,32 +839,25 @@
             typingDiv.innerHTML = `<div class="typing-indicator"><span></span><span></span><span></span></div>`;
             chatMessages.appendChild(typingDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
-            await new Promise(r => setTimeout(r, 500 + Math.random() * 400));
-            const t = document.getElementById('typing');
-            if (t) t.remove();
+            await new Promise(r => setTimeout(r, 500));
+            document.getElementById('typing')?.remove();
         }
         
         async function sendMessage() {
             const msg = chatInput.value.trim();
             if (!msg || estadoRecepcion.esperandoRespuesta) return;
-            addMessage(msg, true, false);
+            addMessage(msg, true);
             chatInput.value = '';
             estadoRecepcion.esperandoRespuesta = true;
             await showTyping();
-            
             let respuesta = "";
-            
-            if (msg.toLowerCase().includes("solicitar") || msg.toLowerCase().includes("quiero un mensajero") || msg.toLowerCase().includes("necesito un mensajero")) {
-                estadoRecepcion.paso = "inicio";
-                estadoRecepcion.datos = { nombre: "", telefono: "", recogida: "", entrega: "", distanciaKm: null, precio: 0, turno: "Mañana", paquete: "Documento", adicional: "" };
-                respuesta = procesarComoVivian(msg);
-            } else if (estadoRecepcion.paso === "inicio" && !msg.toLowerCase().includes("solicitar")) {
-                respuesta = "👋 Hola, soy Vivian. Si deseas solicitar un mensajero, escribe 'solicitar'.\n\n✨ También puedes preguntar por 'precios' o 'horarios'.\n\n📌 Ejemplo: escribe 'desde Vedado hasta Miramar' para ver un cálculo automático.";
+            if (msg.toLowerCase().includes("solicitar") || msg.toLowerCase().includes("mensajero")) {
+                estadoRecepcion = { paso: "inicio", datos: { nombre: "", telefono: "", recogida: "", entrega: "", distanciaKm: null, precio: 0, turno: "Mañana", paquete: "Documento" }, esperandoRespuesta: false, intentosFallidos: 0 };
+                respuesta = procesarComoVivianFlexible(msg);
             } else {
-                respuesta = procesarComoVivian(msg);
-                if (!respuesta) respuesta = "Disculpa, no entendí. ¿Puedes repetirlo? O escribe 'solicitar' para empezar de nuevo.";
+                respuesta = procesarComoVivianFlexible(msg);
+                if (!respuesta || respuesta.length < 5) respuesta = "No entendí bien. Escribe 'solicitar' para empezar o pon los datos en orden libre (ej: 'Juan, 5555, Vedado, Miramar')";
             }
-            
             addMessage(respuesta, false, true);
             estadoRecepcion.esperandoRespuesta = false;
         }
@@ -865,61 +866,37 @@
             chatWindow.classList.add('open');
             if (chatMessages.children.length === 0) {
                 setTimeout(() => {
-                    addMessage("👋 ¡Hola! Soy Vivian, la recepcionista de El Resolvito.\n\n✨ **Novedad:** Ahora guardo los pedidos automáticamente en Google Sheets y reconozco más de 20 municipios de La Habana.\n\n¿Necesitas solicitar un mensajero? Escribe 'solicitar'", false, true);
+                    addMessage("🤖✨ Hola, soy **Vivian**, asistente virtual de El Resolvito.\n\n✅ Puedes escribir en **cualquier orden**\n✅ Acepto errores de escritura\n✅ Si te trabas, te ofrezco un mini formulario\n\n¿Comenzamos? Escribe 'solicitar'", false, true);
                     setTimeout(() => {
                         const quickDiv = document.createElement('div');
                         quickDiv.className = 'quick-replies';
-                        quickDiv.innerHTML = `
-                            <button class="quick-reply-btn" data-msg="solicitar">📝 Solicitar mensajero</button>
-                            <button class="quick-reply-btn" data-msg="precios">💰 Precios</button>
-                            <button class="quick-reply-btn" data-msg="horarios">⏰ Horarios</button>
-                            <button class="quick-reply-btn" data-msg="desde Vedado hasta Miramar">📍 Ej: Vedado → Miramar</button>
-                        `;
+                        quickDiv.innerHTML = `<button class="quick-reply-btn" data-msg="solicitar">📝 Solicitar mensajero</button><button class="quick-reply-btn" data-msg="precios">💰 Precios</button><button class="quick-reply-btn" data-msg="horarios">⏰ Horarios</button><button class="quick-reply-btn" data-msg="Vedado a Miramar">📍 Ejemplo: Vedado → Miramar</button>`;
                         const lastMsg = chatMessages.lastElementChild;
-                        if (lastMsg && lastMsg.classList.contains('message') && !lastMsg.classList.contains('user')) {
-                            lastMsg.querySelector('.message-bubble').after(quickDiv);
-                            document.querySelectorAll('.quick-reply-btn').forEach(btn => {
-                                btn.addEventListener('click', async (e) => {
-                                    const msg = btn.getAttribute('data-msg');
-                                    addMessage(msg, true, false);
-                                    await showTyping();
-                                    let reply = "";
-                                    if (msg === "solicitar") {
-                                        estadoRecepcion.paso = "inicio";
-                                        reply = procesarComoVivian(msg);
-                                    } else if (msg === "precios") {
-                                        reply = "💰 Precios por distancia:\n• ≤1km: 400 CUP\n• 1-2km: 500 CUP\n• 2-3km: 600 CUP\n• 3-4km: 700 CUP\n• 4-5km: 800 CUP\n• 5-7km: 1000 CUP\n• 7-10km: 1200 CUP\n• 10-12km: 1400 CUP\n• +12km: 1400 + 120/km\n\n¿Quieres solicitar un mensajero? Escribe 'solicitar'.";
-                                    } else if (msg === "horarios") {
-                                        reply = "⏰ Recogemos a las 7am (entrega antes 2pm) y a las 2pm (entrega antes 7pm). ¿En qué horario te interesa?";
-                                    } else if (msg === "desde Vedado hasta Miramar") {
-                                        estadoRecepcion.paso = "preguntando_distancia";
-                                        reply = procesarComoVivian(msg);
-                                    }
-                                    addMessage(reply, false, true);
-                                    quickDiv.remove();
-                                });
+                        if (lastMsg) lastMsg.querySelector('.message-bubble')?.after(quickDiv);
+                        document.querySelectorAll('.quick-reply-btn').forEach(btn => {
+                            btn.addEventListener('click', async (e) => {
+                                const val = btn.getAttribute('data-msg');
+                                addMessage(val, true);
+                                await showTyping();
+                                let reply = "";
+                                if (val === "solicitar") reply = procesarComoVivianFlexible(val);
+                                else if (val === "precios") reply = "💰 Tarifas: ≤1km:400, 1-2km:500, 2-3km:600, 3-4km:700, 4-5km:800, 5-7km:1000, 7-10km:1200, 10-12km:1400, +12km:1400+120/km";
+                                else if (val === "horarios") reply = "⏰ Recogidas: 7am y 2pm, entregas mismo día.";
+                                else if (val === "Vedado a Miramar") reply = procesarComoVivianFlexible(val);
+                                addMessage(reply, false, true);
+                                quickDiv.remove();
                             });
-                        }
+                        });
                     }, 200);
                 }, 200);
             }
         }
         
-        function closeChat() { chatWindow.classList.remove('open'); }
-        
         chatButton.addEventListener('click', openChat);
-        closeBtn.addEventListener('click', closeChat);
+        closeBtn.addEventListener('click', () => chatWindow.classList.remove('open'));
         sendBtn.addEventListener('click', sendMessage);
         chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMessage(); });
-        
-        document.addEventListener('click', (e) => {
-            if (chatWindow.classList.contains('open') && !chatWindow.contains(e.target) && !chatButton.contains(e.target)) {
-                closeChat();
-            }
-        });
-        
-        console.log("✅ Vivian está lista con Google Sheets integrado");
+        document.addEventListener('click', (e) => { if (chatWindow.classList.contains('open') && !chatWindow.contains(e.target) && !chatButton.contains(e.target)) chatWindow.classList.remove('open'); });
     </script>
-    <!-- ========== FIN RECEPCIONISTA VIRTUAL VIVIAN ========== -->
 </body>
 </html>
