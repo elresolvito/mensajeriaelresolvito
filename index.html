@@ -80,7 +80,249 @@
             .form-card { padding: 20px; margin: 0 10px; }
             .tarifas-table th, .tarifas-table td { padding: 8px 12px; font-size: 0.7rem; }
         }
+    </style>
+</head>
+<body>
+
+    <div class="progress-bar" id="progressBar"></div>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="animate-fadeUp">
+                    <h1>Mensajería <span>El Resolvito</span></h1>
+                    <p>Tu mensajero de confianza en La Habana. Calcula tu precio al instante. Entregas el mismo día.</p>
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 20px;">
+                        <a href="#solicitar" class="btn-whatsapp"><i class="fab fa-whatsapp"></i> Solicitar ahora</a>
+                        <a href="#tarifas" class="btn-outline"><i class="fas fa-arrow-down"></i> Ver tarifas</a>
+                    </div>
+                </div>
+                <div class="hero-image animate-fadeRight">
+                    <img src="https://i.postimg.cc/d3wFf38p/mensajero_resolvito.png" alt="Mensajero El Resolvito" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1067/1067983.png'">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="info-banner">
+            <i class="fas fa-arrow-down"></i>
+            <p>⬇️ ¡Sigue bajando! Tarifas y formulario ⬇️</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="banner-imagen">
+            <img src="https://i.postimg.cc/7Y57s2Dr/promocion-diaria-mensajeria-1.png" 
+                 alt="Mensajería El Resolvito - Promoción" 
+                 onerror="this.src='https://via.placeholder.com/1200x400/2E7D32/white?text=Mensajeria+El+Resolvito'">
+        </div>
+    </div>
+
+    <div class="scroll-indicator" id="scrollIndicator">
+        <i class="fas fa-chevron-down"></i>
+        <p>Desliza hacia abajo para ver tarifas y solicitar</p>
+    </div>
+
+    <section id="solicitar" style="padding: 40px 0 60px;">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <h2 style="font-size: 1.8rem; font-weight: 700;">📝 Solicita tu mensajero</h2>
+                <p>Completa el formulario y recibe el precio al instante</p>
+            </div>
+            
+            <div class="form-card">
+                <form id="solicitudForm">
+                    <div class="form-group">
+                        <label>Nombre completo <span style="color:red">*</span></label>
+                        <input type="text" id="nombre" required placeholder="Ej: Juan Pérez">
+                    </div>
+                    <div class="form-group">
+                        <label>Teléfono de contacto <span style="color:red">*</span></label>
+                        <input type="tel" id="telefono" required placeholder="+53 5 XXX XXXX">
+                    </div>
+                    <div class="form-group">
+                        <label>Dirección de RECOGIDA <span style="color:red">*</span></label>
+                        <input type="text" id="recogida" required placeholder="Calle, número, municipio">
+                    </div>
+                    <div class="form-group">
+                        <label>Dirección de ENTREGA <span style="color:red">*</span></label>
+                        <input type="text" id="entrega" required placeholder="Calle, número, municipio">
+                    </div>
+                    <div class="form-group">
+                        <label>Distancia aproximada <span style="color:red">*</span></label>
+                        <select id="distanciaSelect" required>
+                            <option value="">-- Selecciona --</option>
+                            <option value="400">Hasta 1 km → 400 CUP</option>
+                            <option value="500">1-2 km → 500 CUP</option>
+                            <option value="600">2-3 km → 600 CUP</option>
+                            <option value="700">3-4 km → 700 CUP</option>
+                            <option value="800">4-5 km → 800 CUP</option>
+                            <option value="1000">5-7 km → 1000 CUP</option>
+                            <option value="1200">7-10 km → 1200 CUP</option>
+                            <option value="1400">10-12 km → 1400 CUP</option>
+                            <option value="custom">Más de 12 km</option>
+                        </select>
+                    </div>
+                    <div id="customDistanciaDiv" style="display: none;">
+                        <div class="form-group">
+                            <label>Kilómetros exactos</label>
+                            <input type="number" id="customKm" step="0.5" placeholder="Ej: 15">
+                            <p style="font-size: 0.7rem;">Precio: 1400 + (km-12)×120 CUP</p>
+                        </div>
+                    </div>
+                    <div class="precio-card" id="precioCard" style="display: none;">
+                        <p>Precio estimado:</p>
+                        <div class="precio" id="precioMostrado">0 CUP</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Turno</label>
+                        <select id="turno">
+                            <option>Mañana (7am → antes 2pm)</option>
+                            <option>Tarde (2pm → antes 7pm)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo de paquete</label>
+                        <select id="tipoPaquete">
+                            <option>Documento/Sobre</option>
+                            <option>Pequeño (≤2kg)</option>
+                            <option>Mediano (2-5kg)</option>
+                            <option>Grande (5-8kg)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Información adicional</label>
+                        <textarea id="adicional" rows="2" placeholder="Ej: Llamar al llegar"></textarea>
+                    </div>
+                    <button type="submit" class="btn-whatsapp" style="width: 100%; justify-content: center;">
+                        <i class="fab fa-whatsapp"></i> Enviar solicitud
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section id="tarifas" style="padding: 0 20px 60px;">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <h2>💰 Tarifas por distancia</h2>
+            </div>
+            <div class="tarifas-table">
+                <table>
+                    <thead><tr><th>Distancia</th><th>Tarifa (CUP)</th></tr></thead>
+                    <tbody>
+                        <tr><td>Hasta 1 km</td><td>400</td></tr>
+                        <tr><td>1-2 km</td><td>500</td></tr>
+                        <tr><td>2-3 km</td><td>600</td></tr>
+                        <tr><td>3-4 km</td><td>700</td></tr>
+                        <tr><td>4-5 km</td><td>800</td></tr>
+                        <tr><td>5-7 km</td><td>1000</td></tr>
+                        <tr><td>7-10 km</td><td>1200</td></tr>
+                        <tr><td>10-12 km</td><td>1400</td></tr>
+                        <tr><td>Más de 12 km</td><td>1400 + 120 × km extra</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section style="padding: 40px 20px; background: #f8fafc; text-align: center;">
+        <div class="container">
+            <h2>Hecho con esfuerzo y dedicación</h2>
+            <p>Somos un grupo de personas trabajando para ayudar a nuestra comunidad en La Habana.</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: center;">
+                <div><h3>El Resolvito</h3><p>Tu mensajero en La Habana</p></div>
+                <div><h4>Contacto</h4><p><i class="fab fa-whatsapp"></i> <a href="https://wa.me/5356382909">+53 5 638 2909</a></p></div>
+                <div><h4>Horarios</h4><p>Recogidas: 7am y 2pm<br>Entregas mismo día</p></div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Funcionalidad formulario
+        window.addEventListener('scroll', function() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            document.getElementById('progressBar').style.width = (winScroll / height) * 100 + '%';
+        });
         
+        document.getElementById('scrollIndicator').addEventListener('click', () => {
+            document.getElementById('solicitar').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        const distanciaSelect = document.getElementById('distanciaSelect');
+        const customDiv = document.getElementById('customDistanciaDiv');
+        const customKm = document.getElementById('customKm');
+        const precioCard = document.getElementById('precioCard');
+        const precioMostrado = document.getElementById('precioMostrado');
+        
+        function actualizarPrecio() {
+            const valor = distanciaSelect.value;
+            if (valor === 'custom') {
+                customDiv.style.display = 'block';
+                const km = parseFloat(customKm.value);
+                if (!isNaN(km) && km > 12) {
+                    const precio = 1400 + (km - 12) * 120;
+                    precioMostrado.innerHTML = Math.round(precio).toLocaleString() + ' CUP';
+                    precioCard.style.display = 'block';
+                } else if (!isNaN(km) && km > 0) {
+                    alert('Para ≤12 km selecciona el rango correspondiente');
+                    precioCard.style.display = 'none';
+                } else {
+                    precioCard.style.display = 'none';
+                }
+            } else if (valor) {
+                customDiv.style.display = 'none';
+                precioMostrado.innerHTML = parseInt(valor).toLocaleString() + ' CUP';
+                precioCard.style.display = 'block';
+            } else {
+                customDiv.style.display = 'none';
+                precioCard.style.display = 'none';
+            }
+        }
+        
+        distanciaSelect.addEventListener('change', actualizarPrecio);
+        customKm.addEventListener('input', actualizarPrecio);
+        
+        document.getElementById('solicitudForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const nombre = document.getElementById('nombre').value;
+            const telefono = document.getElementById('telefono').value;
+            const recogida = document.getElementById('recogida').value;
+            const entrega = document.getElementById('entrega').value;
+            let precio = 0;
+            if (distanciaSelect.value === 'custom') {
+                const km = parseFloat(customKm.value);
+                if (isNaN(km) || km <= 12) { alert('Distancia inválida'); return; }
+                precio = 1400 + (km - 12) * 120;
+            } else {
+                precio = parseInt(distanciaSelect.value);
+            }
+            if (!nombre || !telefono || !recogida || !entrega) { alert('Completa los campos obligatorios'); return; }
+            const mensaje = `🛵 *NUEVA SOLICITUD*\n👤 ${nombre}\n📱 ${telefono}\n📍 Recogida: ${recogida}\n📍 Entrega: ${entrega}\n💰 Precio: ${precio.toLocaleString()} CUP`;
+            window.open(`https://wa.me/5356382909?text=${encodeURIComponent(mensaje)}`, '_blank');
+            alert('✅ Solicitud enviada. Te contactaremos.');
+            document.getElementById('solicitudForm').reset();
+            precioCard.style.display = 'none';
+        });
+        
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+
+    <!-- ========== RECEPCIONISTA VIRTUAL - VIVIAN (MEJORADA) ========== -->
+    <style>
         .chat-bot-button {
             position: fixed;
             bottom: 25px;
@@ -216,9 +458,6 @@
             border-radius: 50%;
             animation: typing 1.4s infinite ease-in-out;
         }
-        .typing-indicator span:nth-child(1) { animation-delay: 0s; }
-        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
-        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
         @keyframes typing {
             0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
             30% { transform: translateY(-6px); opacity: 1; }
@@ -272,179 +511,16 @@
             .chat-bot-button { bottom: 20px; right: 20px; width: 60px; height: 60px; }
         }
     </style>
-</head>
-<body>
 
-    <div class="progress-bar" id="progressBar"></div>
-
-    <section class="hero">
-        <div class="container">
-            <div class="hero-grid">
-                <div class="animate-fadeUp">
-                    <h1>Mensajería <span>El Resolvito</span></h1>
-                    <p>Tu mensajero de confianza en La Habana. Calcula tu precio al instante. Entregas el mismo día.</p>
-                    <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 20px;">
-                        <a href="#solicitar" class="btn-whatsapp"><i class="fab fa-whatsapp"></i> Solicitar ahora</a>
-                        <a href="#tarifas" class="btn-outline"><i class="fas fa-arrow-down"></i> Ver tarifas</a>
-                    </div>
-                </div>
-                <div class="hero-image animate-fadeRight">
-                    <img src="https://i.postimg.cc/d3wFf38p/mensajero_resolvito.png" alt="Mensajero El Resolvito" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1067/1067983.png'">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <div class="container">
-        <div class="info-banner">
-            <i class="fas fa-arrow-down"></i>
-            <p>⬇️ ¡Sigue bajando! Tarifas y formulario ⬇️</p>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="banner-imagen">
-            <img src="https://i.postimg.cc/7Y57s2Dr/promocion-diaria-mensajeria-1.png" 
-                 alt="Mensajería El Resolvito - Promoción" 
-                 onerror="this.src='https://via.placeholder.com/1200x400/2E7D32/white?text=Mensajeria+El+Resolvito'">
-        </div>
-    </div>
-
-    <div class="scroll-indicator" id="scrollIndicator">
-        <i class="fas fa-chevron-down"></i>
-        <p>Desliza hacia abajo para ver tarifas y solicitar</p>
-    </div>
-
-    <section id="solicitar" style="padding: 40px 0 60px;">
-        <div class="container">
-            <div style="text-align: center; margin-bottom: 30px;">
-                <h2 style="font-size: 1.8rem; font-weight: 700;">📝 Solicita tu mensajero</h2>
-                <p>Completa el formulario y recibe el precio al instante</p>
-            </div>
-            
-            <div class="form-card">
-                <form id="solicitudForm">
-                    <div class="form-group">
-                        <label>Nombre completo <span style="color:red">*</span></label>
-                        <input type="text" id="nombre" required placeholder="Ej: Juan Pérez">
-                    </div>
-                    <div class="form-group">
-                        <label>Teléfono de contacto <span style="color:red">*</span></label>
-                        <input type="tel" id="telefono" required placeholder="+53 5 XXX XXXX">
-                    </div>
-                    <div class="form-group">
-                        <label>Dirección de RECOGIDA <span style="color:red">*</span></label>
-                        <input type="text" id="recogida" required placeholder="Ej: Teniente Rey 113 entre Cuba y San Ignacio, Habana Vieja">
-                    </div>
-                    <div class="form-group">
-                        <label>Dirección de ENTREGA <span style="color:red">*</span></label>
-                        <input type="text" id="entrega" required placeholder="Ej: 23 entre 10 y 12, Vedado">
-                    </div>
-                    <div class="form-group">
-                        <label>Distancia aproximada <span style="color:red">*</span></label>
-                        <select id="distanciaSelect" required>
-                            <option value="">-- Selecciona --</option>
-                            <option value="400">Hasta 1 km → 400 CUP</option>
-                            <option value="500">1-2 km → 500 CUP</option>
-                            <option value="600">2-3 km → 600 CUP</option>
-                            <option value="700">3-4 km → 700 CUP</option>
-                            <option value="800">4-5 km → 800 CUP</option>
-                            <option value="1000">5-7 km → 1000 CUP</option>
-                            <option value="1200">7-10 km → 1200 CUP</option>
-                            <option value="1400">10-12 km → 1400 CUP</option>
-                            <option value="custom">Más de 12 km</option>
-                        </select>
-                    </div>
-                    <div id="customDistanciaDiv" style="display: none;">
-                        <div class="form-group">
-                            <label>Kilómetros exactos</label>
-                            <input type="number" id="customKm" step="0.5" placeholder="Ej: 15">
-                            <p style="font-size: 0.7rem;">Precio: 1400 + (km-12)×120 CUP</p>
-                        </div>
-                    </div>
-                    <div class="precio-card" id="precioCard" style="display: none;">
-                        <p>Precio estimado:</p>
-                        <div class="precio" id="precioMostrado">0 CUP</div>
-                    </div>
-                    <div class="form-group">
-                        <label>Turno</label>
-                        <select id="turno">
-                            <option>Mañana (7am → antes 2pm)</option>
-                            <option>Tarde (2pm → antes 6pm)</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Tipo de paquete</label>
-                        <select id="tipoPaquete">
-                            <option>Documento/Sobre</option>
-                            <option>Pequeño (≤2kg)</option>
-                            <option>Mediano (2-5kg)</option>
-                            <option>Grande (5-8kg)</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Información adicional</label>
-                        <textarea id="adicional" rows="2" placeholder="Ej: Llamar al llegar, timbre 3B"></textarea>
-                    </div>
-                    <button type="submit" class="btn-whatsapp" style="width: 100%; justify-content: center;">
-                        <i class="fab fa-whatsapp"></i> Enviar solicitud
-                    </button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <section id="tarifas" style="padding: 0 20px 60px;">
-        <div class="container">
-            <div style="text-align: center; margin-bottom: 20px;">
-                <h2>💰 Tarifas por distancia</h2>
-            </div>
-            <div class="tarifas-table">
-                <table>
-                    <thead><tr><th>Distancia</th><th>Tarifa (CUP)</th></tr></thead>
-                    <tbody>
-                        <tr><td>Hasta 1 km</td><td>400</td></tr>
-                        <tr><td>1-2 km</td><td>500</td></tr>
-                        <tr><td>2-3 km</td><td>600</td></tr>
-                        <tr><td>3-4 km</td><td>700</td></tr>
-                        <tr><td>4-5 km</td><td>800</td></tr>
-                        <tr><td>5-7 km</td><td>1000</td></tr>
-                        <tr><td>7-10 km</td><td>1200</td></tr>
-                        <tr><td>10-12 km</td><td>1400</td></tr>
-                        <tr><td>Más de 12 km</td><td>1400 + 120 × km extra</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-
-    <section style="padding: 40px 20px; background: #f8fafc; text-align: center;">
-        <div class="container">
-            <h2>Hecho con esfuerzo y dedicación</h2>
-            <p>Somos un grupo de personas trabajando para ayudar a nuestra comunidad en La Habana.</p>
-        </div>
-    </section>
-
-    <footer class="footer">
-        <div class="container">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: center;">
-                <div><h3>El Resolvito</h3><p>Tu mensajero en La Habana</p></div>
-                <div><h4>Contacto</h4><p><i class="fab fa-whatsapp"></i> <a href="https://wa.me/5356382909">+53 5 638 2909</a></p></div>
-                <div><h4>Horarios</h4><p>Recogidas: 7am y 2pm<br>Entregas mismo día antes 2pm o antes 6pm</p></div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- ========== CHAT DE VIVIAN ========== -->
     <div class="chat-bot-button" id="chatBotButton">
-        <img src="https://i.postimg.cc/L4ycRvNG/vivian.webp" alt="Vivian" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1067/1067983.png'">
+        <img src="https://i.postimg.cc/d3wFf38p/mensajero_resolvito.png" alt="Vivian" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1067/1067983.png'">
     </div>
 
     <div class="chat-bot-window" id="chatBotWindow">
         <div class="chat-header">
-            <img class="chat-header-avatar" src="https://i.postimg.cc/L4ycRvNG/vivian.webp" alt="Vivian" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1067/1067983.png'">
+            <img class="chat-header-avatar" src="https://i.postimg.cc/d3wFf38p/mensajero_resolvito.png" alt="Vivian" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1067/1067983.png'">
             <div class="chat-header-info">
-                <h4>Vivian</h4>
+                <h4>Vivian ✨ Mejorada</h4>
                 <p>📋 Recepcionista - El Resolvito</p>
             </div>
             <button class="close-chat" id="closeChatBtn">&times;</button>
@@ -457,165 +533,12 @@
     </div>
 
     <script>
-        // ========== SCRIPT DEL FORMULARIO PRINCIPAL ==========
-        window.addEventListener('scroll', function() {
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            document.getElementById('progressBar').style.width = (winScroll / height) * 100 + '%';
-        });
+        // ==================== CONFIGURACIÓN ====================
+        // URL de Google Apps Script para guardar pedidos
+        const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbx_38Ff3FxUGLlF-ga1QeFmudk3jmvifBHwXcFLT1aq0uis3DiIgqMwpEbKaPotum0B/exec";
         
-        document.getElementById('scrollIndicator').addEventListener('click', () => {
-            document.getElementById('solicitar').scrollIntoView({ behavior: 'smooth' });
-        });
-        
-        const distanciaSelect = document.getElementById('distanciaSelect');
-        const customDiv = document.getElementById('customDistanciaDiv');
-        const customKm = document.getElementById('customKm');
-        const precioCard = document.getElementById('precioCard');
-        const precioMostrado = document.getElementById('precioMostrado');
-        
-        function actualizarPrecio() {
-            const valor = distanciaSelect.value;
-            if (valor === 'custom') {
-                customDiv.style.display = 'block';
-                const km = parseFloat(customKm.value);
-                if (!isNaN(km) && km > 12) {
-                    const precio = 1400 + (km - 12) * 120;
-                    precioMostrado.innerHTML = Math.round(precio).toLocaleString() + ' CUP';
-                    precioCard.style.display = 'block';
-                } else if (!isNaN(km) && km > 0) {
-                    alert('Para ≤12 km selecciona el rango correspondiente');
-                    precioCard.style.display = 'none';
-                } else {
-                    precioCard.style.display = 'none';
-                }
-            } else if (valor) {
-                customDiv.style.display = 'none';
-                precioMostrado.innerHTML = parseInt(valor).toLocaleString() + ' CUP';
-                precioCard.style.display = 'block';
-            } else {
-                customDiv.style.display = 'none';
-                precioCard.style.display = 'none';
-            }
-        }
-        
-        distanciaSelect.addEventListener('change', actualizarPrecio);
-        customKm.addEventListener('input', actualizarPrecio);
-        
-        document.getElementById('solicitudForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const nombre = document.getElementById('nombre').value;
-            const telefono = document.getElementById('telefono').value;
-            const recogida = document.getElementById('recogida').value;
-            const entrega = document.getElementById('entrega').value;
-            const turno = document.getElementById('turno').value;
-            const tipoPaquete = document.getElementById('tipoPaquete').value;
-            const adicional = document.getElementById('adicional').value;
-            
-            let precio = 0;
-            if (distanciaSelect.value === 'custom') {
-                const km = parseFloat(customKm.value);
-                if (isNaN(km) || km <= 12) { alert('Distancia inválida'); return; }
-                precio = 1400 + (km - 12) * 120;
-            } else {
-                precio = parseInt(distanciaSelect.value);
-            }
-            if (!nombre || !telefono || !recogida || !entrega) { alert('Completa los campos obligatorios'); return; }
-            
-            const mensaje = `🛵 *NUEVA SOLICITUD WEB*\n👤 ${nombre}\n📱 ${telefono}\n📍 Recogida: ${recogida}\n📍 Entrega: ${entrega}\n💰 Precio: ${precio.toLocaleString()} CUP\n⏰ Turno: ${turno}\n📦 Paquete: ${tipoPaquete}\n📝 Adicional: ${adicional || "Ninguno"}`;
-            
-            window.open(`https://wa.me/5356382909?text=${encodeURIComponent(mensaje)}`, '_blank');
-            alert('✅ Solicitud enviada. En el horario seleccionado te contactaremos.');
-            document.getElementById('solicitudForm').reset();
-            precioCard.style.display = 'none';
-            customDiv.style.display = 'none';
-        });
-        
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) target.scrollIntoView({ behavior: 'smooth' });
-            });
-        });
-
-        // ========== VIVIAN CON MAPA Y GEOLOCALIZACIÓN ==========
-        
-        let historialCliente = JSON.parse(localStorage.getItem('historialVivian')) || { ultimoNombre: "" };
-        
-        let estadoRecepcion = {
-            paso: "inicio",
-            datos: {
-                nombre: "",
-                telefono: "",
-                recogida: "",
-                entrega: "",
-                distanciaKm: null,
-                precio: 0,
-                turno: "Mañana",
-                paquete: "Documento"
-            },
-            esperandoRespuesta: false
-        };
-        
-        async function tiempoVariable(baseMs = 600) {
-            let extra = Math.random() * 500;
-            await new Promise(r => setTimeout(r, baseMs + extra));
-        }
-        
-        let typingIndicatorElement = null;
-        
-        async function showTyping() {
-            if (typingIndicatorElement) typingIndicatorElement.remove();
-            const typingDiv = document.createElement('div');
-            typingDiv.className = 'message bot';
-            typingDiv.id = 'typing';
-            typingDiv.innerHTML = `<div class="typing-indicator"><span></span><span></span><span></span></div>`;
-            chatMessages.appendChild(typingDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-            typingIndicatorElement = typingDiv;
-        }
-        
-        async function hideTyping() {
-            if (typingIndicatorElement) {
-                typingIndicatorElement.remove();
-                typingIndicatorElement = null;
-            }
-        }
-        
-        async function geocodeAddress(direccion) {
-            try {
-                const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(direccion + ", La Habana, Cuba")}&format=json&limit=1`;
-                const response = await fetch(url, {
-                    headers: { 'User-Agent': 'ElResolvito-Mensajeria/1.0' }
-                });
-                const data = await response.json();
-                if (data && data.length > 0) {
-                    return {
-                        lat: parseFloat(data[0].lat),
-                        lon: parseFloat(data[0].lon),
-                        display_name: data[0].display_name
-                    };
-                }
-                return null;
-            } catch (error) {
-                console.error("Error en geocoding:", error);
-                return null;
-            }
-        }
-        
-        function calcularDistanciaEnKm(lat1, lon1, lat2, lon2) {
-            const R = 6371;
-            const dLat = (lat2 - lat1) * Math.PI / 180;
-            const dLon = (lon2 - lon1) * Math.PI / 180;
-            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-                      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-                      Math.sin(dLon/2) * Math.sin(dLon/2);
-            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-            return R * c;
-        }
-        
-        function calcularPrecioPorDistancia(km) {
+        // Función para calcular precio según kilómetros
+        function calcularPrecio(km) {
             if (km <= 1) return 400;
             if (km <= 2) return 500;
             if (km <= 3) return 600;
@@ -627,188 +550,237 @@
             return 1400 + (km - 12) * 120;
         }
         
-        async function calcularDistanciaYPrecio(direccionRecogida, direccionEntrega) {
-            try {
-                const coordRecogida = await geocodeAddress(direccionRecogida);
-                const coordEntrega = await geocodeAddress(direccionEntrega);
+        // ==================== MAPA DE MUNICIPIOS ====================
+        const mapaMunicipios = {
+            "habana vieja": { lat: 23.139, lng: -82.352, abrev: "Habana Vieja" },
+            "centro habana": { lat: 23.126, lng: -82.383, abrev: "Centro Habana" },
+            "centro": { lat: 23.126, lng: -82.383, abrev: "Centro Habana" },
+            "vedado": { lat: 23.123, lng: -82.398, abrev: "Vedado" },
+            "plaza": { lat: 23.130, lng: -82.415, abrev: "Plaza" },
+            "plaza de la revolucion": { lat: 23.124, lng: -82.386, abrev: "Plaza" },
+            "nuevo vedado": { lat: 23.107, lng: -82.406, abrev: "Nuevo Vedado" },
+            "miramar": { lat: 23.123, lng: -82.430, abrev: "Miramar" },
+            "siboney": { lat: 23.095, lng: -82.455, abrev: "Siboney" },
+            "guanabacoa": { lat: 23.124, lng: -82.301, abrev: "Guanabacoa" },
+            "san miguel del padron": { lat: 23.092, lng: -82.320, abrev: "San Miguel" },
+            "diez de octubre": { lat: 23.088, lng: -82.359, abrev: "Diez de Octubre" },
+            "cerro": { lat: 23.101, lng: -82.374, abrev: "Cerro" },
+            "marianao": { lat: 23.087, lng: -82.404, abrev: "Marianao" },
+            "la lisa": { lat: 23.057, lng: -82.420, abrev: "La Lisa" },
+            "boyeros": { lat: 23.041, lng: -82.363, abrev: "Boyeros" },
+            "arboleda": { lat: 23.056, lng: -82.347, abrev: "Arboleda" },
+            "san francisco de paula": { lat: 23.114, lng: -82.279, abrev: "San Francisco" },
+            "regla": { lat: 23.125, lng: -82.316, abrev: "Regla" },
+            "la habana del este": { lat: 23.157, lng: -82.238, abrev: "Habana del Este" },
+            "alamar": { lat: 23.157, lng: -82.238, abrev: "Alamar" },
+            "cojimar": { lat: 23.163, lng: -82.288, abrev: "Cojímar" },
+            "santiago de las vegas": { lat: 23.000, lng: -82.386, abrev: "Santiago" }
+        };
+        
+        // Función para calcular distancia entre coordenadas (Haversine)
+        function calcularDistanciaKm(lat1, lon1, lat2, lon2) {
+            const R = 6371;
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                      Math.sin(dLon/2) * Math.sin(dLon/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return Math.round(R * c * 10) / 10;
+        }
+        
+        // Estado de la conversación
+        let estadoRecepcion = {
+            paso: "inicio",
+            datos: {
+                nombre: "",
+                telefono: "",
+                recogida: "",
+                entrega: "",
+                distanciaKm: null,
+                precio: 0,
+                turno: "Mañana",
+                paquete: "Documento",
+                adicional: ""
+            },
+            esperandoRespuesta: false
+        };
+        
+        // Función principal mejorada de Vivian
+        function procesarComoVivian(mensaje) {
+            const msg = mensaje.toLowerCase().trim();
+            
+            switch(estadoRecepcion.paso) {
+                case "inicio":
+                    estadoRecepcion.paso = "preguntando_nombre";
+                    return "👋 ¡Hola! Soy Vivian, la recepcionista de El Resolvito. ¿Cómo te llamas?";
                 
-                if (!coordRecogida || !coordEntrega) {
-                    return { error: "No pude ubicar una de las direcciones. ¿Puedes ser más específico?" };
-                }
+                case "preguntando_nombre":
+                    if (msg.length < 3) return "Dime tu nombre completo para la solicitud, por favor.";
+                    estadoRecepcion.datos.nombre = mensaje;
+                    estadoRecepcion.paso = "preguntando_telefono";
+                    return `Encantada de conocerte, ${mensaje}. 📱 ¿Cuál es tu número de teléfono de contacto? (con código de área, ej: +53 5XXX XXXX)`;
                 
-                const distanciaKm = calcularDistanciaEnKm(coordRecogida.lat, coordRecogida.lon, coordEntrega.lat, coordEntrega.lon);
-                const precio = calcularPrecioPorDistancia(distanciaKm);
+                case "preguntando_telefono":
+                    if (!msg.match(/[0-9]{5,}/)) return "Necesito un número de teléfono válido para contactarte. ¿Me lo puedes dar?";
+                    estadoRecepcion.datos.telefono = mensaje;
+                    estadoRecepcion.paso = "preguntando_recogida";
+                    return "📍 ¿Cuál es la dirección de RECOGIDA? (calle, número, municipio, entre calles si puedes)";
                 
-                return {
-                    distancia: Math.round(distanciaKm * 10) / 10,
-                    precio: precio,
-                    recogida_encontrada: coordRecogida.display_name.substring(0, 80),
-                    entrega_encontrada: coordEntrega.display_name.substring(0, 80)
-                };
-            } catch (error) {
-                console.error("Error calculando distancia:", error);
-                return { error: "Hubo un problema calculando la distancia. ¿Puedes decirme los kilómetros aproximados?" };
+                case "preguntando_recogida":
+                    if (msg.length < 5) return "Dame más detalles de la dirección de recogida, por favor.";
+                    estadoRecepcion.datos.recogida = mensaje;
+                    estadoRecepcion.paso = "preguntando_entrega";
+                    return "📍 ¿Y la dirección de ENTREGA? (calle, número, municipio)";
+                
+                case "preguntando_entrega":
+                    if (msg.length < 5) return "Dame más detalles de la dirección de entrega.";
+                    estadoRecepcion.datos.entrega = mensaje;
+                    estadoRecepcion.paso = "preguntando_distancia";
+                    return "📏 ¿Aproximadamente cuántos kilómetros hay entre esas dos direcciones? Puedes decirme un número o los municipios. Ejemplo: '3 km' o 'desde Vedado hasta Miramar'.\n\n✨ ¡Ahora reconozco más de 20 municipios de La Habana!";
+                
+                case "preguntando_distancia":
+                    // Detectar municipios en el mensaje
+                    let municipiosEncontrados = [];
+                    for (let [nombre, info] of Object.entries(mapaMunicipios)) {
+                        if (msg.includes(nombre)) {
+                            municipiosEncontrados.push({
+                                nombre: info.abrev,
+                                lat: info.lat,
+                                lng: info.lng
+                            });
+                        }
+                    }
+                    
+                    let km = null;
+                    
+                    // Si encontró al menos 2 municipios, calcular distancia
+                    if (municipiosEncontrados.length >= 2) {
+                        const origen = municipiosEncontrados[0];
+                        const destino = municipiosEncontrados[1];
+                        km = calcularDistanciaKm(origen.lat, origen.lng, destino.lat, destino.lng);
+                        km = Math.round(km * 10) / 10;
+                    }
+                    
+                    // Si no, intentar extraer número
+                    if (km === null) {
+                        const kmMatch = msg.match(/([0-9]+(?:\.[0-9]+)?)\s*(?:km|k|kilometros|kilómetros)/i);
+                        if (kmMatch) {
+                            km = parseFloat(kmMatch[1]);
+                        } else {
+                            const soloNum = msg.match(/([0-9]+(?:\.[0-9]+)?)/);
+                            if (soloNum && parseFloat(soloNum[1]) < 100) {
+                                km = parseFloat(soloNum[1]);
+                            }
+                        }
+                    }
+                    
+                    if (km !== null && !isNaN(km) && km > 0) {
+                        const precio = calcularPrecio(km);
+                        estadoRecepcion.datos.distanciaKm = km;
+                        estadoRecepcion.datos.precio = precio;
+                        estadoRecepcion.paso = "preguntando_turno";
+                        
+                        let textoMunicipios = "";
+                        if (municipiosEncontrados.length >= 2) {
+                            textoMunicipios = ` (detecté: ${municipiosEncontrados[0].nombre} → ${municipiosEncontrados[1].nombre})`;
+                        }
+                        
+                        return `💰 Según la distancia de ${km} km${textoMunicipios}, el precio sería de ${precio.toLocaleString()} CUP.\n\n⏰ ¿En qué turno prefieres la recogida?\n• Mañana (7am, entrega antes 2pm)\n• Tarde (2pm, entrega antes 7pm)\n\n(Escribe 'mañana' o 'tarde')`;
+                    } else {
+                        const listaMunicipios = Object.keys(mapaMunicipios).slice(0, 12).join(", ");
+                        return `🌆 No pude calcular la distancia automáticamente.\n\nPuedes:\n• Escribir los municipios (ej: "desde Vedado hasta Miramar")\n• Escribir los kilómetros (ej: "7 km")\n• Usar el formulario de abajo\n\nMunicipios que reconozco: ${listaMunicipios}...`;
+                    }
+                
+                case "preguntando_turno":
+                    if (msg.includes("mañana") || msg.includes("manana")) {
+                        estadoRecepcion.datos.turno = "Mañana (7am)";
+                        estadoRecepcion.paso = "preguntando_paquete";
+                        return "Perfecto. 📦 ¿Qué tipo de paquete vas a enviar?\n• Documento/Sobre\n• Pequeño (hasta 2kg)\n• Mediano (2-5kg)\n• Grande (5-8kg)";
+                    } else if (msg.includes("tarde")) {
+                        estadoRecepcion.datos.turno = "Tarde (2pm)";
+                        estadoRecepcion.paso = "preguntando_paquete";
+                        return "Perfecto. 📦 ¿Qué tipo de paquete vas a enviar?\n• Documento/Sobre\n• Pequeño (hasta 2kg)\n• Mediano (2-5kg)\n• Grande (5-8kg)";
+                    } else {
+                        return "Dime 'mañana' o 'tarde' para continuar con la solicitud.";
+                    }
+                
+                case "preguntando_paquete":
+                    if (msg.includes("documento") || msg.includes("sobre")) {
+                        estadoRecepcion.datos.paquete = "Documento/Sobre";
+                    } else if (msg.includes("pequeño") || (msg.includes("peque") && msg.includes("kg"))) {
+                        estadoRecepcion.datos.paquete = "Pequeño (≤2kg)";
+                    } else if (msg.includes("mediano") || msg.includes("med")) {
+                        estadoRecepcion.datos.paquete = "Mediano (2-5kg)";
+                    } else if (msg.includes("grande")) {
+                        estadoRecepcion.datos.paquete = "Grande (5-8kg)";
+                    } else {
+                        return "Dime el tipo: Documento, Pequeño, Mediano o Grande.";
+                    }
+                    estadoRecepcion.paso = "confirmar";
+                    return mostrarResumen();
+                
+                case "confirmar":
+                    if (msg.includes("si") || msg.includes("sí") || msg.includes("correcto") || msg.includes("confirmo")) {
+                        return enviarSolicitud();
+                    } else if (msg.includes("no") || msg.includes("cambiar")) {
+                        estadoRecepcion.paso = "inicio";
+                        estadoRecepcion.datos = { nombre: "", telefono: "", recogida: "", entrega: "", distanciaKm: null, precio: 0, turno: "Mañana", paquete: "Documento", adicional: "" };
+                        return "Está bien, empezamos de nuevo. Escribe 'solicitar' cuando quieras comenzar.";
+                    } else {
+                        return mostrarResumen() + "\n\n¿Confirmamos el envío? Responde 'sí' para enviar o 'no' para corregir.";
+                    }
+                
+                default:
+                    return "Escribe 'solicitar' para comenzar una nueva solicitud de mensajería.";
             }
         }
         
         function mostrarResumen() {
             const d = estadoRecepcion.datos;
-            return `📋 **Resumen de tu solicitud**\n\n👤 Nombre: ${d.nombre}\n📱 Teléfono: ${d.telefono}\n📍 Recogida: ${d.recogida}\n📍 Entrega: ${d.entrega}\n💰 Precio: ${d.precio.toLocaleString()} CUP\n⏰ Turno: ${d.turno}\n📦 Paquete: ${d.paquete}\n\n¿Confirmas el envío? Responde **sí** o **no**`;
+            return `📋 **Resumen de tu solicitud**\n\n👤 Nombre: ${d.nombre}\n📱 Teléfono: ${d.telefono}\n📍 Recogida: ${d.recogida}\n📍 Entrega: ${d.entrega}\n💰 Precio: ${d.precio.toLocaleString()} CUP\n⏰ Turno: ${d.turno}\n📦 Paquete: ${d.paquete}\n\n¿Confirmamos el envío? (responde 'sí' o 'no')`;
         }
         
-        function enviarSolicitud() {
+        async function enviarSolicitud() {
             const d = estadoRecepcion.datos;
-            const mensajeWA = `🛵 *NUEVA SOLICITUD (Vivian)*\n\n👤 ${d.nombre}\n📱 ${d.telefono}\n📍 Recogida: ${d.recogida}\n📍 Entrega: ${d.entrega}\n💰 Precio: ${d.precio.toLocaleString()} CUP\n⏰ Turno: ${d.turno}\n📦 Paquete: ${d.paquete}`;
             
+            // 1. Guardar en Google Sheets
+            try {
+                await fetch(GOOGLE_SHEETS_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        nombre: d.nombre,
+                        telefono: d.telefono,
+                        recogida: d.recogida,
+                        entrega: d.entrega,
+                        distanciaKm: d.distanciaKm,
+                        precio: d.precio,
+                        turno: d.turno,
+                        paquete: d.paquete
+                    })
+                });
+                console.log("✅ Pedido guardado en Google Sheets");
+            } catch (error) {
+                console.log("❌ Error guardando en Google Sheets:", error);
+            }
+            
+            // 2. Enviar por WhatsApp
+            const mensajeWA = `🛵 *NUEVA SOLICITUD DESDE CHAT CON VIVIAN*\n\n👤 ${d.nombre}\n📱 ${d.telefono}\n📍 Recogida: ${d.recogida}\n📍 Entrega: ${d.entrega}\n💰 Precio: ${d.precio.toLocaleString()} CUP\n⏰ Turno: ${d.turno}\n📦 Paquete: ${d.paquete}`;
             window.open(`https://wa.me/5356382909?text=${encodeURIComponent(mensajeWA)}`, '_blank');
             
-            historialCliente.ultimoNombre = d.nombre;
-            localStorage.setItem('historialVivian', JSON.stringify(historialCliente));
+            // 3. Guardar backup local
+            const solicitudes = JSON.parse(localStorage.getItem('solicitudesVivian') || '[]');
+            solicitudes.push({ ...d, fecha: new Date().toISOString() });
+            localStorage.setItem('solicitudesVivian', JSON.stringify(solicitudes));
             
-            const nombreCliente = d.nombre;
-            const turnoCliente = d.turno;
-            const telefonoCliente = d.telefono;
-            
+            // 4. Resetear estado
             estadoRecepcion.paso = "inicio";
-            estadoRecepcion.datos = { nombre: "", telefono: "", recogida: "", entrega: "", distanciaKm: null, precio: 0, turno: "Mañana", paquete: "Documento" };
+            const nombreCliente = d.nombre;
+            estadoRecepcion.datos = { nombre: "", telefono: "", recogida: "", entrega: "", distanciaKm: null, precio: 0, turno: "Mañana", paquete: "Documento", adicional: "" };
             
-            let mensajeHorario = "";
-            if (turnoCliente.includes("Mañana")) {
-                mensajeHorario = `📅 **Horario de mañana:**\n• Recogemos tu paquete a las **7:00 AM**\n• Entregamos antes de las **2:00 PM**\n• Un mensajero te contactará la noche anterior o temprano en la mañana para confirmar.`;
-            } else {
-                mensajeHorario = `📅 **Horario de tarde:**\n• Recogemos tu paquete a las **2:00 PM**\n• Entregamos antes de las **6:00 PM**\n• Un mensajero te contactará antes de la 1:00 PM para coordinar.`;
-            }
-            
-            return `✅ **¡Listo, ${nombreCliente}!**\n\nTu solicitud ha sido recibida.📤\n\n${mensajeHorario}\n\n📌 **Importante:** Tu número registrado es **${telefonoCliente}**. Por favor tenlo a mano.\n\nGracias por confiar en El Resolvito. ¿Necesitas algo más?`;
-        }
-        
-        async function procesarComoVivian(mensaje) {
-            const msg = mensaje.toLowerCase().trim();
-            
-            if (msg.includes("ayuda") || msg.includes("como escribo") || msg.includes("formato")) {
-                return `📌 **Formato para direcciones en La Habana:**\n\n` +
-                       `Escribe la dirección así:\n` +
-                       `"Calle y número, entre calles, municipio"\n\n` +
-                       `✅ Ejemplos correctos:\n` +
-                       `• "Teniente Rey 113 entre Cuba y San Ignacio, Habana Vieja"\n` +
-                       `• "12 entre 15 y 17, Vedado"\n` +
-                       `• "3ra A y 70, Miramar"\n` +
-                       `• "Línea #552 entre 12 y 14, El Vedado"\n\n` +
-                       `¿Quieres solicitar un mensajero? Escribe "solicitar".`;
-            }
-            
-            if (estadoRecepcion.paso === "inicio" && historialCliente.ultimoNombre && (msg.includes("hola") || msg.includes("buenas") || msg.includes("saludos"))) {
-                return `¡Hola de nuevo, ${historialCliente.ultimoNombre}! ¿Necesitas otro mensajero? Escribe "solicitar" para empezar.`;
-            }
-            
-            switch(estadoRecepcion.paso) {
-                case "inicio":
-                    if (msg.includes("solicitar") || msg.includes("mensajero") || msg.includes("necesito")) {
-                        estadoRecepcion.paso = "preguntando_nombre";
-                        return "Claro, te ayudo. ¿Cuál es tu nombre completo?";
-                    }
-                    return "Hola, soy Vivian. Si quieres solicitar un mensajero, escribe **solicitar**.\n\nSi necesitas ayuda con el formato de las direcciones, escribe **ayuda**.";
-                    
-                case "preguntando_nombre":
-                    if (msg.length < 3) return "Dime tu nombre completo, por favor.";
-                    estadoRecepcion.datos.nombre = mensaje;
-                    estadoRecepcion.paso = "preguntando_telefono";
-                    return `Gracias, ${mensaje}. ¿Cuál es tu número de teléfono? (ej: +53 5XXX XXXX)`;
-                    
-                case "preguntando_telefono":
-                    if (!msg.match(/[0-9]{5,}/)) return "Necesito un número válido para contactarte. ¿Me lo das?";
-                    estadoRecepcion.datos.telefono = mensaje;
-                    estadoRecepcion.paso = "preguntando_recogida";
-                    return `📍 **Dirección de RECOGIDA**\n\n` +
-                           `Escribe la dirección con este formato:\n` +
-                           `"Calle y número, entre calles, municipio"\n\n` +
-                           `📌 Ejemplos:\n` +
-                           `• "Teniente Rey 113 entre Cuba y San Ignacio, Habana Vieja"\n` +
-                           `• "12 entre 15 y 17, Vedado"\n` +
-                           `• "3ra A y 70, Miramar"\n\n` +
-                           `Escribe tu dirección ahora:`;
-                    
-                case "preguntando_recogida":
-                    if (msg.length < 5) return "Dame más detalles de la dirección de recogida. Sigue el formato: calle, número, entre calles, municipio.";
-                    estadoRecepcion.datos.recogida = mensaje;
-                    estadoRecepcion.paso = "preguntando_entrega";
-                    return `📍 **Dirección de ENTREGA**\n\n` +
-                           `Ahora la dirección de entrega, con el mismo formato:\n` +
-                           `"Calle y número, entre calles, municipio"\n\n` +
-                           `📌 Ejemplo: "23 entre 10 y 12, Vedado"\n\n` +
-                           `Escribe la dirección:`;
-                    
-                case "preguntando_entrega":
-                    if (msg.length < 5) return "Dame la dirección de entrega completa. Recuerda: calle, número, entre calles, municipio.";
-                    estadoRecepcion.datos.entrega = mensaje;
-                    
-                    await showTyping();
-                    const resultado = await calcularDistanciaYPrecio(
-                        estadoRecepcion.datos.recogida,
-                        estadoRecepcion.datos.entrega
-                    );
-                    await hideTyping();
-                    
-                    if (resultado.error) {
-                        estadoRecepcion.paso = "preguntando_distancia_manual";
-                        return resultado.error + " ¿Prefieres decirme los kilómetros aproximados o escribir la dirección con más detalles?";
-                    }
-                    
-                    estadoRecepcion.datos.distanciaKm = resultado.distancia;
-                    estadoRecepcion.datos.precio = resultado.precio;
-                    estadoRecepcion.paso = "preguntando_turno";
-                    
-                    return `📍 He localizado:\n📌 Recogida: ${resultado.recogida_encontrada}\n📌 Entrega: ${resultado.entrega_encontrada}\n\n📏 Distancia calculada: ${resultado.distancia} km\n💰 Precio: ${resultado.precio.toLocaleString()} CUP\n\n⏰ ¿Turno: mañana o tarde?`;
-                    
-                case "preguntando_distancia_manual":
-                    let km = parseFloat(msg);
-                    if (!isNaN(km) && km > 0) {
-                        const precio = calcularPrecioPorDistancia(km);
-                        estadoRecepcion.datos.distanciaKm = km;
-                        estadoRecepcion.datos.precio = precio;
-                        estadoRecepcion.paso = "preguntando_turno";
-                        return `💰 Precio estimado: ${precio.toLocaleString()} CUP para ${km} km.\n\n⏰ ¿Turno: mañana o tarde?`;
-                    } else {
-                        return "Dime los kilómetros aproximados, por favor (solo el número).";
-                    }
-                    
-                case "preguntando_turno":
-                    if (msg.includes("mañana")) {
-                        estadoRecepcion.datos.turno = "Mañana (7am)";
-                        estadoRecepcion.paso = "preguntando_paquete";
-                        return "📦 ¿Qué tipo de paquete? Documento, Pequeño (≤2kg), Mediano (2-5kg) o Grande (5-8kg).";
-                    } else if (msg.includes("tarde")) {
-                        estadoRecepcion.datos.turno = "Tarde (2pm)";
-                        estadoRecepcion.paso = "preguntando_paquete";
-                        return "📦 ¿Tipo de paquete? Documento, Pequeño, Mediano o Grande.";
-                    } else {
-                        return "Responde 'mañana' o 'tarde'.";
-                    }
-                    
-                case "preguntando_paquete":
-                    if (msg.includes("documento")) estadoRecepcion.datos.paquete = "Documento/Sobre";
-                    else if (msg.includes("pequeño")) estadoRecepcion.datos.paquete = "Pequeño (≤2kg)";
-                    else if (msg.includes("mediano")) estadoRecepcion.datos.paquete = "Mediano (2-5kg)";
-                    else if (msg.includes("grande")) estadoRecepcion.datos.paquete = "Grande (5-8kg)";
-                    else return "Dime una opción: Documento, Pequeño, Mediano o Grande.";
-                    estadoRecepcion.paso = "confirmar";
-                    return mostrarResumen();
-                    
-                case "confirmar":
-                    if (msg.includes("si") || msg.includes("sí") || msg.includes("confirmo")) {
-                        return enviarSolicitud();
-                    } else if (msg.includes("no") || msg.includes("cancelar")) {
-                        estadoRecepcion.paso = "inicio";
-                        estadoRecepcion.datos = { nombre: "", telefono: "", recogida: "", entrega: "", distanciaKm: null, precio: 0, turno: "Mañana", paquete: "Documento" };
-                        return "Ok, cancelamos. Si deseas empezar de nuevo, escribe 'solicitar'.";
-                    } else {
-                        return mostrarResumen() + "\n\n¿Confirmas? Responde **sí** o **no**.";
-                    }
-                    
-                default:
-                    estadoRecepcion.paso = "inicio";
-                    return "Disculpa, perdí el hilo. Escribe 'solicitar' para comenzar de nuevo.";
-            }
+            return `✅ **¡Solicitud enviada, ${nombreCliente}!**\n\nTu pedido ha sido guardado en nuestro sistema y un mensajero se pondrá en contacto contigo pronto. ¿Necesitas algo más? Escribe 'solicitar' para otro envío.`;
         }
         
         // ========== MANEJO DEL CHAT ==========
@@ -828,7 +800,7 @@
                 div.innerHTML = `
                     <div class="message-meta">
                         <img class="message-avatar" src="https://i.postimg.cc/d3wFf38p/mensajero_resolvito.png" alt="Vivian" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1067/1067983.png'">
-                        <span style="font-size:0.7rem; font-weight:600;">Vivian</span>
+                        <span style="font-size:0.7rem; font-weight:600;">Vivian ✨</span>
                     </div>
                     <div class="message-bubble">${text.replace(/\n/g, '<br>')}</div>
                     <div class="message-time">${time}</div>
@@ -840,6 +812,18 @@
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
         
+        async function showTyping() {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message bot';
+            typingDiv.id = 'typing';
+            typingDiv.innerHTML = `<div class="typing-indicator"><span></span><span></span><span></span></div>`;
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            await new Promise(r => setTimeout(r, 600 + Math.random() * 400));
+            const t = document.getElementById('typing');
+            if (t) t.remove();
+        }
+        
         async function sendMessage() {
             const msg = chatInput.value.trim();
             if (!msg || estadoRecepcion.esperandoRespuesta) return;
@@ -848,9 +832,18 @@
             estadoRecepcion.esperandoRespuesta = true;
             await showTyping();
             
-            let respuesta = await procesarComoVivian(msg);
-            await hideTyping();
-            if (!respuesta) respuesta = "No entendí. Escribe 'solicitar' para empezar.";
+            let respuesta = "";
+            
+            if (msg.toLowerCase().includes("solicitar") || msg.toLowerCase().includes("quiero un mensajero") || msg.toLowerCase().includes("necesito un mensajero")) {
+                estadoRecepcion.paso = "inicio";
+                estadoRecepcion.datos = { nombre: "", telefono: "", recogida: "", entrega: "", distanciaKm: null, precio: 0, turno: "Mañana", paquete: "Documento", adicional: "" };
+                respuesta = procesarComoVivian(msg);
+            } else if (estadoRecepcion.paso === "inicio" && !msg.toLowerCase().includes("solicitar")) {
+                respuesta = "👋 Hola, soy Vivian. Si deseas solicitar un mensajero, escribe 'solicitar'. Si tienes dudas sobre precios o servicios, pregúntame. ¿En qué te ayudo?\n\n✨ ¡Ahora reconozco más de 20 municipios de La Habana!";
+            } else {
+                respuesta = procesarComoVivian(msg);
+                if (!respuesta) respuesta = "Disculpa, no entendí. ¿Puedes repetirlo? O escribe 'solicitar' para empezar de nuevo.";
+            }
             
             addMessage(respuesta, false, true);
             estadoRecepcion.esperandoRespuesta = false;
@@ -859,18 +852,16 @@
         function openChat() {
             chatWindow.classList.add('open');
             if (chatMessages.children.length === 0) {
-                setTimeout(async () => {
-                    await showTyping();
-                    await hideTyping();
-                    addMessage("Hola, soy Vivian. ¿Necesitas solicitar un mensajero? Escribe **solicitar** para comenzar.", false, true);
+                setTimeout(() => {
+                    addMessage("👋 ¡Hola! Soy Vivian, la recepcionista de El Resolvito. ¿Necesitas solicitar un mensajero o tienes alguna pregunta?\n\n✨ **¡Novedad!** Ahora reconozco más de 20 municipios de La Habana y guardo los pedidos automáticamente.", false, true);
                     setTimeout(() => {
                         const quickDiv = document.createElement('div');
                         quickDiv.className = 'quick-replies';
                         quickDiv.innerHTML = `
                             <button class="quick-reply-btn" data-msg="solicitar">📝 Solicitar mensajero</button>
-                            <button class="quick-reply-btn" data-msg="precios">💰 Ver precios</button>
+                            <button class="quick-reply-btn" data-msg="precios">💰 Precios</button>
                             <button class="quick-reply-btn" data-msg="horarios">⏰ Horarios</button>
-                            <button class="quick-reply-btn" data-msg="ayuda">❓ Ayuda con direcciones</button>
+                            <button class="quick-reply-btn" data-msg="desde Vedado hasta Miramar">📍 Ej: Vedado → Miramar</button>
                         `;
                         const lastMsg = chatMessages.lastElementChild;
                         if (lastMsg && lastMsg.classList.contains('message') && !lastMsg.classList.contains('user')) {
@@ -883,15 +874,15 @@
                                     let reply = "";
                                     if (msg === "solicitar") {
                                         estadoRecepcion.paso = "inicio";
-                                        reply = await procesarComoVivian(msg);
+                                        reply = procesarComoVivian(msg);
                                     } else if (msg === "precios") {
-                                        reply = "💰 Tarifas por distancia:\n• ≤1km: 400 CUP\n• 1-2km: 500 CUP\n• 2-3km: 600 CUP\n• 3-4km: 700 CUP\n• 4-5km: 800 CUP\n• 5-7km: 1000 CUP\n• 7-10km: 1200 CUP\n• 10-12km: 1400 CUP\n• +12km: 1400 + 120/km extra\n\n¿Quieres solicitar un mensajero? Escribe 'solicitar'.";
+                                        reply = "💰 Precios por distancia:\n• ≤1km: 400 CUP\n• 1-2km: 500 CUP\n• 2-3km: 600 CUP\n• 3-4km: 700 CUP\n• 4-5km: 800 CUP\n• 5-7km: 1000 CUP\n• 7-10km: 1200 CUP\n• 10-12km: 1400 CUP\n• +12km: 1400 + 120/km\n\n¿Quieres que te ayude a calcular tu envío? Escribe 'solicitar'.";
                                     } else if (msg === "horarios") {
-                                        reply = "⏰ **Horarios de El Resolvito:**\n\n**Turno mañana:** Recogida 7am, entrega antes 2pm\n**Turno tarde:** Recogida 2pm, entrega antes 6pm\n\n¿En qué turno te interesa?";
-                                    } else if (msg === "ayuda") {
-                                        reply = await procesarComoVivian("ayuda");
+                                        reply = "⏰ Recogemos a las 7am (entrega antes 2pm) y a las 2pm (entrega antes 7pm). ¿En qué horario te interesa?";
+                                    } else if (msg === "desde Vedado hasta Miramar") {
+                                        estadoRecepcion.paso = "preguntando_distancia";
+                                        reply = procesarComoVivian(msg);
                                     }
-                                    await hideTyping();
                                     addMessage(reply, false, true);
                                     quickDiv.remove();
                                 });
@@ -915,5 +906,6 @@
             }
         });
     </script>
+    <!-- ========== FIN RECEPCIONISTA VIRTUAL VIVIAN MEJORADA ========== -->
 </body>
 </html>
