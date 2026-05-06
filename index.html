@@ -4,10 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Mensajería El Resolvito | Tu mensajero en La Habana</title>
-    <meta name="description" content="Servicio de mensajería en La Habana. Calcula tu precio al instante. Recogemos a las 7am y 2pm. Cobertura en toda la ciudad.">
-    
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <meta name="description" content="Servicio de mensajería en La Habana. Solicita tu mensajero con Vivian.">
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
@@ -19,18 +16,12 @@
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeInRight { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); } }
-        @keyframes bounceArrow { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
         
         .animate-fadeUp { animation: fadeInUp 0.6s ease forwards; }
         .animate-fadeRight { animation: fadeInRight 0.6s ease forwards; }
-        
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         
-        .hero {
-            background: linear-gradient(135deg, #f8fafc, #ffffff);
-            padding: 60px 0 40px 0;
-        }
+        .hero { background: linear-gradient(135deg, #f8fafc, #ffffff); padding: 60px 0 40px 0; }
         .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
         .hero h1 { font-size: 3rem; font-weight: 800; color: #1B5E20; }
         .hero h1 span { color: #FFB300; }
@@ -38,865 +29,704 @@
         .hero-image { text-align: center; animation: float 3s ease-in-out infinite; }
         .hero-image img { max-width: 100%; max-height: 350px; border-radius: 20px; }
         
-        .btn-whatsapp { background: #25D366; color: white; padding: 14px 32px; border-radius: 50px; font-weight: 700; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; transition: all 0.2s; }
-        .btn-whatsapp:hover { background: #20b859; transform: scale(1.02); }
-        .btn-outline { background: transparent; color: #2E7D32; padding: 12px 28px; border-radius: 50px; font-weight: 600; text-decoration: none; border: 2px solid #2E7D32; display: inline-flex; align-items: center; gap: 10px; transition: all 0.2s; }
+        .btn-vivian { 
+            background: linear-gradient(135deg, #128C7E, #075E54); 
+            color: white; padding: 16px 36px; border-radius: 50px; font-weight: 700; font-size: 1.1rem;
+            border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 12px;
+            box-shadow: 0 5px 15px rgba(18,140,126,0.3);
+        }
+        .btn-vivian:hover { background: linear-gradient(135deg, #075E54, #054d44); transform: scale(1.02); }
+        .btn-outline { background: transparent; color: #2E7D32; padding: 10px 24px; border-radius: 50px; font-weight: 500; text-decoration: none; border: 2px solid #2E7D32; display: inline-flex; align-items: center; gap: 8px; }
         .btn-outline:hover { background: #2E7D32; color: white; }
         
-        .banner-imagen { margin: 30px 0; border-radius: 28px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.1); background: #f0fdf4; }
-        .banner-imagen img { width: 100%; height: auto; display: block; }
+        .benefits-section { padding: 60px 0; background: #f0fdf4; }
+        .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 40px; }
+        .benefit-card { background: white; padding: 30px 20px; border-radius: 20px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .benefit-card i { font-size: 2.5rem; color: #2E7D32; margin-bottom: 15px; }
         
-        .scroll-indicator { text-align: center; padding: 15px 0 25px 0; animation: bounceArrow 1.5s infinite; cursor: pointer; }
-        .scroll-indicator i { font-size: 2rem; color: #2E7D32; background: #e8f5e9; padding: 12px; border-radius: 50%; }
-        
-        .progress-bar { position: fixed; top: 0; left: 0; width: 0%; height: 4px; background: linear-gradient(90deg, #2E7D32, #FFB300); z-index: 1000; transition: width 0.1s ease; }
-        
-        .info-banner { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border-radius: 16px; padding: 15px 20px; margin: 20px 0; text-align: center; border-left: 5px solid #FFB300; }
-        .info-banner p { color: #1B5E20; font-weight: 500; }
-        
-        .form-card { background: white; border-radius: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); padding: 30px; max-width: 550px; margin: 0 auto; }
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; font-weight: 600; margin-bottom: 8px; color: #1F2937; }
-        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 14px 16px; border: 1px solid #D1D5DB; border-radius: 16px; font-family: inherit; font-size: 0.95rem; transition: all 0.2s; }
-        .form-group input:focus, .form-group select:focus { outline: none; border-color: #2E7D32; box-shadow: 0 0 0 3px rgba(46,125,50,0.1); }
-        .precio-card { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border-radius: 20px; padding: 20px; text-align: center; margin: 20px 0; animation: pulse 1.5s infinite; }
-        .precio-card .precio { font-size: 2.2rem; font-weight: 800; color: #1B5E20; }
-        
-        .tarifas-table { background: white; border-radius: 24px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05); margin-top: 30px; }
+        .tarifas-table { background: white; border-radius: 24px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05); margin-top: 20px; }
         .tarifas-table table { width: 100%; border-collapse: collapse; }
-        .tarifas-table th { background: linear-gradient(135deg, #1B5E20, #2E7D32); color: white; padding: 14px 16px; text-align: left; }
-        .tarifas-table td { padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-size: 0.85rem; }
-        .tarifas-table tr:last-child td { border-bottom: none; }
-        .tarifas-table tr:hover td { background: #f0fdf4; }
+        .tarifas-table th { background: linear-gradient(135deg, #1B5E20, #2E7D32); color: white; padding: 12px 16px; text-align: left; }
+        .tarifas-table td { padding: 10px 16px; border-bottom: 1px solid #e5e7eb; }
         
         .footer { background: #0f172a; color: white; padding: 40px 0 20px; margin-top: 60px; }
-        .footer a { color: #94a3b8; text-decoration: none; transition: color 0.2s; }
+        .footer a { color: #94a3b8; text-decoration: none; }
         .footer a:hover { color: #FFB300; }
         
         @media (max-width: 768px) {
             .hero-grid { grid-template-columns: 1fr; text-align: center; gap: 30px; }
             .hero-image { order: -1; }
             .hero h1 { font-size: 2rem; }
-            .form-card { padding: 20px; margin: 0 10px; }
-            .tarifas-table th, .tarifas-table td { padding: 8px 12px; font-size: 0.7rem; }
+        }
+        
+        /* Estilos del chat */
+        .chat-bot-button {
+            position: fixed; bottom: 25px; right: 25px; width: 70px; height: 70px;
+            background: linear-gradient(135deg, #25D366, #128C7E); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; cursor: pointer;
+            z-index: 1000; box-shadow: 0 5px 20px rgba(0,0,0,0.2); border: 3px solid white;
+        }
+        .chat-bot-button img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+        .chat-bot-window {
+            position: fixed; bottom: 100px; right: 25px; width: 380px; max-width: calc(100vw - 40px);
+            height: 580px; background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+            z-index: 1001; display: none; flex-direction: column; overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+        }
+        .chat-bot-window.open { display: flex; }
+        .chat-header { background: linear-gradient(135deg, #075E54, #128C7E); color: white; padding: 12px 20px; display: flex; align-items: center; gap: 12px; }
+        .chat-header-avatar { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid white; }
+        .chat-header-info { flex: 1; }
+        .chat-header-info h4 { margin: 0; font-size: 1rem; }
+        .close-chat { background: none; border: none; color: white; font-size: 24px; cursor: pointer; }
+        .chat-messages { flex: 1; overflow-y: auto; padding: 15px; background: #ECE5DD; display: flex; flex-direction: column; gap: 8px; }
+        .message { display: flex; flex-direction: column; max-width: 85%; }
+        .message.bot { align-items: flex-start; }
+        .message.user { align-items: flex-end; align-self: flex-end; }
+        .message.bot .message-bubble { background: white; border-top-left-radius: 4px; padding: 10px 14px; border-radius: 18px; }
+        .message.user .message-bubble { background: #DCF8C6; border-bottom-right-radius: 4px; padding: 10px 14px; border-radius: 18px; }
+        .message-avatar { width: 28px; height: 28px; border-radius: 50%; margin-right: 8px; vertical-align: middle; }
+        .message.bot .message-meta { display: flex; align-items: center; margin-bottom: 4px; }
+        .chat-input-area { display: flex; padding: 12px; background: white; border-top: 1px solid #e5e7eb; gap: 8px; }
+        .chat-input-area input { flex: 1; padding: 10px 14px; border: 1px solid #e5e7eb; border-radius: 25px; font-family: inherit; }
+        .chat-input-area button { background: #128C7E; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; color: white; }
+        .quick-replies { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+        .quick-reply-btn { background: #f0fdf4; border: 1px solid #128C7E; color: #128C7E; padding: 6px 12px; border-radius: 20px; font-size: 0.7rem; cursor: pointer; }
+        .typing-indicator { display: flex; gap: 4px; padding: 10px 14px; background: white; border-radius: 18px; width: fit-content; }
+        .typing-indicator span { width: 8px; height: 8px; background: #94a3b8; border-radius: 50%; animation: typing 1.4s infinite; }
+        @keyframes typing { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
+        @media (max-width: 500px) {
+            .chat-bot-window { width: calc(100vw - 40px); right: 20px; bottom: 85px; height: 520px; }
+            .chat-bot-button { bottom: 20px; right: 20px; width: 60px; height: 60px; }
+        }
+        
+        .suscripcion-check {
+            background: #f0fdf4;
+            border-radius: 12px;
+            padding: 10px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.8rem;
+        }
+        .suscripcion-check input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-    <div class="progress-bar" id="progressBar"></div>
-
-    <section class="hero">
-        <div class="container">
-            <div class="hero-grid">
-                <div class="animate-fadeUp">
-                    <h1>Mensajería <span>El Resolvito</span></h1>
-                    <p>Tu mensajero de confianza en La Habana. Calcula tu precio al instante. Entregas el mismo día.</p>
-                    <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 20px;">
-                        <a href="#solicitar" class="btn-whatsapp"><i class="fab fa-whatsapp"></i> Solicitar ahora</a>
-                        <a href="#tarifas" class="btn-outline"><i class="fas fa-arrow-down"></i> Ver tarifas</a>
-                    </div>
-                </div>
-                <div class="hero-image animate-fadeRight">
-                    <img src="https://i.postimg.cc/d3wFf38p/mensajero_resolvito.png" alt="Mensajero El Resolvito" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1067/1067983.png'">
+<section class="hero">
+    <div class="container">
+        <div class="hero-grid">
+            <div class="animate-fadeUp">
+                <h1>Mensajería <span>El Resolvito</span></h1>
+                <p>Tu mensajero de confianza en La Habana.</p>
+                <button id="openChatMainBtn" class="btn-vivian" style="margin-top: 15px;">
+                    <i class="fas fa-comment-dots"></i> 💬 Solicitar mensajero
+                </button>
+                <p style="font-size: 0.75rem; margin-top: 12px; color: #6B7280;">
+                    <i class="fas fa-bolt"></i> Respuesta inmediata · Sin esperas · 24/7
+                </p>
+                <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 20px; justify-content: center;">
+                    <a href="#tarifas" class="btn-outline"><i class="fas fa-arrow-down"></i> Ver tarifas</a>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <div class="container">
-        <div class="info-banner">
-            <i class="fas fa-arrow-down"></i>
-            <p>⬇️ ¡Sigue bajando! Tarifas y formulario ⬇️</p>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="banner-imagen">
-            <img src="https://i.postimg.cc/7Y57s2Dr/promocion-diaria-mensajeria-1.png" 
-                 alt="Mensajería El Resolvito - Promoción" 
-                 onerror="this.src='https://via.placeholder.com/1200x400/2E7D32/white?text=Mensajeria+El+Resolvito'">
-        </div>
-    </div>
-
-    <div class="scroll-indicator" id="scrollIndicator">
-        <i class="fas fa-chevron-down"></i>
-        <p>Desliza hacia abajo para ver tarifas y solicitar</p>
-    </div>
-
-    <section id="solicitar" style="padding: 40px 0 60px;">
-        <div class="container">
-            <div style="text-align: center; margin-bottom: 30px;">
-                <h2 style="font-size: 1.8rem; font-weight: 700;">📝 Solicita tu mensajero</h2>
-                <p>Completa el formulario y recibe el precio al instante</p>
+            <div class="hero-image animate-fadeRight">
+                <img src="https://i.postimg.cc/d3wFf38p/mensajero_resolvito.png" alt="Mensajero El Resolvito" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1067/1067983.png'">
             </div>
+        </div>
+    </div>
+</section>
+
+<section class="benefits-section">
+    <div class="container">
+        <div style="text-align: center;"><h2 style="font-size: 1.8rem;">¿Por qué usar nuestra web?</h2></div>
+        <div class="benefits-grid">
+            <div class="benefit-card"><i class="fas fa-stopwatch"></i><h3>Precio al instante</h3><p>Cálculo aproximado en segundos</p></div>
+            <div class="benefit-card"><i class="fas fa-clock"></i><h3>Disponible 24/7</h3><p>A cualquier hora</p></div>
+            <div class="benefit-card"><i class="fas fa-clipboard-list"></i><h3>Formulario guiado</h3><p>Paso a paso, sin confusiones</p></div>
+        </div>
+    </div>
+</section>
+
+<section id="tarifas" style="padding: 0 20px 60px;">
+    <div class="container">
+        <div style="text-align: center; margin-bottom: 20px;"><h2>💰 Tarifas por distancia</h2></div>
+        <div class="tarifas-table">
+            <table>
+                <thead><tr><th>Distancia (km)</th><th>Tarifa (CUP)</th></tr></thead>
+                <tbody>
+                    <tr><td>Hasta 1 km</td><td>350</td></tr>
+                    <tr><td>2 km</td><td>500</td></tr>
+                    <tr><td>3 km</td><td>650</td></tr>
+                    <tr><td>4 km</td><td>800</td></tr>
+                    <tr><td>5 km</td><td>950</td></tr>
+                    <tr><td>6 km</td><td>1100</td></tr>
+                    <tr><td>7 km</td><td>1250</td></tr>
+                    <tr><td>8 km</td><td>1400</td></tr>
+                    <tr><td>9 km</td><td>1550</td></tr>
+                    <tr><td>10 km</td><td>1700</td></tr>
+                    <tr><td>11 km</td><td>1850</td></tr>
+                    <tr><td>12 km</td><td>2000</td></tr>
+                    <tr><td>13+ km</td><td>200 + (km × 150)</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: center;">
+            <div><h3>El Resolvito</h3><p>Tu mensajero en La Habana</p></div>
+            <div><h4>Contacto</h4><p><i class="fab fa-whatsapp"></i> <a href="https://wa.me/5356382909">+53 5 638 2909</a></p></div>
+            <div><h4>Horarios</h4><p>Recogidas: 7am y 2pm<br>Entregas antes de 6pm</p></div>
+        </div>
+    </div>
+</footer>
+
+<div class="chat-bot-button" id="chatBotButton">
+    <img src="https://i.postimg.cc/L4ycRvNG/vivian.webp" alt="Vivian" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1067/1067983.png'">
+</div>
+
+<div class="chat-bot-window" id="chatBotWindow">
+    <div class="chat-header">
+        <img class="chat-header-avatar" src="https://i.postimg.cc/L4ycRvNG/vivian.webp" alt="Vivian">
+        <div class="chat-header-info"><h4>Vivian 🤖✨</h4><p>Recepcionista - El Resolvito</p></div>
+        <button class="close-chat" id="closeChatBtn">&times;</button>
+    </div>
+    <div class="chat-messages" id="chatMessages"></div>
+    <div class="chat-input-area">
+        <input type="text" id="chatInput" placeholder="Escribe aquí..." autocomplete="off">
+        <button id="sendChatBtn"><i class="fas fa-paper-plane"></i></button>
+    </div>
+</div>
+
+<script>
+    // ==================== CONFIGURACIÓN ====================
+    const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbxiilOy-o6i8FGq-d9pC0EfRr6pdy7lYHuK8A0-LTcIoqC-6Wn8jPCVvpuxm1Nr1hOT/exec";
+    
+    // Nombres de clientes que ya han usado la web (localStorage)
+    let clientesRegistrados = [];
+    try {
+        const saved = localStorage.getItem("elresolvito_clientes");
+        if (saved) clientesRegistrados = JSON.parse(saved);
+    } catch(e) {}
+    
+    function guardarCliente(nombre, telefono, quiereOfertas) {
+        if (!nombre || nombre.length < 3) return;
+        const existe = clientesRegistrados.find(c => c.telefono === telefono);
+        if (!existe && quiereOfertas) {
+            clientesRegistrados.push({
+                nombre: nombre,
+                telefono: telefono,
+                fecha: new Date().toISOString(),
+                ofertas: true
+            });
+            try {
+                localStorage.setItem("elresolvito_clientes", JSON.stringify(clientesRegistrados));
+            } catch(e) {}
+        }
+    }
+    
+    // ==================== TARIFA ====================
+    function calcularPrecio(km) {
+        const kmEntero = Math.ceil(km);
+        const tabla = {
+            1: 350, 2: 500, 3: 650, 4: 800, 5: 950,
+            6: 1100, 7: 1250, 8: 1400, 9: 1550, 10: 1700,
+            11: 1850, 12: 2000, 13: 2150, 14: 2300, 15: 2450
+        };
+        if (tabla[kmEntero]) return tabla[kmEntero];
+        return 200 + Math.round(km * 150);
+    }
+    
+    // ==================== BASE DE DATOS LOCAL ====================
+    const mapaMunicipios = {
+        "vedado": { lat: 23.123, lng: -82.398 },
+        "miramar": { lat: 23.123, lng: -82.430 },
+        "habana vieja": { lat: 23.139, lng: -82.352 },
+        "centro habana": { lat: 23.126, lng: -82.383 },
+        "plaza": { lat: 23.130, lng: -82.415 },
+        "nuevo vedado": { lat: 23.107, lng: -82.406 },
+        "alamar": { lat: 23.157, lng: -82.238 },
+        "marianao": { lat: 23.087, lng: -82.404 },
+        "la lisa": { lat: 23.057, lng: -82.420 },
+        "boyeros": { lat: 23.041, lng: -82.363 },
+        "cerro": { lat: 23.101, lng: -82.374 },
+        "diez de octubre": { lat: 23.088, lng: -82.359 }
+    };
+    
+    const puntosReferencia = {
+        "coppelia": { lat: 23.124, lng: -82.382 },
+        "malecon": { lat: 23.140, lng: -82.357 },
+        "capitolio": { lat: 23.135, lng: -82.359 },
+        "hotel nacional": { lat: 23.144, lng: -82.381 },
+        "universidad": { lat: 23.134, lng: -82.382 },
+        "plaza revolucion": { lat: 23.124, lng: -82.386 }
+    };
+    
+    function buscarLugar(texto) {
+        const lugar = texto.toLowerCase().trim();
+        for (let [nombre, punto] of Object.entries(puntosReferencia)) {
+            if (lugar.includes(nombre)) return punto;
+        }
+        for (let [nombre, punto] of Object.entries(mapaMunicipios)) {
+            if (lugar.includes(nombre)) return punto;
+        }
+        return null;
+    }
+    
+    function calcularDistanciaKm(lat1, lon1, lat2, lon2) {
+        const R = 6371;
+        const dLat = (lat2 - lat1) * Math.PI / 180;
+        const dLon = (lon2 - lon1) * Math.PI / 180;
+        const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                  Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                  Math.sin(dLon/2) * Math.sin(dLon/2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        return Math.round(R * c * 10) / 10;
+    }
+    
+    function extraerTelefono(texto) {
+        const match = texto.match(/(?:5[35]?\d{7}|\d{7,8})/);
+        if (match) {
+            let tel = match[0];
+            if (tel.length === 7) tel = '53' + tel;
+            if (tel.length === 8 && !tel.startsWith('53')) tel = '53' + tel;
+            return tel;
+        }
+        return null;
+    }
+    
+    // ==================== ESTADO DEL CHAT ====================
+    let estadoRecepcion = {
+        paso: "inicio",
+        datos: {
+            nombre: "",
+            telefono: "",
+            recogida: "",
+            entrega: "",
+            distanciaKm: null,
+            precio: 0,
+            turnoRecogida: "",
+            adicional: "",
+            suscripcion: false
+        },
+        esperandoRespuesta: false
+    };
+    
+    // Variable para controlar el trigger por tiempo
+    let tiempoInactivo;
+    let tiempoTriggerActivado = false;
+    
+    function resetearTemporizador() {
+        if (tiempoInactivo) clearTimeout(tiempoInactivo);
+        tiempoInactivo = setTimeout(() => {
+            if (!tiempoTriggerActivado && chatWindow.classList.contains('open') && chatMessages.children.length > 0) {
+                tiempoTriggerActivado = true;
+                addMessage("👋 **¿Necesitas ayuda?**\n\nPuedo ayudarte a solicitar un mensajero. Solo escribe *solicitar* y te guío paso a paso.\n\nO si prefieres, contáctanos directamente por [WhatsApp](https://wa.me/5356382909).", false, true);
+            }
+        }, 30000); // 30 segundos de inactividad
+    }
+    
+    function guardarEnGoogleSheets(datos) {
+        const params = new URLSearchParams({
+            nombre: datos.nombre,
+            telefono: datos.telefono,
+            recogida: datos.recogida,
+            entrega: datos.entrega,
+            distanciaKm: datos.distanciaKm || 0,
+            precio: datos.precio,
+            turno: datos.turnoRecogida,
+            adicional: datos.adicional,
+            suscripcion: datos.suscripcion,
+            _t: Date.now()
+        });
+        fetch(`${GOOGLE_SHEETS_URL}?${params.toString()}`, { method: 'GET', mode: 'no-cors' }).catch(()=>{});
+    }
+    
+    async function procesarMensaje(mensaje) {
+        // Resetear temporizador de inactividad
+        resetearTemporizador();
+        
+        const original = mensaje.trim();
+        const msg = original.toLowerCase();
+        
+        // Comandos especiales
+        if (msg === "ver tarifas") {
+            return "💰 **Tarifas por distancia:**\n\n• 1 km → 350 CUP\n• 2 km → 500 CUP\n• 3 km → 650 CUP\n• 4 km → 800 CUP\n• 5 km → 950 CUP\n• 6 km → 1100 CUP\n• 7 km → 1250 CUP\n• 8 km → 1400 CUP\n• 9 km → 1550 CUP\n• 10 km → 1700 CUP\n• 11 km → 1850 CUP\n• 12 km → 2000 CUP\n• 13+ km → 200 + (km × 150) CUP\n\n*El precio final lo confirma el mensajero al verificar la distancia real.*";
+        }
+        
+        if (msg === "ayuda" || msg === "help") {
+            return "📋 **¿Cómo solicitar un mensajero?**\n\nSolo escribe *solicitar* y te guiaré paso a paso:\n\n1️⃣ Tu nombre completo\n2️⃣ Teléfono de contacto\n3️⃣ Dirección de recogida (municipio, calle, entre calles)\n4️⃣ Dirección de entrega\n5️⃣ Turno (mañana o tarde)\n6️⃣ Confirmación del pedido\n\nTambién puedes ver las *tarifas* escribiendo 'ver tarifas'.\n\n¿Empezamos? Escribe *solicitar*.";
+        }
+        
+        // Iniciar nuevo pedido
+        if (msg.includes("solicitar") || msg.includes("empezar") || msg.includes("nuevo pedido")) {
+            // Verificar si ya tenemos datos guardados del cliente
+            let mensajeBienvenida = "📝 **Vamos a tomar tu pedido paso a paso.**\n\n";
             
-            <div class="form-card">
-                <form id="solicitudForm">
-                    <div class="form-group">
-                        <label>Nombre completo <span style="color:red">*</span></label>
-                        <input type="text" id="nombre" required placeholder="Ej: Juan Pérez">
-                    </div>
-                    <div class="form-group">
-                        <label>Teléfono de contacto <span style="color:red">*</span></label>
-                        <input type="tel" id="telefono" required placeholder="+53 5 XXX XXXX">
-                    </div>
-                    <div class="form-group">
-                        <label>Dirección de RECOGIDA <span style="color:red">*</span></label>
-                        <input type="text" id="recogida" required placeholder="Calle, número, municipio">
-                    </div>
-                    <div class="form-group">
-                        <label>Dirección de ENTREGA <span style="color:red">*</span></label>
-                        <input type="text" id="entrega" required placeholder="Calle, número, municipio">
-                    </div>
-                    <div class="form-group">
-                        <label>Distancia aproximada <span style="color:red">*</span></label>
-                        <select id="distanciaSelect" required>
-                            <option value="">-- Selecciona --</option>
-                            <option value="400">Hasta 1 km → 400 CUP</option>
-                            <option value="500">1-2 km → 500 CUP</option>
-                            <option value="600">2-3 km → 600 CUP</option>
-                            <option value="700">3-4 km → 700 CUP</option>
-                            <option value="800">4-5 km → 800 CUP</option>
-                            <option value="1000">5-7 km → 1000 CUP</option>
-                            <option value="1200">7-10 km → 1200 CUP</option>
-                            <option value="1400">10-12 km → 1400 CUP</option>
-                            <option value="custom">Más de 12 km</option>
-                        </select>
-                    </div>
-                    <div id="customDistanciaDiv" style="display: none;">
-                        <div class="form-group">
-                            <label>Kilómetros exactos</label>
-                            <input type="number" id="customKm" step="0.5" placeholder="Ej: 15">
-                            <p style="font-size: 0.7rem;">Precio: 1400 + (km-12)×120 CUP</p>
-                        </div>
-                    </div>
-                    <div class="precio-card" id="precioCard" style="display: none;">
-                        <p>Precio estimado:</p>
-                        <div class="precio" id="precioMostrado">0 CUP</div>
-                    </div>
-                    <div class="form-group">
-                        <label>Turno</label>
-                        <select id="turno">
-                            <option>Mañana (7am → antes 2pm)</option>
-                            <option>Tarde (2pm → antes 7pm)</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Tipo de paquete</label>
-                        <select id="tipoPaquete">
-                            <option>Documento/Sobre</option>
-                            <option>Pequeño (≤2kg)</option>
-                            <option>Mediano (2-5kg)</option>
-                            <option>Grande (5-8kg)</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Información adicional</label>
-                        <textarea id="adicional" rows="2" placeholder="Ej: Llamar al llegar"></textarea>
-                    </div>
-                    <button type="submit" class="btn-whatsapp" style="width: 100%; justify-content: center;">
-                        <i class="fab fa-whatsapp"></i> Enviar solicitud
-                    </button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <section id="tarifas" style="padding: 0 20px 60px;">
-        <div class="container">
-            <div style="text-align: center; margin-bottom: 20px;">
-                <h2>💰 Tarifas por distancia</h2>
-            </div>
-            <div class="tarifas-table">
-                <table>
-                    <thead>
-                        <tr><th>Distancia</th><th>Tarifa (CUP)</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>Hasta 1 km</td><td>400</td></tr>
-                        <tr><td>1-2 km</td><td>500</td></tr>
-                        <tr><td>2-3 km</td><td>600</td></tr>
-                        <tr><td>3-4 km</td><td>700</td></tr>
-                        <tr><td>4-5 km</td><td>800</td></tr>
-                        <tr><td>5-7 km</td><td>1000</td></tr>
-                        <tr><td>7-10 km</td><td>1200</td></tr>
-                        <tr><td>10-12 km</td><td>1400</td></tr>
-                        <tr><td>Más de 12 km</td><td>1400 + 120 × km extra</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-
-    <section style="padding: 40px 20px; background: #f8fafc; text-align: center;">
-        <div class="container">
-            <h2>Hecho con esfuerzo y dedicación</h2>
-            <p>Somos un grupo de personas trabajando para ayudar a nuestra comunidad en La Habana.</p>
-        </div>
-    </section>
-
-    <footer class="footer">
-        <div class="container">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: center;">
-                <div><h3>El Resolvito</h3><p>Tu mensajero en La Habana</p></div>
-                <div><h4>Contacto</h4><p><i class="fab fa-whatsapp"></i> <a href="https://wa.me/5356382909">+53 5 638 2909</a></p></div>
-                <div><h4>Horarios</h4><p>Recogidas: 7am y 2pm<br>Entregas mismo día</p></div>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Funcionalidad formulario
-        window.addEventListener('scroll', function() {
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            document.getElementById('progressBar').style.width = (winScroll / height) * 100 + '%';
-        });
+            // Si hay cliente guardado en localStorage, ofrecer autocompletar
+            const datosGuardados = localStorage.getItem("elresolvito_ultimo_cliente");
+            if (datosGuardados) {
+                try {
+                    const ultimo = JSON.parse(datosGuardados);
+                    if (ultimo.nombre && ultimo.telefono) {
+                        mensajeBienvenida += `👋 **Bienvenido de vuelta, ${ultimo.nombre}!**\n`;
+                        mensajeBienvenida += `¿Usamos tu último teléfono (${ultimo.telefono})? Responde *sí* o *no*.\n\n`;
+                        estadoRecepcion.paso = "preguntando_reutilizar_datos";
+                        estadoRecepcion.datosGuardados = ultimo;
+                        return mensajeBienvenida;
+                    }
+                } catch(e) {}
+            }
+            
+            estadoRecepcion = {
+                paso: "preguntando_nombre",
+                datos: { nombre: "", telefono: "", recogida: "", entrega: "", distanciaKm: null, precio: 0, turnoRecogida: "", adicional: "", suscripcion: false },
+                esperandoRespuesta: false
+            };
+            return mensajeBienvenida + "✏️ **¿Cómo te llamas?** (ej: Juan Pérez)";
+        }
         
-        document.getElementById('scrollIndicator').addEventListener('click', () => {
-            document.getElementById('solicitar').scrollIntoView({ behavior: 'smooth' });
-        });
-        
-        const distanciaSelect = document.getElementById('distanciaSelect');
-        const customDiv = document.getElementById('customDistanciaDiv');
-        const customKm = document.getElementById('customKm');
-        const precioCard = document.getElementById('precioCard');
-        const precioMostrado = document.getElementById('precioMostrado');
-        
-        function actualizarPrecio() {
-            const valor = distanciaSelect.value;
-            if (valor === 'custom') {
-                customDiv.style.display = 'block';
-                const km = parseFloat(customKm.value);
-                if (!isNaN(km) && km > 12) {
-                    const precio = 1400 + (km - 12) * 120;
-                    precioMostrado.innerHTML = Math.round(precio).toLocaleString() + ' CUP';
-                    precioCard.style.display = 'block';
-                } else if (!isNaN(km) && km > 0) {
-                    alert('Para ≤12 km selecciona el rango correspondiente');
-                    precioCard.style.display = 'none';
+        // FLUJO ESTRUCTURADO
+        switch(estadoRecepcion.paso) {
+            case "inicio":
+                estadoRecepcion.paso = "preguntando_nombre";
+                return "📝 **Bienvenido a El Resolvito**\n\n✏️ **¿Cómo te llamas?** (ej: Juan Pérez)";
+            
+            case "preguntando_reutilizar_datos":
+                if (msg.includes("si") || msg.includes("sí") || msg.includes("vale") || msg.includes("ok")) {
+                    estadoRecepcion.datos.nombre = estadoRecepcion.datosGuardados.nombre;
+                    estadoRecepcion.datos.telefono = estadoRecepcion.datosGuardados.telefono;
+                    estadoRecepcion.paso = "preguntando_recogida";
+                    return `✅ Usaremos tus datos: ${estadoRecepcion.datos.nombre}, ${estadoRecepcion.datos.telefono}\n\n📍 **¿Dónde recogemos?**\n(Municipio, calle y entre calles. Ej: Vedado, Calle 23 #123 entre 12 y 14)`;
                 } else {
-                    precioCard.style.display = 'none';
+                    estadoRecepcion = {
+                        paso: "preguntando_nombre",
+                        datos: { nombre: "", telefono: "", recogida: "", entrega: "", distanciaKm: null, precio: 0, turnoRecogida: "", adicional: "", suscripcion: false },
+                        esperandoRespuesta: false
+                    };
+                    return "Ok, empecemos desde cero.\n\n✏️ **¿Cómo te llamas?** (ej: Juan Pérez)";
                 }
-            } else if (valor) {
-                customDiv.style.display = 'none';
-                precioMostrado.innerHTML = parseInt(valor).toLocaleString() + ' CUP';
-                precioCard.style.display = 'block';
-            } else {
-                customDiv.style.display = 'none';
-                precioCard.style.display = 'none';
-            }
-        }
-        
-        distanciaSelect.addEventListener('change', actualizarPrecio);
-        customKm.addEventListener('input', actualizarPrecio);
-        
-        document.getElementById('solicitudForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const nombre = document.getElementById('nombre').value;
-            const telefono = document.getElementById('telefono').value;
-            const recogida = document.getElementById('recogida').value;
-            const entrega = document.getElementById('entrega').value;
-            let precio = 0;
-            if (distanciaSelect.value === 'custom') {
-                const km = parseFloat(customKm.value);
-                if (isNaN(km) || km <= 12) { alert('Distancia inválida'); return; }
-                precio = 1400 + (km - 12) * 120;
-            } else {
-                precio = parseInt(distanciaSelect.value);
-            }
-            if (!nombre || !telefono || !recogida || !entrega) { alert('Completa los campos obligatorios'); return; }
-            const mensaje = `🛵 *NUEVA SOLICITUD*\n👤 ${nombre}\n📱 ${telefono}\n📍 Recogida: ${recogida}\n📍 Entrega: ${entrega}\n💰 Precio: ${precio.toLocaleString()} CUP`;
-            window.open(`https://wa.me/5356382909?text=${encodeURIComponent(mensaje)}`, '_blank');
-            alert('✅ Solicitud enviada. Te contactaremos.');
-            document.getElementById('solicitudForm').reset();
-            precioCard.style.display = 'none';
-        });
-        
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) target.scrollIntoView({ behavior: 'smooth' });
-            });
-        });
-    </script>
-
-    <!-- ========== RECEPCIONISTA VIRTUAL - VIVIAN (MEJORADA: ORDEN FLEXIBLE + MINI FORMULARIO) ========== -->
-    <style>
-        .chat-bot-button {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, #25D366, #128C7E);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 1000;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-            transition: all 0.3s;
-            border: 3px solid white;
-        }
-        .chat-bot-button:hover { transform: scale(1.05); }
-        .chat-bot-button img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-        .chat-bot-window {
-            position: fixed;
-            bottom: 100px;
-            right: 25px;
-            width: 380px;
-            max-width: calc(100vw - 40px);
-            height: 580px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.25);
-            z-index: 1001;
-            display: none;
-            flex-direction: column;
-            overflow: hidden;
-            font-family: 'Poppins', sans-serif;
-        }
-        .chat-bot-window.open { display: flex; }
-        .chat-header {
-            background: linear-gradient(135deg, #075E54, #128C7E);
-            color: white;
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .chat-header-avatar {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid white;
-        }
-        .chat-header-info { flex: 1; }
-        .chat-header-info h4 { margin: 0; font-size: 1rem; font-weight: 600; }
-        .chat-header-info p { margin: 0; font-size: 0.7rem; opacity: 0.8; }
-        .close-chat {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            opacity: 0.8;
-        }
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 15px;
-            background: #ECE5DD;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .message {
-            display: flex;
-            flex-direction: column;
-            max-width: 85%;
-        }
-        .message.bot { align-items: flex-start; }
-        .message.user { align-items: flex-end; align-self: flex-end; }
-        .message-bubble {
-            padding: 10px 14px;
-            border-radius: 18px;
-            font-size: 0.85rem;
-            line-height: 1.4;
-            position: relative;
-        }
-        .message.bot .message-bubble {
-            background: white;
-            border-top-left-radius: 4px;
-            color: #1F2937;
-            box-shadow: 0 1px 1px rgba(0,0,0,0.05);
-        }
-        .message.user .message-bubble {
-            background: #DCF8C6;
-            color: #1F2937;
-            border-bottom-right-radius: 4px;
-        }
-        .message-avatar {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            margin-right: 8px;
-            vertical-align: middle;
-        }
-        .message.bot .message-meta {
-            display: flex;
-            align-items: center;
-            margin-bottom: 4px;
-        }
-        .message-time {
-            font-size: 0.6rem;
-            color: #8e8e94;
-            margin-top: 4px;
-            margin-left: 36px;
-        }
-        .typing-indicator {
-            display: flex;
-            gap: 4px;
-            padding: 10px 14px;
-            background: white;
-            border-radius: 18px;
-            border-top-left-radius: 4px;
-            width: fit-content;
-        }
-        .typing-indicator span {
-            width: 8px;
-            height: 8px;
-            background: #94a3b8;
-            border-radius: 50%;
-            animation: typing 1.4s infinite ease-in-out;
-        }
-        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
-        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes typing {
-            0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
-            30% { transform: translateY(-6px); opacity: 1; }
-        }
-        .chat-input-area {
-            display: flex;
-            padding: 12px;
-            background: white;
-            border-top: 1px solid #e5e7eb;
-            gap: 8px;
-        }
-        .chat-input-area input {
-            flex: 1;
-            padding: 10px 14px;
-            border: 1px solid #e5e7eb;
-            border-radius: 25px;
-            font-family: inherit;
-            font-size: 0.85rem;
-            outline: none;
-        }
-        .chat-input-area input:focus { border-color: #128C7E; }
-        .chat-input-area button {
-            background: #128C7E;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            color: white;
-            transition: all 0.2s;
-        }
-        .quick-replies {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 12px;
-        }
-        .quick-reply-btn {
-            background: #f0fdf4;
-            border: 1px solid #128C7E;
-            color: #128C7E;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .quick-reply-btn:hover { background: #128C7E; color: white; }
-        .mini-form-card {
-            background: #f9fafb;
-            border-radius: 16px;
-            padding: 12px;
-            margin: 8px 0;
-            border-left: 3px solid #128C7E;
-            font-size: 0.75rem;
-        }
-        .mini-form-card p { margin: 4px 0; }
-        .btn-chat-form {
-            background: #128C7E;
-            color: white;
-            border: none;
-            border-radius: 20px;
-            padding: 6px 12px;
-            font-size: 0.7rem;
-            cursor: pointer;
-            margin-top: 8px;
-        }
-        @media (max-width: 500px) {
-            .chat-bot-window { width: calc(100vw - 40px); right: 20px; bottom: 85px; height: 520px; }
-            .chat-bot-button { bottom: 20px; right: 20px; width: 60px; height: 60px; }
-        }
-    </style>
-
-    <div class="chat-bot-button" id="chatBotButton">
-        <img src="https://i.postimg.cc/L4ycRvNG/vivian.webp" alt="Vivian" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1067/1067983.png'">
-    </div>
-
-    <div class="chat-bot-window" id="chatBotWindow">
-        <div class="chat-header">
-            <img class="chat-header-avatar" src="https://i.postimg.cc/L4ycRvNG/vivian.webp" alt="Vivian" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1067/1067983.png'">
-            <div class="chat-header-info">
-                <h4>Vivian 🤖✨</h4>
-                <p>Asistente virtual - El Resolvito</p>
-            </div>
-            <button class="close-chat" id="closeChatBtn">&times;</button>
-        </div>
-        <div class="chat-messages" id="chatMessages"></div>
-        <div class="chat-input-area">
-            <input type="text" id="chatInput" placeholder="Escribe aquí..." autocomplete="off">
-            <button id="sendChatBtn"><i class="fas fa-paper-plane"></i></button>
-        </div>
-    </div>
-
-    <script>
-        // ==================== CONFIGURACIÓN ====================
-        const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbxiilOy-o6i8FGq-d9pC0EfRr6pdy7lYHuK8A0-LTcIoqC-6Wn8jPCVvpuxm1Nr1hOT/exec";
-        
-        function calcularPrecio(km) {
-            if (km <= 1) return 400;
-            if (km <= 2) return 500;
-            if (km <= 3) return 600;
-            if (km <= 4) return 700;
-            if (km <= 5) return 800;
-            if (km <= 7) return 1000;
-            if (km <= 10) return 1200;
-            if (km <= 12) return 1400;
-            return 1400 + (km - 12) * 120;
-        }
-        
-        // Normalizar texto para tolerar errores ortográficos habituales
-        function normalizarTexto(texto) {
-            return texto.toLowerCase()
-                .replace(/á/g, 'a').replace(/é/g, 'e').replace(/í/g, 'i')
-                .replace(/ó/g, 'o').replace(/ú/g, 'u')
-                .replace(/v/g, 'b')
-                .replace(/x/g, 'ks')
-                .trim();
-        }
-        
-        // Mapa de municipios mejorado (con sinónimos)
-        const mapaMunicipios = {
-            "habana vieja": { lat: 23.139, lng: -82.352, abrev: "Habana Vieja", sinonimos: ["casco histórico", "habana vieja"] },
-            "centro habana": { lat: 23.126, lng: -82.383, abrev: "Centro Habana", sinonimos: ["centro", "centro habana"] },
-            "vedado": { lat: 23.123, lng: -82.398, abrev: "Vedado", sinonimos: ["el vedado"] },
-            "plaza": { lat: 23.130, lng: -82.415, abrev: "Plaza", sinonimos: ["plaza de la revolución"] },
-            "nuevo vedado": { lat: 23.107, lng: -82.406, abrev: "Nuevo Vedado", sinonimos: ["nuevo vedado"] },
-            "miramar": { lat: 23.123, lng: -82.430, abrev: "Miramar", sinonimos: ["miramar"] },
-            "siboney": { lat: 23.095, lng: -82.455, abrev: "Siboney", sinonimos: ["siboney"] },
-            "guanabacoa": { lat: 23.124, lng: -82.301, abrev: "Guanabacoa", sinonimos: ["guanabacoa"] },
-            "san miguel del padron": { lat: 23.092, lng: -82.320, abrev: "San Miguel", sinonimos: ["san miguel"] },
-            "diez de octubre": { lat: 23.088, lng: -82.359, abrev: "Diez de Octubre", sinonimos: ["10 de octubre"] },
-            "cerro": { lat: 23.101, lng: -82.374, abrev: "Cerro", sinonimos: ["cerro"] },
-            "marianao": { lat: 23.087, lng: -82.404, abrev: "Marianao", sinonimos: ["marianao"] },
-            "la lisa": { lat: 23.057, lng: -82.420, abrev: "La Lisa", sinonimos: ["la lisa"] },
-            "boyeros": { lat: 23.041, lng: -82.363, abrev: "Boyeros", sinonimos: ["boyeros"] },
-            "alamar": { lat: 23.157, lng: -82.238, abrev: "Alamar", sinonimos: ["alamar"] }
-        };
-        
-        function calcularDistanciaKm(lat1, lon1, lat2, lon2) {
-            const R = 6371;
-            const dLat = (lat2 - lat1) * Math.PI / 180;
-            const dLon = (lon2 - lon1) * Math.PI / 180;
-            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-                      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-                      Math.sin(dLon/2) * Math.sin(dLon/2);
-            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-            return Math.round(R * c * 10) / 10;
-        }
-        
-        // Estado flexible
-        let estadoRecepcion = {
-            paso: "inicio",
-            datos: { nombre: "", telefono: "", recogida: "", entrega: "", distanciaKm: null, precio: 0, turno: "Mañana", paquete: "Documento" },
-            esperandoRespuesta: false,
-            intentosFallidos: 0
-        };
-        
-        // Guardado en segundo plano
-        function guardarEnGoogleSheets(datos) {
-            const params = new URLSearchParams({
-                nombre: datos.nombre,
-                telefono: datos.telefono,
-                recogida: datos.recogida,
-                entrega: datos.entrega,
-                distanciaKm: datos.distanciaKm || 0,
-                precio: datos.precio,
-                turno: datos.turno,
-                paquete: datos.paquete,
-                _t: Date.now()
-            });
-            const img = new Image();
-            img.src = `${GOOGLE_SHEETS_URL}?${params.toString()}`;
-            fetch(`${GOOGLE_SHEETS_URL}?${params.toString()}`, { method: 'GET', mode: 'no-cors' }).catch(()=>{});
-        }
-        
-        // Detectar datos sueltos en cualquier mensaje
-        function detectarDatosSueltos(mensaje) {
-            const msg = mensaje.toLowerCase();
-            let cambios = {};
             
-            // Detectar patrón "desde X hasta Y" o "X a Y"
-            const desdeHasta = msg.match(/(?:desde|de)\s+([a-záéíóúñ\s]+?)\s+(?:hasta|a|para)\s+([a-záéíóúñ\s]+)/i);
-            if (desdeHasta && !estadoRecepcion.datos.recogida && !estadoRecepcion.datos.entrega) {
-                cambios.recogida = desdeHasta[1].trim();
-                cambios.entrega = desdeHasta[2].trim();
-            }
+            case "preguntando_nombre":
+                if (msg.length < 3) return "Por favor, dime tu nombre completo (ej: Juan Pérez)";
+                estadoRecepcion.datos.nombre = original.charAt(0).toUpperCase() + original.slice(1).toLowerCase();
+                estadoRecepcion.paso = "preguntando_telefono";
+                return `Gracias ${estadoRecepcion.datos.nombre}. 📱 **¿Cuál es tu número de teléfono?**\n(ej: 56382909 o 5356382909)`;
             
-            // Detectar municipios sueltos (si escribe "Vedado a Miramar" sin "desde")
-            const municipiosKeys = Object.keys(mapaMunicipios);
-            let encontrados = [];
-            for (let mun of municipiosKeys) {
-                if (msg.includes(mun)) encontrados.push(mun);
-            }
-            if (encontrados.length >= 2 && !estadoRecepcion.datos.recogida && !estadoRecepcion.datos.entrega) {
-                cambios.recogida = encontrados[0];
-                cambios.entrega = encontrados[1];
-            }
+            case "preguntando_telefono":
+                const telefono = extraerTelefono(original);
+                if (!telefono) return "📱 **Número inválido.** Escribe solo los dígitos (ej: 56382909)";
+                estadoRecepcion.datos.telefono = telefono;
+                estadoRecepcion.paso = "preguntando_recogida";
+                return "📍 **¿Dónde recogemos?**\n(Municipio, calle y entre calles. Ej: Vedado, Calle 23 #123 entre 12 y 14)";
             
-            // Detectar número de teléfono (mínimo 5 dígitos)
-            const telefonoMatch = msg.match(/(?:5[35]\d{7}|\d{5,})/);
-            if (telefonoMatch && !estadoRecepcion.datos.telefono) {
-                cambios.telefono = telefonoMatch[0];
-            }
+            case "preguntando_recogida":
+                if (msg.length < 5) return "📍 **Dame una dirección más específica.**\nEjemplo: Vedado, Calle 23 #123 entre 12 y 14";
+                estadoRecepcion.datos.recogida = original;
+                estadoRecepcion.paso = "preguntando_entrega";
+                return "📍 **¿Dónde entregamos?**\n(Municipio, calle y entre calles. También puedes darme una referencia de lugar conocido, ej: 'Frente al Coppelia')";
             
-            return cambios;
-        }
-        
-        // Procesar mensaje flexible
-        function procesarComoVivianFlexible(mensaje) {
-            const original = mensaje;
-            const msg = normalizarTexto(original);
-            const datosSueltos = detectarDatosSueltos(original);
-            
-            // Aplicar datos sueltos automáticamente
-            if (datosSueltos.recogida) estadoRecepcion.datos.recogida = datosSueltos.recogida;
-            if (datosSueltos.entrega) estadoRecepcion.datos.entrega = datosSueltos.entrega;
-            if (datosSueltos.telefono) estadoRecepcion.datos.telefono = datosSueltos.telefono;
-            
-            // Si ya tiene recogida y entrega pero no distancia, calcular automáticamente
-            if (estadoRecepcion.datos.recogida && estadoRecepcion.datos.entrega && !estadoRecepcion.datos.distanciaKm && estadoRecepcion.paso !== "confirmar") {
-                let municipioOrigen = null, municipioDestino = null;
-                for (let [nombre, info] of Object.entries(mapaMunicipios)) {
-                    if (estadoRecepcion.datos.recogida.toLowerCase().includes(nombre)) municipioOrigen = info;
-                    if (estadoRecepcion.datos.entrega.toLowerCase().includes(nombre)) municipioDestino = info;
-                }
-                if (municipioOrigen && municipioDestino) {
-                    const km = calcularDistanciaKm(municipioOrigen.lat, municipioOrigen.lng, municipioDestino.lat, municipioDestino.lng);
+            case "preguntando_entrega":
+                if (msg.length < 5) return "📍 **Dame una dirección más específica para la entrega.**";
+                estadoRecepcion.datos.entrega = original;
+                
+                // Calcular distancia aproximada
+                const origen = buscarLugar(estadoRecepcion.datos.recogida);
+                const destino = buscarLugar(estadoRecepcion.datos.entrega);
+                
+                if (origen && destino) {
+                    const km = calcularDistanciaKm(origen.lat, origen.lng, destino.lat, destino.lng);
                     estadoRecepcion.datos.distanciaKm = km;
                     estadoRecepcion.datos.precio = calcularPrecio(km);
+                    estadoRecepcion.paso = "preguntando_turno";
+                    return `📏 **Distancia aproximada:** ${km} km\n💰 **Precio estimado:** ${estadoRecepcion.datos.precio.toLocaleString()} CUP\n\n⚠️ *El precio final lo confirma el mensajero al verificar la distancia real.*\n\n⏰ **¿En qué turno queremos recoger?**\n• **Mañana** (recogida a las 7am, entrega antes de 1pm)\n• **Tarde** (recogida a las 2pm, entrega antes de 6pm)\n\nResponde: *mañana* o *tarde*`;
+                } else {
+                    estadoRecepcion.paso = "preguntando_distancia_manual";
+                    return "📏 **No pude calcular la distancia automáticamente.**\n\n¿Cuántos kilómetros aproximadamente son?\n(ej: 5 km)\n\n*El mensajero confirmará la distancia exacta al llegar.*";
                 }
-            }
             
-            // Flujo principal
-            switch(estadoRecepcion.paso) {
-                case "inicio":
-                    estadoRecepcion.paso = "preguntando_nombre";
-                    return "🤖✨ ¡Hola! Soy **Vivian, la asistente virtual** de El Resolvito (no soy humana, pero te ayudo con gusto). ¿Cómo te llamas?\n\n*Puedes写 tu nombre, teléfono o hasta 'Vedado a Miramar' y lo entiendo*";
-                
-                case "preguntando_nombre":
-                    if (msg.length < 2) return "Dime tu nombre para empezar, por favor.";
-                    estadoRecepcion.datos.nombre = original;
-                    estadoRecepcion.paso = estadoRecepcion.datos.telefono ? "preguntando_recogida" : "preguntando_telefono";
-                    if (estadoRecepcion.datos.telefono) return `Gracias ${estadoRecepcion.datos.nombre}. 📍 ¿Dirección de RECOGIDA?`;
-                    return `Encantada, ${estadoRecepcion.datos.nombre}. 📱 ¿Tu teléfono? (ej: 53 5XXX XXXX)`;
-                
-                case "preguntando_telefono":
-                    if (!msg.match(/\d{5,}/)) return "Necesito un número válido para contactarte. ¿Me lo das?";
-                    estadoRecepcion.datos.telefono = original;
-                    estadoRecepcion.paso = "preguntando_recogida";
-                    return "📍 ¿Dirección de RECOGIDA? (calle, municipio)";
-                
-                case "preguntando_recogida":
-                    if (msg.length < 3) return "Dime la dirección de recogida, por favor.";
-                    estadoRecepcion.datos.recogida = original;
-                    estadoRecepcion.paso = "preguntando_entrega";
-                    return "📍 ¿Dirección de ENTREGA?";
-                
-                case "preguntando_entrega":
-                    if (msg.length < 3) return "Dime la dirección de entrega.";
-                    estadoRecepcion.datos.entrega = original;
-                    if (estadoRecepcion.datos.distanciaKm) {
-                        estadoRecepcion.paso = "preguntando_turno";
-                        return `💰 Detecté ${estadoRecepcion.datos.distanciaKm} km → Precio: ${estadoRecepcion.datos.precio.toLocaleString()} CUP\n\n⏰ ¿Turno? (mañana/tarde)`;
-                    }
-                    estadoRecepcion.paso = "preguntando_distancia";
-                    return "📏 ¿Distancia aproximada? Puedes poner los municipios (ej: Vedado a Miramar) o los km.";
-                
-                case "preguntando_distancia":
-                    let km = null;
-                    const kmMatch = msg.match(/(\d+(?:\.\d+)?)\s*(?:km|k)/);
-                    if (kmMatch) km = parseFloat(kmMatch[1]);
-                    else {
-                        let municipiosEncontrados = [];
-                        for (let [nombre, info] of Object.entries(mapaMunicipios)) {
-                            if (msg.includes(nombre)) municipiosEncontrados.push(info);
-                        }
-                        if (municipiosEncontrados.length >= 2) {
-                            km = calcularDistanciaKm(municipiosEncontrados[0].lat, municipiosEncontrados[0].lng, 
-                                                      municipiosEncontrados[1].lat, municipiosEncontrados[1].lng);
-                        }
-                    }
-                    if (km && km > 0) {
+            case "preguntando_distancia_manual":
+                const kmMatch = msg.match(/(\d+(?:\.\d+)?)/);
+                if (kmMatch) {
+                    const km = parseFloat(kmMatch[1]);
+                    if (km > 0) {
                         estadoRecepcion.datos.distanciaKm = km;
                         estadoRecepcion.datos.precio = calcularPrecio(km);
                         estadoRecepcion.paso = "preguntando_turno";
-                        return `💰 Distancia: ${km} km → ${estadoRecepcion.datos.precio.toLocaleString()} CUP\n\n⏰ ¿Turno? (mañana/tarde)`;
+                        return `📏 **Distancia estimada:** ${km} km\n💰 **Precio estimado:** ${estadoRecepcion.datos.precio.toLocaleString()} CUP\n\n⚠️ *El precio final lo confirma el mensajero.*\n\n⏰ **¿En qué turno queremos recoger?**\n• **Mañana** (7am)\n• **Tarde** (2pm)\n\nResponde: *mañana* o *tarde*`;
                     }
-                    estadoRecepcion.intentosFallidos++;
-                    if (estadoRecepcion.intentosFallidos >= 2) {
-                        estadoRecepcion.intentosFallidos = 0;
-                        return mostrarMiniFormulario();
-                    }
-                    return "No entendí la distancia. Escribe algo como 'Vedado a Miramar' o '7 km'.\n\n" + mostrarMiniFormularioTexto();
-                
-                case "preguntando_turno":
-                    if (msg.includes("mañana") || msg.includes("manana")) estadoRecepcion.datos.turno = "Mañana (7am)";
-                    else if (msg.includes("tarde")) estadoRecepcion.datos.turno = "Tarde (2pm)";
-                    else return "Responde 'mañana' o 'tarde'.";
-                    estadoRecepcion.paso = "preguntando_paquete";
-                    return "📦 ¿Tipo de paquete?\n• Documento\n• Pequeño\n• Mediano\n• Grande";
-                
-                case "preguntando_paquete":
-                    if (msg.includes("documento")) estadoRecepcion.datos.paquete = "Documento/Sobre";
-                    else if (msg.includes("pequeño")) estadoRecepcion.datos.paquete = "Pequeño (≤2kg)";
-                    else if (msg.includes("mediano")) estadoRecepcion.datos.paquete = "Mediano (2-5kg)";
-                    else if (msg.includes("grande")) estadoRecepcion.datos.paquete = "Grande (5-8kg)";
-                    else return "Elige: Documento, Pequeño, Mediano o Grande.";
+                }
+                return "📏 No entendí la distancia. Escribe solo el número (ej: 5) o los kilómetros (ej: 5 km)";
+            
+            case "preguntando_turno":
+                if (msg.includes("mañana") || msg.includes("manana")) {
+                    estadoRecepcion.datos.turnoRecogida = "Mañana (7am)";
+                    estadoRecepcion.paso = "preguntando_adicional";
+                    return "📝 **¿Alguna información adicional?**\n(Instrucciones especiales, persona de contacto, timbre, etc.)\n\n*Escribe 'ninguna' si no hay nada importante*";
+                } else if (msg.includes("tarde")) {
+                    estadoRecepcion.datos.turnoRecogida = "Tarde (2pm)";
+                    estadoRecepcion.paso = "preguntando_adicional";
+                    return "📝 **¿Alguna información adicional?**\n(Instrucciones especiales, persona de contacto, timbre, etc.)\n\n*Escribe 'ninguna' si no hay nada importante*";
+                } else {
+                    return "⏰ **Por favor, elige un turno:**\n• mañana (recogida 7am, entrega antes de 1pm)\n• tarde (recogida 2pm, entrega antes de 6pm)";
+                }
+            
+            case "preguntando_adicional":
+                if (!msg.includes("ninguna") && msg.length > 2) {
+                    estadoRecepcion.datos.adicional = original;
+                }
+                estadoRecepcion.paso = "preguntando_suscripcion";
+                return `📋 **RESUMEN DEL PEDIDO**\n\n👤 Cliente: ${estadoRecepcion.datos.nombre}\n📱 Teléfono: ${estadoRecepcion.datos.telefono}\n📍 Recogida: ${estadoRecepcion.datos.recogida}\n📍 Entrega: ${estadoRecepcion.datos.entrega}\n📏 Distancia: ${estadoRecepcion.datos.distanciaKm} km\n💰 Precio estimado: ${estadoRecepcion.datos.precio.toLocaleString()} CUP\n⏰ Turno: ${estadoRecepcion.datos.turnoRecogida}\n${estadoRecepcion.datos.adicional ? `📝 Adicional: ${estadoRecepcion.datos.adicional}\n` : ''}\n\n⚠️ *El precio final lo confirma el mensajero al verificar la distancia real.*\n\n📧 **¿Quieres recibir ofertas y novedades por WhatsApp?**\n(Es gratis y solo te escribiremos cuando haya promociones)\n\nResponde *sí* o *no*`;
+            
+            case "preguntando_suscripcion":
+                if (msg.includes("si") || msg.includes("sí")) {
+                    estadoRecepcion.datos.suscripcion = true;
+                } else {
+                    estadoRecepcion.datos.suscripcion = false;
+                }
+                estadoRecepcion.paso = "confirmar";
+                return `${estadoRecepcion.datos.suscripcion ? "✅ ¡Gracias! Te mantendremos informado.\n\n" : "✅ Ok, solo recibirás información de tu pedido.\n\n"}**¿Confirmas el pedido?**\nResponde: *sí* para enviar, *no* para cancelar, o dime qué quieres cambiar.`;
+            
+            case "confirmar":
+                if (msg.includes("si") || msg.includes("sí") || msg.includes("confirmo") || msg.includes("correcto")) {
+                    return enviarSolicitudFinal();
+                } else if (msg.includes("no")) {
+                    estadoRecepcion = {
+                        paso: "inicio",
+                        datos: { nombre: "", telefono: "", recogida: "", entrega: "", distanciaKm: null, precio: 0, turnoRecogida: "", adicional: "", suscripcion: false },
+                        esperandoRespuesta: false
+                    };
+                    return "Pedido cancelado. Escribe *solicitar* cuando quieras empezar uno nuevo.";
+                } else if (msg.includes("nombre")) {
+                    estadoRecepcion.paso = "corrigiendo_nombre";
+                    return "✏️ **Dime el nombre correcto:**";
+                } else if (msg.includes("teléfono") || msg.includes("telefono")) {
+                    estadoRecepcion.paso = "corrigiendo_telefono";
+                    return "✏️ **Dime el número de teléfono correcto:**";
+                } else if (msg.includes("recogida")) {
+                    estadoRecepcion.paso = "corrigiendo_recogida";
+                    return "✏️ **Dónde recogemos:**";
+                } else if (msg.includes("entrega") || msg.includes("destino")) {
+                    estadoRecepcion.paso = "corrigiendo_entrega";
+                    return "✏️ **Dónde entregamos:**";
+                } else if (msg.includes("turno")) {
+                    estadoRecepcion.paso = "corrigiendo_turno";
+                    return "✏️ **Turno: mañana (7am) o tarde (2pm)**";
+                } else {
+                    return mostrarResumen() + "\n\n❓ **No entendí.** Responde *sí* para confirmar, *no* para cancelar, o dime qué campo quieres cambiar (nombre, teléfono, recogida, entrega, turno).";
+                }
+            
+            case "corrigiendo_nombre":
+                if (msg.length >= 3) {
+                    estadoRecepcion.datos.nombre = original.charAt(0).toUpperCase() + original.slice(1).toLowerCase();
                     estadoRecepcion.paso = "confirmar";
-                    return mostrarResumen();
-                
-                case "confirmar":
-                    if (msg.includes("si") || msg.includes("sí") || msg.includes("confirmo")) return enviarSolicitudFinal();
-                    else if (msg.includes("no")) {
-                        estadoRecepcion.paso = "inicio";
-                        estadoRecepcion.datos = { nombre: "", telefono: "", recogida: "", entrega: "", distanciaKm: null, precio: 0, turno: "Mañana", paquete: "Documento" };
-                        return "Ok, empezamos de nuevo. Escribe 'solicitar' cuando quieras.";
-                    }
-                    return mostrarResumen() + "\n\n¿Confirmas? (sí/no)";
-                
-                default:
-                    return "Escribe 'solicitar' para comenzar.";
-            }
+                    return "✅ Nombre actualizado.\n\n" + mostrarResumen() + "\n\n¿Confirmas el pedido? (sí/no)";
+                }
+                return "Dime un nombre válido.";
+            
+            case "corrigiendo_telefono":
+                const nuevoTel = extraerTelefono(original);
+                if (nuevoTel) {
+                    estadoRecepcion.datos.telefono = nuevoTel;
+                    estadoRecepcion.paso = "confirmar";
+                    return "✅ Teléfono actualizado.\n\n" + mostrarResumen() + "\n\n¿Confirmas el pedido? (sí/no)";
+                }
+                return "Número inválido. Escribe solo los dígitos (ej: 56382909)";
+            
+            case "corrigiendo_recogida":
+                if (msg.length >= 5) {
+                    estadoRecepcion.datos.recogida = original;
+                    estadoRecepcion.paso = "confirmar";
+                    return "✅ Dirección de recogida actualizada.\n\n" + mostrarResumen() + "\n\n¿Confirmas el pedido? (sí/no)";
+                }
+                return "Dame una dirección más específica.";
+            
+            case "corrigiendo_entrega":
+                if (msg.length >= 5) {
+                    estadoRecepcion.datos.entrega = original;
+                    estadoRecepcion.paso = "confirmar";
+                    return "✅ Dirección de entrega actualizada.\n\n" + mostrarResumen() + "\n\n¿Confirmas el pedido? (sí/no)";
+                }
+                return "Dame una dirección más específica.";
+            
+            case "corrigiendo_turno":
+                if (msg.includes("mañana") || msg.includes("manana")) {
+                    estadoRecepcion.datos.turnoRecogida = "Mañana (7am)";
+                    estadoRecepcion.paso = "confirmar";
+                    return "✅ Turno actualizado.\n\n" + mostrarResumen() + "\n\n¿Confirmas el pedido? (sí/no)";
+                } else if (msg.includes("tarde")) {
+                    estadoRecepcion.datos.turnoRecogida = "Tarde (2pm)";
+                    estadoRecepcion.paso = "confirmar";
+                    return "✅ Turno actualizado.\n\n" + mostrarResumen() + "\n\n¿Confirmas el pedido? (sí/no)";
+                }
+                return "Elige: mañana o tarde";
+            
+            default:
+                estadoRecepcion.paso = "preguntando_nombre";
+                return "📝 **Empecemos de nuevo.**\n\n✏️ **¿Cómo te llamas?**";
+        }
+    }
+    
+    function mostrarResumen() {
+        const d = estadoRecepcion.datos;
+        let resumen = `📋 **RESUMEN DEL PEDIDO**\n\n`;
+        resumen += `👤 Cliente: ${d.nombre}\n`;
+        resumen += `📱 Teléfono: ${d.telefono}\n`;
+        resumen += `📍 Recogida: ${d.recogida}\n`;
+        resumen += `📍 Entrega: ${d.entrega}\n`;
+        resumen += `📏 Distancia: ${d.distanciaKm ? d.distanciaKm + ' km' : 'No calculada'}\n`;
+        resumen += `💰 Precio estimado: ${d.precio.toLocaleString()} CUP\n`;
+        resumen += `⏰ Turno: ${d.turnoRecogida}\n`;
+        if (d.adicional) resumen += `📝 Adicional: ${d.adicional}\n`;
+        resumen += `\n⚠️ *El precio final lo confirma el mensajero*`;
+        return resumen;
+    }
+    
+    function enviarSolicitudFinal() {
+        const d = estadoRecepcion.datos;
+        
+        // Guardar en Google Sheets
+        guardarEnGoogleSheets(d);
+        
+        // Guardar datos del cliente para próxima vez (sin forzar suscripción)
+        localStorage.setItem("elresolvito_ultimo_cliente", JSON.stringify({
+            nombre: d.nombre,
+            telefono: d.telefono
+        }));
+        
+        // Si aceptó suscripción, guardar en lista de clientes
+        if (d.suscripcion) {
+            guardarCliente(d.nombre, d.telefono, true);
         }
         
-        function mostrarResumen() {
-            const d = estadoRecepcion.datos;
-            return `📋 **Resumen**\n👤 ${d.nombre}\n📱 ${d.telefono}\n📍 ${d.recogida} → ${d.entrega}\n💰 ${d.precio.toLocaleString()} CUP\n⏰ ${d.turno}\n📦 ${d.paquete}\n\n¿Confirmas? (sí/no)`;
+        // Enviar WhatsApp
+        let mensajeWA = `🛵 *NUEVO PEDIDO - EL RESOLVITO*\n\n`;
+        mensajeWA += `👤 *Cliente:* ${d.nombre}\n`;
+        mensajeWA += `📱 *Teléfono:* ${d.telefono}\n`;
+        mensajeWA += `📍 *Recogida:* ${d.recogida}\n`;
+        mensajeWA += `📍 *Entrega:* ${d.entrega}\n`;
+        mensajeWA += `📏 *Distancia estimada:* ${d.distanciaKm} km\n`;
+        mensajeWA += `💰 *Precio estimado:* ${d.precio} CUP\n`;
+        mensajeWA += `⏰ *Turno:* ${d.turnoRecogida}\n`;
+        if (d.adicional) mensajeWA += `📝 *Adicional:* ${d.adicional}\n`;
+        if (d.suscripcion) mensajeWA += `📧 *Aceptó recibir ofertas*\n`;
+        
+        window.open(`https://wa.me/5356382909?text=${encodeURIComponent(mensajeWA)}`, '_blank');
+        
+        const nombreCliente = d.nombre;
+        const suscripcionMsg = d.suscripcion ? "\n\n📧 **Te suscribiste a nuestras ofertas.** Te enviaremos promociones especiales de vez en cuando. Puedes responder STOP en cualquier momento." : "";
+        
+        // Reiniciar estado
+        estadoRecepcion = {
+            paso: "inicio",
+            datos: { nombre: "", telefono: "", recogida: "", entrega: "", distanciaKm: null, precio: 0, turnoRecogida: "", adicional: "", suscripcion: false },
+            esperandoRespuesta: false
+        };
+        
+        return `✅ **¡Pedido enviado, ${nombreCliente}!** 🚀\n\n📞 **Próximos pasos:**\n\n1️⃣ Un mensajero de **El Resolvito** revisará tu solicitud\n2️⃣ Te llamará o escribirá por WhatsApp para **confirmar el servicio**\n3️⃣ Coordinarán los detalles finales de la recogida\n4️⃣ **El mensajero confirmará el precio exacto** según la distancia real recorrida\n\n⏰ **Importante:** La entrega siempre se realiza **antes de las 6:00 PM**.\n\n💚 Gracias por confiar en nosotros.${suscripcionMsg}\n\n¿Necesitas otro servicio? Escribe *solicitar* para empezar de nuevo.`;
+    }
+    
+    // ==================== INTERFAZ DEL CHAT ====================
+    let chatMessages = document.getElementById('chatMessages');
+    let chatInput = document.getElementById('chatInput');
+    let sendBtn = document.getElementById('sendChatBtn');
+    let chatButton = document.getElementById('chatBotButton');
+    let chatWindow = document.getElementById('chatBotWindow');
+    let closeBtn = document.getElementById('closeChatBtn');
+    let openChatMainBtn = document.getElementById('openChatMainBtn');
+    
+    function addMessage(text, isUser = false, withAvatar = false) {
+        const div = document.createElement('div');
+        div.className = `message ${isUser ? 'user' : 'bot'}`;
+        const time = new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+        if (!isUser && withAvatar) {
+            div.innerHTML = `<div class="message-meta"><img class="message-avatar" src="https://i.postimg.cc/L4ycRvNG/vivian.webp"><span>Vivian</span></div><div class="message-bubble">${text.replace(/\n/g, '<br>')}</div><div class="message-time">${time}</div>`;
+        } else {
+            div.innerHTML = `<div class="message-bubble">${text.replace(/\n/g, '<br>')}</div><div class="message-time">${time}</div>`;
         }
+        chatMessages.appendChild(div);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+    
+    async function showTyping() {
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'message bot';
+        typingDiv.id = 'typing';
+        typingDiv.innerHTML = `<div class="typing-indicator"><span></span><span></span><span></span></div>`;
+        chatMessages.appendChild(typingDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        await new Promise(r => setTimeout(r, 500));
+        document.getElementById('typing')?.remove();
+    }
+    
+    async function sendMessage() {
+        const msg = chatInput.value.trim();
+        if (!msg || estadoRecepcion.esperandoRespuesta) return;
+        addMessage(msg, true);
+        chatInput.value = '';
+        estadoRecepcion.esperandoRespuesta = true;
+        await showTyping();
+        const respuesta = await procesarMensaje(msg);
+        addMessage(respuesta, false, true);
+        estadoRecepcion.esperandoRespuesta = false;
+    }
+    
+    function openChat() {
+        chatWindow.classList.add('open');
+        tiempoTriggerActivado = false;
+        resetearTemporizador();
         
-        function mostrarMiniFormulario() {
-            return "📝 **Rellena rápido** (copia y pega):\n```\nNombre: \nTeléfono: \nRecogida: \nEntrega: \n```\nO escribe 'solicitar' para guía paso a paso.";
-        }
-        
-        function mostrarMiniFormularioTexto() {
-            return "✏️ **Escríbelo así**:\n`Nombre: Juan, Teléfono: 5555, Recogida: Vedado, Entrega: Miramar`";
-        }
-        
-        function enviarSolicitudFinal() {
-            const d = estadoRecepcion.datos;
-            guardarEnGoogleSheets(d);
-            const mensajeWA = `🛵 *SOLICITUD VIVIAN*\n👤 ${d.nombre}\n📱 ${d.telefono}\n📍 ${d.recogida} → ${d.entrega}\n💰 ${d.precio} CUP\n⏰ ${d.turno}\n📦 ${d.paquete}`;
-            window.open(`https://wa.me/5356382909?text=${encodeURIComponent(mensajeWA)}`, '_blank');
-            localStorage.setItem('solicitudesVivian', JSON.stringify([...(JSON.parse(localStorage.getItem('solicitudesVivian')||'[]')), {...d, fecha: new Date()}]));
-            const nombre = d.nombre;
-            estadoRecepcion.paso = "inicio";
-            estadoRecepcion.datos = { nombre: "", telefono: "", recogida: "", entrega: "", distanciaKm: null, precio: 0, turno: "Mañana", paquete: "Documento" };
-            return `✅ **Enviado, ${nombre}!** Un mensajero te contactará. ¿Necesitas algo más? Escribe 'solicitar' para otro.`;
-        }
-        
-        // Interfaz del chat
-        let chatMessages = document.getElementById('chatMessages');
-        let chatInput = document.getElementById('chatInput');
-        let sendBtn = document.getElementById('sendChatBtn');
-        let chatButton = document.getElementById('chatBotButton');
-        let chatWindow = document.getElementById('chatBotWindow');
-        let closeBtn = document.getElementById('closeChatBtn');
-        
-        function addMessage(text, isUser = false, withAvatar = false) {
-            const div = document.createElement('div');
-            div.className = `message ${isUser ? 'user' : 'bot'}`;
-            const time = new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
-            if (!isUser && withAvatar) {
-                div.innerHTML = `<div class="message-meta"><img class="message-avatar" src="https://i.postimg.cc/L4ycRvNG/vivian.webp" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1067/1067983.png'"><span>Vivian 🤖</span></div><div class="message-bubble">${text.replace(/\n/g, '<br>')}</div><div class="message-time">${time}</div>`;
-            } else {
-                div.innerHTML = `<div class="message-bubble">${text.replace(/\n/g, '<br>')}</div><div class="message-time">${time}</div>`;
-            }
-            chatMessages.appendChild(div);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-        
-        async function showTyping() {
-            const typingDiv = document.createElement('div');
-            typingDiv.className = 'message bot';
-            typingDiv.id = 'typing';
-            typingDiv.innerHTML = `<div class="typing-indicator"><span></span><span></span><span></span></div>`;
-            chatMessages.appendChild(typingDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-            await new Promise(r => setTimeout(r, 500));
-            document.getElementById('typing')?.remove();
-        }
-        
-        async function sendMessage() {
-            const msg = chatInput.value.trim();
-            if (!msg || estadoRecepcion.esperandoRespuesta) return;
-            addMessage(msg, true);
-            chatInput.value = '';
-            estadoRecepcion.esperandoRespuesta = true;
-            await showTyping();
-            let respuesta = "";
-            if (msg.toLowerCase().includes("solicitar") || msg.toLowerCase().includes("mensajero")) {
-                estadoRecepcion = { paso: "inicio", datos: { nombre: "", telefono: "", recogida: "", entrega: "", distanciaKm: null, precio: 0, turno: "Mañana", paquete: "Documento" }, esperandoRespuesta: false, intentosFallidos: 0 };
-                respuesta = procesarComoVivianFlexible(msg);
-            } else {
-                respuesta = procesarComoVivianFlexible(msg);
-                if (!respuesta || respuesta.length < 5) respuesta = "No entendí bien. Escribe 'solicitar' para empezar o pon los datos en orden libre (ej: 'Juan, 5555, Vedado, Miramar')";
-            }
-            addMessage(respuesta, false, true);
-            estadoRecepcion.esperandoRespuesta = false;
-        }
-        
-        function openChat() {
-            chatWindow.classList.add('open');
-            if (chatMessages.children.length === 0) {
+        if (chatMessages.children.length === 0) {
+            setTimeout(() => {
+                addMessage("🤖✨ ¡Hola! Soy **Vivian**, recepcionista de **El Resolvito**.\n\n📋 **Voy a ayudarte a solicitar un mensajero.** Solo necesito que respondas unas preguntas:\n\n1️⃣ Tu nombre\n2️⃣ Teléfono\n3️⃣ Dirección de recogida (municipio, calle y entre calles)\n4️⃣ Dirección de entrega\n5️⃣ Turno (mañana o tarde)\n\n⚠️ *El precio que calculamos es aproximado. El mensajero te confirmará el precio exacto al verificar la distancia real.*\n\n✏️ **¿Comenzamos? Escribe *solicitar***", false, true);
                 setTimeout(() => {
-                    addMessage("🤖✨ Hola, soy **Vivian**, asistente virtual de El Resolvito.\n\n✅ Puedes escribir en **cualquier orden**\n✅ Acepto errores de escritura\n✅ Si te trabas, te ofrezco un mini formulario\n\n¿Comenzamos? Escribe 'solicitar'", false, true);
-                    setTimeout(() => {
-                        const quickDiv = document.createElement('div');
-                        quickDiv.className = 'quick-replies';
-                        quickDiv.innerHTML = `<button class="quick-reply-btn" data-msg="solicitar">📝 Solicitar mensajero</button><button class="quick-reply-btn" data-msg="precios">💰 Precios</button><button class="quick-reply-btn" data-msg="horarios">⏰ Horarios</button><button class="quick-reply-btn" data-msg="Vedado a Miramar">📍 Ejemplo: Vedado → Miramar</button>`;
-                        const lastMsg = chatMessages.lastElementChild;
-                        if (lastMsg) lastMsg.querySelector('.message-bubble')?.after(quickDiv);
-                        document.querySelectorAll('.quick-reply-btn').forEach(btn => {
-                            btn.addEventListener('click', async (e) => {
-                                const val = btn.getAttribute('data-msg');
-                                addMessage(val, true);
-                                await showTyping();
-                                let reply = "";
-                                if (val === "solicitar") reply = procesarComoVivianFlexible(val);
-                                else if (val === "precios") reply = "💰 Tarifas: ≤1km:400, 1-2km:500, 2-3km:600, 3-4km:700, 4-5km:800, 5-7km:1000, 7-10km:1200, 10-12km:1400, +12km:1400+120/km";
-                                else if (val === "horarios") reply = "⏰ Recogidas: 7am y 2pm, entregas mismo día.";
-                                else if (val === "Vedado a Miramar") reply = procesarComoVivianFlexible(val);
-                                addMessage(reply, false, true);
-                                quickDiv.remove();
-                            });
+                    const quickDiv = document.createElement('div');
+                    quickDiv.className = 'quick-replies';
+                    quickDiv.innerHTML = `<button class="quick-reply-btn" data-msg="solicitar">📝 Solicitar mensajero</button><button class="quick-reply-btn" data-msg="ver tarifas">💰 Ver tarifas</button><button class="quick-reply-btn" data-msg="ayuda">❓ Ayuda</button>`;
+                    const lastMsg = chatMessages.lastElementChild;
+                    if (lastMsg) lastMsg.querySelector('.message-bubble')?.after(quickDiv);
+                    document.querySelectorAll('.quick-reply-btn').forEach(btn => {
+                        btn.addEventListener('click', async (e) => {
+                            const val = btn.getAttribute('data-msg');
+                            addMessage(val, true);
+                            await showTyping();
+                            const reply = await procesarMensaje(val);
+                            addMessage(reply, false, true);
+                            quickDiv.remove();
                         });
-                    }, 200);
+                    });
                 }, 200);
-            }
+            }, 200);
         }
-        
-        chatButton.addEventListener('click', openChat);
-        closeBtn.addEventListener('click', () => chatWindow.classList.remove('open'));
-        sendBtn.addEventListener('click', sendMessage);
-        chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMessage(); });
-        document.addEventListener('click', (e) => { if (chatWindow.classList.contains('open') && !chatWindow.contains(e.target) && !chatButton.contains(e.target)) chatWindow.classList.remove('open'); });
-    </script>
+    }
+    
+    chatButton.addEventListener('click', openChat);
+    closeBtn.addEventListener('click', () => chatWindow.classList.remove('open'));
+    sendBtn.addEventListener('click', sendMessage);
+    chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMessage(); });
+    if (openChatMainBtn) openChatMainBtn.addEventListener('click', openChat);
+    
+    // Detectar actividad del usuario para resetear temporizador
+    chatInput.addEventListener('focus', resetearTemporizador);
+    chatInput.addEventListener('input', resetearTemporizador);
+    
+    document.addEventListener('click', (e) => {
+        if (chatWindow.classList.contains('open') && 
+            !chatWindow.contains(e.target) && 
+            !chatButton.contains(e.target) && 
+            !openChatMainBtn?.contains(e.target)) {
+            chatWindow.classList.remove('open');
+            if (tiempoInactivo) clearTimeout(tiempoInactivo);
+        }
+    });
+</script>
 </body>
 </html>
