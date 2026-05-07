@@ -72,7 +72,7 @@
 
         /* Hero Parallax */
         .hero-bg {
-            background-image: url('https://image.qwenlm.ai/public_source/c24beb3e-b99d-43b2-a853-ce6e313611c0/125bcb5b9-280f-416e-913d-9cc7fb9baa13.png');
+            background-image: url('https://i.postimg.cc/yxG88b5v/mensajero-hero.webp');
             background-attachment: fixed;
             background-position: center;
             background-repeat: no-repeat;
@@ -83,7 +83,7 @@
             .hero-bg { background-attachment: scroll; }
         }
 
-        /* ===== CHATBOT MODERN STYLES (Fusionados) ===== */
+        /* ===== CHATBOT MODERN STYLES ===== */
         .chatbot-container {
             position: fixed;
             bottom: 20px;
@@ -366,6 +366,47 @@
             width: 0%;
             transition: width 0.2s ease;
         }
+
+        /* TARIFAS: Nuevo estilo compacto y elegante */
+        .tarifa-card {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 1rem;
+            background: white;
+            transition: all 0.2s ease;
+            border: 1px solid #f1f5f9;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+        }
+        .tarifa-card:hover {
+            transform: translateY(-3px);
+            border-color: #e2e8f0;
+            box-shadow: 0 8px 20px rgba(0,86,179,0.08);
+        }
+        .tarifa-km {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #0056b3;
+            background: #eff6ff;
+            display: inline-block;
+            padding: 0.2rem 0.7rem;
+            border-radius: 20px;
+            margin-bottom: 0.6rem;
+        }
+        .tarifa-precio {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #0f172a;
+        }
+        .tarifa-precio small {
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #64748b;
+        }
+        @media (min-width: 640px) {
+            .tarifa-precio { font-size: 1.7rem; }
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 antialiased overflow-x-hidden">
@@ -375,7 +416,7 @@
         <div class="progress-bar" id="progressBar"></div>
     </div>
 
-    <!-- Navbar (igual que antes, compacto) -->
+    <!-- Navbar -->
     <nav class="fixed w-full z-40 glass transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
@@ -409,7 +450,7 @@
         </div>
     </nav>
 
-    <!-- Hero Section (compacta pero igual) -->
+    <!-- Hero Section -->
     <section class="relative min-h-screen flex items-center justify-center hero-bg overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-r from-brand-blue/90 via-brand-blue/70 to-transparent"></div>
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-20">
@@ -445,7 +486,7 @@
                 <div class="hidden lg:block relative" data-aos="fade-left">
                     <div class="absolute inset-0 bg-brand-orange rounded-3xl transform rotate-3 scale-95 opacity-20 blur-xl"></div>
                     <div class="bg-white p-4 rounded-3xl shadow-2xl transform hover:-translate-y-2 transition-all duration-500">
-                        <img src="https://i.postimg.cc/d3wFf38p/mensajero_resolvito.png" alt="Mensajero" class="w-full h-auto rounded-2xl object-cover">
+                        <img src="https://i.postimg.cc/yxG88b5v/mensajero-hero.webp" alt="Mensajero El Resolvito" class="w-full h-auto rounded-2xl object-cover">
                         <div class="absolute bottom-12 left-12 bg-white p-4 rounded-xl shadow-lg flex items-center gap-4 animate-float">
                             <div class="bg-green-100 p-3 rounded-full text-green-600"><i class="fa-solid fa-clock text-xl"></i></div>
                             <div><p class="text-sm text-gray-500">Próxima recogida</p><p class="font-bold text-gray-800">7:00 AM</p></div>
@@ -477,25 +518,21 @@
         </div>
     </section>
 
-    <!-- Tarifas Section -->
+    <!-- Tarifas Section (COMPACTA Y LEGIBLE) -->
     <section id="tarifas" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">Precios Claros</h2>
-                <p class="text-lg text-gray-600">Sin letra pequeña. Calculamos por la ruta real de Google Maps.<br><span class="text-brand-orange font-semibold">No cobramos el viaje de vuelta.</span></p>
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Precios claros y directos</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Sin letra pequeña. Calculamos por la ruta real de Google Maps.<br><span class="text-brand-orange font-semibold">No cobramos el viaje de vuelta.</span></p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="tarifasGrid"></div>
-            <div class="mt-12 bg-brand-light rounded-2xl p-8 flex flex-col md:flex-row items-center justify-between gap-6" data-aos="fade-up">
-                <div class="flex items-center gap-4">
-                    <div class="bg-white p-3 rounded-full shadow-sm text-brand-orange"><i class="fa-solid fa-calculator text-xl"></i></div>
-                    <div><h4 class="font-bold text-gray-900">¿Distancia larga? (+12 km)</h4><p class="text-gray-600 text-sm">Tarifa base + <span class="font-bold text-brand-orange">150 CUP/km extra</span>.</p></div>
-                </div>
-                <a href="#calculadora" class="text-brand-blue font-bold hover:underline flex items-center gap-2">Ir a la calculadora <i class="fa-solid fa-arrow-right"></i></a>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-5" id="tarifasGrid"></div>
+            <div class="mt-12 bg-brand-light rounded-2xl p-6 text-center">
+                <p class="text-sm text-gray-700">⚡ Más de 12 km: tarifa base + <span class="font-bold text-brand-orange">150 CUP/km adicional</span>. El mensajero confirma el valor exacto.</p>
             </div>
         </div>
     </section>
 
-    <!-- Calculadora + Formulario (unificado) -->
+    <!-- Calculadora + Formulario -->
     <section id="calculadora" class="py-20 bg-gray-50 relative">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col lg:flex-row" data-aos="zoom-in">
@@ -548,7 +585,7 @@
                         <div class="flex gap-4"><div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center text-brand-orange"><i class="fa-solid fa-heart text-xl"></i></div><div><h3 class="text-xl font-bold">Confianza</h3><p class="text-gray-600">Hecho por habaneros, para habaneros.</p></div></div>
                     </div>
                 </div>
-                <div data-aos="fade-left"><img src="https://i.postimg.cc/7Y57s2Dr/promocion-diaria-mensajeria-1.png" alt="Mensajero" class="rounded-3xl shadow-2xl w-full"></div>
+                <div data-aos="fade-left"><img src="https://i.postimg.cc/bvZXF5Xq/promocion-diaria-mensajeria-1.webp" alt="Mensajero feliz" class="rounded-3xl shadow-2xl w-full"></div>
             </div>
         </div>
     </section>
@@ -565,11 +602,11 @@
         </div>
     </footer>
 
-    <!-- ================= CHATBOT VIVIAN 2.0 (Fusionado: UI moderna + lógica inteligente) ================= -->
+    <!-- ================= CHATBOT VIVIAN (INTELIGENTE + UI MODERNA) ================= -->
     <div class="chatbot-container" id="chatbot">
         <div class="chatbot-window" id="chatbotWindow">
             <div class="chatbot-header">
-                <img src="https://i.postimg.cc/0QqJfL3T/vivian-avatar.png" alt="Vivian" class="chatbot-avatar">
+                <img src="https://i.postimg.cc/L4ycRvNG/vivian.webp" alt="Vivian" class="chatbot-avatar">
                 <div class="chatbot-header-info">
                     <h4>Vivian</h4>
                     <p><span class="online-dot"></span> Asistente El Resolvito</p>
@@ -584,252 +621,116 @@
             </div>
         </div>
         <div class="chatbot-toggle" id="chatbotToggle">
-            <img src="https://i.postimg.cc/0QqJfL3T/vivian-avatar.png" alt="Vivian" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover;">
+            <img src="https://i.postimg.cc/L4ycRvNG/vivian.webp" alt="Vivian" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover;">
             <span class="notification-dot" id="chatbotNotification"></span>
         </div>
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // ==================== INICIALIZACIONES GENERALES ====================
+        // ==================== INICIALIZACIONES ====================
         AOS.init({ once: true, offset: 100, duration: 800 });
+        const navbarEl = document.getElementById('navbar');
+        window.addEventListener('scroll', () => { if (window.scrollY > 50) navbarEl.classList.add('shadow-md'); else navbarEl.classList.remove('shadow-md'); });
+        const mobileBtn = document.getElementById('mobile-menu-btn'), mobileMenu = document.getElementById('mobile-menu');
+        mobileBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+        window.addEventListener('scroll', () => { const winScroll = document.body.scrollTop || document.documentElement.scrollTop; const height = document.documentElement.scrollHeight - document.documentElement.clientHeight; document.getElementById('progressBar').style.width = (winScroll / height) * 100 + '%'; });
 
-        // Navbar scroll
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) navbar.classList.add('shadow-md');
-            else navbar.classList.remove('shadow-md');
-        });
-        // Mobile menu
-        const btn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
-        btn.addEventListener('click', () => menu.classList.toggle('hidden'));
-        menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => menu.classList.add('hidden')));
-
-        // Progress bar
-        window.addEventListener('scroll', () => {
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            document.getElementById('progressBar').style.width = (winScroll / height) * 100 + '%';
-        });
-
-        // ==================== TARIFAS DINÁMICAS (Grid) ====================
-        const tarifasData = [
-            { km: "Hasta 1 km", precio: 400 }, { km: "1–2 km", precio: 500 }, { km: "2–3 km", precio: 600 },
+        // ==================== TARIFAS GRID (COMPACTO) ====================
+        const tarifasLista = [
+            { km: "Hasta 1km", precio: 400 }, { km: "1–2 km", precio: 500 }, { km: "2–3 km", precio: 600 },
             { km: "3–4 km", precio: 700 }, { km: "4–5 km", precio: 800 }, { km: "5–7 km", precio: 1000 },
             { km: "8 km", precio: 1150 }, { km: "9 km", precio: 1300 }, { km: "10 km", precio: 1450 },
             { km: "11 km", precio: 1600 }, { km: "12 km", precio: 1750 }, { km: "13 km", precio: 1900 },
             { km: "14 km", precio: 2050 }, { km: "15 km", precio: 2200 }
         ];
-        const tarifasGrid = document.getElementById('tarifasGrid');
-        tarifasData.forEach((t, i) => {
-            const card = document.createElement('div');
-            card.className = 'bg-gray-50 rounded-2xl p-6 border border-gray-100 hover:shadow-xl hover:border-brand-blue/30 transition-all duration-300 hover:-translate-y-2 group';
-            card.innerHTML = `<div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-brand-blue mb-4"><i class="fa-solid fa-chart-line text-xl"></i></div><h3 class="text-xl font-bold">${t.km}</h3><div class="text-3xl font-extrabold text-brand-blue mt-2">${t.precio.toLocaleString()} <span class="text-sm">CUP</span></div>`;
-            tarifasGrid.appendChild(card);
+        const tarifasContainer = document.getElementById('tarifasGrid');
+        tarifasLista.forEach(t => {
+            const card = document.createElement('div'); card.className = 'tarifa-card';
+            card.innerHTML = `<div class="tarifa-km">${t.km}</div><div class="tarifa-precio">${t.precio.toLocaleString()}<small> CUP</small></div>`;
+            tarifasContainer.appendChild(card);
         });
 
         // ==================== GEOLOCALIZACIÓN + CÁLCULO PRECIO ====================
-        const lugaresLocales = {
-            "vedado": { lat: 23.123, lng: -82.398 }, "miramar": { lat: 23.123, lng: -82.430 },
-            "habana vieja": { lat: 23.139, lng: -82.352 }, "centro habana": { lat: 23.126, lng: -82.383 },
-            "plaza": { lat: 23.130, lng: -82.415 }, "marianao": { lat: 23.087, lng: -82.404 },
-            "alamar": { lat: 23.157, lng: -82.238 }, "boyeros": { lat: 23.041, lng: -82.363 },
-            "coppelia": { lat: 23.124, lng: -82.382 }, "malecon": { lat: 23.140, lng: -82.357 }
-        };
+        const lugaresLocales = { "vedado": { lat: 23.123, lng: -82.398 }, "miramar": { lat: 23.123, lng: -82.430 }, "habana vieja": { lat: 23.139, lng: -82.352 }, "centro habana": { lat: 23.126, lng: -82.383 }, "plaza": { lat: 23.130, lng: -82.415 }, "marianao": { lat: 23.087, lng: -82.404 }, "alamar": { lat: 23.157, lng: -82.238 }, "boyeros": { lat: 23.041, lng: -82.363 } };
         let cacheGeocoding = {};
         try { const saved = localStorage.getItem("elresolvito_cache"); if(saved) cacheGeocoding = JSON.parse(saved); } catch(e) {}
-
         function guardarCache(dir, res) { cacheGeocoding[dir.toLowerCase().trim()] = { ...res, timestamp: Date.now() }; localStorage.setItem("elresolvito_cache", JSON.stringify(cacheGeocoding)); }
-        function extraerMunicipio(dir) { const munis = Object.keys(lugaresLocales); for(let m of munis) if(dir.toLowerCase().includes(m)) return m; return null; }
         async function geocodificarInteligente(direccion) {
             if(!direccion || direccion.length<5) return null;
             const clave = direccion.toLowerCase().trim();
             if(cacheGeocoding[clave]) return cacheGeocoding[clave];
-            for(let [nombre, coords] of Object.entries(lugaresLocales))
-                if(clave.includes(nombre)) { guardarCache(direccion, coords); return coords; }
-            const mun = extraerMunicipio(direccion);
-            if(mun && lugaresLocales[mun]) { guardarCache(direccion, lugaresLocales[mun]); return lugaresLocales[mun]; }
+            for(let [nombre, coords] of Object.entries(lugaresLocales)) if(clave.includes(nombre)) { guardarCache(direccion, coords); return coords; }
             return null;
         }
-        function distanciaEntrePuntos(lat1,lng1,lat2,lng2) {
-            const R=6371, dLat=(lat2-lat1)*Math.PI/180, dLng=(lng2-lng1)*Math.PI/180;
-            const a=Math.sin(dLat/2)**2+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLng/2)**2;
-            const c=2*Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-            return Math.round(R*c*10)/10;
-        }
-        function calcularPrecio(km) {
-            if(km<=1) return 400; if(km<=2) return 500; if(km<=3) return 600;
-            if(km<=4) return 700; if(km<=5) return 800; if(km<=7) return 1000;
-            return 1000 + Math.round((km-7)*150);
-        }
+        function distanciaEntrePuntos(lat1,lng1,lat2,lng2) { const R=6371, dLat=(lat2-lat1)*Math.PI/180, dLng=(lng2-lng1)*Math.PI/180; const a=Math.sin(dLat/2)**2+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLng/2)**2; const c=2*Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); return Math.round(R*c*10)/10; }
+        function calcularPrecioDistancia(km) { if(km<=1) return 400; if(km<=2) return 500; if(km<=3) return 600; if(km<=4) return 700; if(km<=5) return 800; if(km<=7) return 1000; return 1000 + Math.round((km-7)*150); }
 
-        // Slider + cálculo automático con direcciones
-        const slider = document.getElementById('distanceSlider');
-        const precioMostrado = document.getElementById('precioMostrado');
-        const recogidaInput = document.getElementById('recogida');
-        const entregaInput = document.getElementById('entrega');
-        const precioCardDiv = document.getElementById('precioCard');
-        const precioNota = document.getElementById('precioNota');
-
-        async function actualizarPrecioPorDirecciones() {
-            const rec = recogidaInput.value.trim(), ent = entregaInput.value.trim();
+        const sliderDist = document.getElementById('distanceSlider'), precioSpan = document.getElementById('precioMostrado'), precioNotaSpan = document.getElementById('precioNota');
+        const recogidaField = document.getElementById('recogida'), entregaField = document.getElementById('entrega');
+        sliderDist.addEventListener('input', function() { let km = parseFloat(this.value); let p = calcularPrecioDistancia(km); precioSpan.innerHTML = `${p.toLocaleString()} <span class="text-lg text-gray-400">CUP</span>`; precioNotaSpan.innerText = `📏 ${km} km estimado`; });
+        async function actualizarPorDirecciones() {
+            const rec = recogidaField.value.trim(), ent = entregaField.value.trim();
             if(!rec || !ent || rec.length<5 || ent.length<5) return;
             const o = await geocodificarInteligente(rec), d = await geocodificarInteligente(ent);
-            if(o && d) {
-                const dist = distanciaEntrePuntos(o.lat, o.lng, d.lat, d.lng);
-                const precio = calcularPrecio(dist);
-                precioMostrado.innerHTML = `${precio.toLocaleString()} <span class="text-lg text-gray-400">CUP</span>`;
-                precioNota.innerHTML = `📏 ${dist} km aprox. Precio final lo confirma mensajero.`;
-                slider.value = Math.min(20, dist);
-            } else {
-                precioMostrado.innerHTML = "📍 Sin ubicación"; precioNota.innerHTML = "Intenta incluir municipio (Vedado, Miramar...)";
-            }
+            if(o && d) { const dist = distanciaEntrePuntos(o.lat, o.lng, d.lat, d.lng); const p = calcularPrecioDistancia(dist); precioSpan.innerHTML = `${p.toLocaleString()} <span class="text-lg text-gray-400">CUP</span>`; precioNotaSpan.innerHTML = `📏 ${dist} km aprox. El mensajero confirma.`; sliderDist.value = Math.min(20, dist); }
+            else { precioSpan.innerHTML = "📍 Sin ubicación"; precioNotaSpan.innerHTML = "Incluye municipio (Vedado, Miramar...)"; }
         }
-        slider.addEventListener('input', function() {
-            let km = parseFloat(this.value);
-            let price = calcularPrecio(km);
-            precioMostrado.innerHTML = `${price.toLocaleString()} <span class="text-lg text-gray-400">CUP</span>`;
-            precioNota.innerHTML = `📏 ${km} km estimado`;
-        });
-        let timeoutUbicacion;
-        recogidaInput.addEventListener('input', () => { clearTimeout(timeoutUbicacion); timeoutUbicacion = setTimeout(actualizarPrecioPorDirecciones, 800); });
-        entregaInput.addEventListener('input', () => { clearTimeout(timeoutUbicacion); timeoutUbicacion = setTimeout(actualizarPrecioPorDirecciones, 800); });
-
-        // Formulario a WhatsApp
+        let timerDir; recogidaField.addEventListener('input', () => { clearTimeout(timerDir); timerDir = setTimeout(actualizarPorDirecciones, 700); });
+        entregaField.addEventListener('input', () => { clearTimeout(timerDir); timerDir = setTimeout(actualizarPorDirecciones, 700); });
         document.getElementById('pedidoForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const nombre = document.getElementById('nombre').value.trim();
-            let telefono = document.getElementById('telefono').value.trim();
-            const recogida = recogidaInput.value.trim();
-            const entrega = entregaInput.value.trim();
-            const turno = document.getElementById('turno').value;
+            e.preventDefault(); const nombre = document.getElementById('nombre').value.trim(); let telefono = document.getElementById('telefono').value.trim(); const recogida = recogidaField.value.trim(), entrega = entregaField.value.trim(), turno = document.getElementById('turno').value;
             if(!nombre || !telefono || !recogida || !entrega) { alert("Completa todos los campos"); return; }
-            telefono = telefono.replace(/\s/g,'');
-            if(telefono.length===7) telefono='53'+telefono;
-            if(telefono.length===8 && !telefono.startsWith('53')) telefono='53'+telefono;
-            const o = await geocodificarInteligente(recogida), d = await geocodificarInteligente(entrega);
-            let dist=null, price=null;
-            if(o && d) { dist = distanciaEntrePuntos(o.lat, o.lng, d.lat, d.lng); price = calcularPrecio(dist); }
-            const mensajeWA = `🛵 *NUEVO PEDIDO - EL RESOLVITO*\n\n👤 ${nombre}\n📱 ${telefono}\n📍 Recogida: ${recogida}\n📍 Entrega: ${entrega}\n${price ? `💰 Precio referencia: ${price.toLocaleString()} CUP\n📏 ${dist} km\n` : "💰 Precio: a confirmar\n"}⏰ ${turno}`;
-            window.open(`https://wa.me/5356382909?text=${encodeURIComponent(mensajeWA)}`, '_blank');
-            alert("✅ Solicitud enviada. Un mensajero te contactará.");
-            document.getElementById('pedidoForm').reset();
-            precioMostrado.innerHTML = `600 <span class="text-lg text-gray-400">CUP</span>`;
+            telefono = telefono.replace(/\s/g,''); if(telefono.length===7) telefono='53'+telefono; if(telefono.length===8 && !telefono.startsWith('53')) telefono='53'+telefono;
+            const o = await geocodificarInteligente(recogida), d = await geocodificarInteligente(entrega); let dist=null, price=null;
+            if(o && d) { dist = distanciaEntrePuntos(o.lat, o.lng, d.lat, d.lng); price = calcularPrecioDistancia(dist); }
+            const msgWA = `🛵 *NUEVO PEDIDO*\n👤 ${nombre}\n📱 ${telefono}\n📍 ${recogida} → ${entrega}\n${price ? `💰 ${price.toLocaleString()} CUP\n📏 ${dist} km` : "💰 Precio a confirmar"}\n⏰ ${turno}`;
+            window.open(`https://wa.me/5356382909?text=${encodeURIComponent(msgWA)}`, '_blank'); alert("✅ Solicitud enviada. Un mensajero te contactará.");
+            document.getElementById('pedidoForm').reset(); precioSpan.innerHTML = `600 <span class="text-lg text-gray-400">CUP</span>`; precioNotaSpan.innerText = "*Precio final sujeto a ruta real";
         });
 
-        // ==================== CHATBOT VIVIAN (SISTEMA INTELIGENTE FUSIONADO) ====================
+        // ==================== CHATBOT VIVIAN (LÓGICA AVANZADA) ====================
         let estadoVivian = { paso: "inicio", datos: { nombre: "", telefono: "", recogida: "", entrega: "", turno: "Mañana (7am)" } };
-        let chatMessages = document.getElementById('chatbotMessages');
-        let chatInput = document.getElementById('chatbotInput');
-        let sendBtn = document.getElementById('chatbotSendBtn');
-        let closeBtn = document.getElementById('closeChatBtn');
-        let toggleBtn = document.getElementById('chatbotToggle');
-        let chatWindow = document.getElementById('chatbotWindow');
-        let notificationDot = document.getElementById('chatbotNotification');
-        let quickArea = document.getElementById('quickOptionsArea');
-
-        function addMessage(text, isUser = false, isBotWithAvatar = true) {
-            const div = document.createElement('div'); div.className = `chat-message ${isUser ? 'user' : 'bot'}`;
-            div.innerHTML = `<div class="message-bubble">${text.replace(/\n/g, '<br>')}</div>`;
-            chatMessages.appendChild(div); chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-        async function showTyping() {
-            const typingDiv = document.createElement('div'); typingDiv.className = 'typing-indicator'; typingDiv.id = 'typingIndicator';
-            typingDiv.innerHTML = '<span></span><span></span><span></span>';
-            chatMessages.appendChild(typingDiv); chatMessages.scrollTop = chatMessages.scrollHeight;
-            await new Promise(r => setTimeout(r, 600));
-            document.getElementById('typingIndicator')?.remove();
-        }
-        function setQuickOptions(opts) {
-            quickArea.innerHTML = '';
-            if(!opts) return;
-            opts.forEach(opt => {
-                const btn = document.createElement('button'); btn.className = 'quick-option';
-                btn.textContent = opt.text; btn.onclick = () => { addMessage(opt.text, true); processUserInput(opt.value); };
-                quickArea.appendChild(btn);
-            });
-        }
-        function extraerTelefono(texto) { const match = texto.match(/(?:5[35]?\d{7}|\d{7,8})/); if(match) { let t = match[0]; if(t.length===7) t='53'+t; if(t.length===8 && !t.startsWith('53')) t='53'+t; return t; } return null; }
-        function detectarDirecciones(texto) {
-            let rec=null, ent=null;
-            const patrones = [/(?:desde|de)\s+(.+?)\s+(?:hasta|a|para)\s+(.+)/i, /(.+?)\s+(?:hasta|a|para)\s+(.+)/i];
-            for(let p of patrones) { const m = texto.match(p); if(m && m[1] && m[2]) { rec=m[1].trim(); ent=m[2].trim(); break; } }
-            if(!rec) { const munis = ["vedado","miramar","habana vieja","centro habana","marianao","alamar","boyeros"]; let enc=[]; for(let m of munis) if(texto.toLowerCase().includes(m)) enc.push(m); if(enc.length>=2) { rec=enc[0]; ent=enc[1]; } }
-            return { recogida: rec, entrega: ent };
-        }
-        async function processUserInput(mensaje) {
+        const chatMsgs = document.getElementById('chatbotMessages'), chatInputField = document.getElementById('chatbotInput'), sendChatBtn = document.getElementById('chatbotSendBtn'), closeChat = document.getElementById('closeChatBtn'), toggleChat = document.getElementById('chatbotToggle'), chatWin = document.getElementById('chatbotWindow'), notifDot = document.getElementById('chatbotNotification'), quickAreaDiv = document.getElementById('quickOptionsArea');
+        function addMsg(text, isUser = false) { const div = document.createElement('div'); div.className = `chat-message ${isUser ? 'user' : 'bot'}`; div.innerHTML = `<div class="message-bubble">${text.replace(/\n/g, '<br>')}</div>`; chatMsgs.appendChild(div); chatMsgs.scrollTop = chatMsgs.scrollHeight; }
+        async function showTypingGif() { const typingDiv = document.createElement('div'); typingDiv.className = 'typing-indicator'; typingDiv.id = 'typingIndicatorGif'; typingDiv.innerHTML = '<span></span><span></span><span></span>'; chatMsgs.appendChild(typingDiv); chatMsgs.scrollTop = chatMsgs.scrollHeight; await new Promise(r => setTimeout(r, 550)); document.getElementById('typingIndicatorGif')?.remove(); }
+        function setQuickOpts(opts) { quickAreaDiv.innerHTML = ''; if(!opts) return; opts.forEach(opt => { const btn = document.createElement('button'); btn.className = 'quick-option'; btn.textContent = opt.text; btn.onclick = () => { addMsg(opt.text, true); processUserMsg(opt.value); }; quickAreaDiv.appendChild(btn); }); }
+        function extraerTelefonoMsg(texto) { const match = texto.match(/(?:5[35]?\d{7}|\d{7,8})/); if(match) { let t = match[0]; if(t.length===7) t='53'+t; if(t.length===8 && !t.startsWith('53')) t='53'+t; return t; } return null; }
+        function detectarDireccionesMsg(texto) { let rec=null, ent=null; const patrones = [/(?:desde|de)\s+(.+?)\s+(?:hasta|a|para)\s+(.+)/i, /(.+?)\s+(?:hasta|a|para)\s+(.+)/i]; for(let p of patrones) { const m = texto.match(p); if(m && m[1] && m[2]) { rec=m[1].trim(); ent=m[2].trim(); break; } } if(!rec) { const munis = ["vedado","miramar","habana vieja","centro habana","marianao","alamar","boyeros"]; let enc=[]; for(let m of munis) if(texto.toLowerCase().includes(m)) enc.push(m); if(enc.length>=2) { rec=enc[0]; ent=enc[1]; } } return { recogida: rec, entrega: ent }; }
+        async function processUserMsg(mensaje) {
             const original = mensaje.trim(), msg = original.toLowerCase();
-            if(msg === "ver tarifas") {
-                addMessage("💰 Tarifas de referencia:\n• Hasta 1km: 400 CUP\n• 2km: 500\n• 3km: 600\n• 4km: 700\n• 5km: 800\n• 7km: 1000 CUP\n• +8km: 1000 + (km-7)×150 CUP\n\n*El mensajero confirma el valor final.*", false);
-                setQuickOptions([{text:"📦 Solicitar", value:"solicitar"},{text:"📍 Cobertura", value:"cobertura"},{text:"🕒 Horarios", value:"horarios"}]);
-                return;
-            }
-            if(msg === "cobertura") { addMessage("📍 Cubrimos toda La Habana: Habana Vieja, Centro, Vedado, Plaza, Miramar, Marianao, Alamar, Boyeros y más. ¡Llegamos a todos!", false); setQuickOptions([{text:"📦 Solicitar", value:"solicitar"},{text:"💰 Tarifas", value:"ver tarifas"}]); return; }
-            if(msg === "horarios") { addMessage("🕒 Turno mañana: recogida 7am, entrega antes 1pm.\n🕒 Turno tarde: recogida 2pm, entrega antes 6pm.", false); setQuickOptions([{text:"📦 Solicitar", value:"solicitar"},{text:"💰 Tarifas", value:"ver tarifas"}]); return; }
-            if(msg === "solicitar" || msg.includes("pedido")) { estadoVivian = { paso: "nombre", datos: { nombre:"", telefono:"", recogida:"", entrega:"", turno:"Mañana (7am)" } }; addMessage("📝 ¡Vamos paso a paso! ¿Cómo te llamas?", false); return; }
-
-            const telefono = extraerTelefono(original);
-            const direcciones = detectarDirecciones(original);
-            let nombre = null;
-            const palabras = original.split(/\s+/);
-            const munisConocidos = ["vedado","miramar","habana","marianao","alamar","plaza","boyeros"];
-            for(let p of palabras) {
-                const plow = p.toLowerCase();
-                const esNumero = /\d/.test(p);
-                const esLugar = munisConocidos.some(l=>plow.includes(l));
-                if(p.length>=3 && !esNumero && !esLugar && !nombre && !plow.includes("calle") && !plow.includes("ave"))
-                    { nombre = p.charAt(0).toUpperCase()+p.slice(1).toLowerCase(); break; }
-            }
+            if(msg === "ver tarifas") { addMsg("💰 *Tarifas de referencia:*\n• Hasta 1km: 400 CUP\n• 2km: 500\n• 3km: 600\n• 4km: 700\n• 5km: 800\n• 7km: 1000\n• Desde 8km: 1000 + (km-7)×150 CUP.\n\n*El mensajero confirma el valor final.*"); setQuickOpts([{text:"📦 Solicitar", value:"solicitar"},{text:"📍 Cobertura", value:"cobertura"}]); return; }
+            if(msg === "cobertura") { addMsg("📍 Cubrimos toda La Habana: Habana Vieja, Centro, Vedado, Plaza, Miramar, Marianao, Alamar, Boyeros y más. ¡Llegamos a todos!"); setQuickOpts([{text:"📦 Solicitar", value:"solicitar"},{text:"💰 Tarifas", value:"ver tarifas"}]); return; }
+            if(msg === "solicitar" || msg.includes("pedido")) { estadoVivian = { paso: "nombre", datos: { nombre:"", telefono:"", recogida:"", entrega:"", turno:"Mañana (7am)" } }; addMsg("📝 ¡Vamos paso a paso! ¿Cómo te llamas?"); return; }
+            const telefono = extraerTelefonoMsg(original); const direcciones = detectarDireccionesMsg(original); let nombre = null; const palabrasArr = original.split(/\s+/), munisList = ["vedado","miramar","habana","marianao","alamar","plaza","boyeros"];
+            for(let p of palabrasArr) { const plow = p.toLowerCase(); const esNumero = /\d/.test(p), esLugar = munisList.some(l=>plow.includes(l)); if(p.length>=3 && !esNumero && !esLugar && !nombre && !plow.includes("calle") && !plow.includes("ave")) { nombre = p.charAt(0).toUpperCase()+p.slice(1).toLowerCase(); break; } }
             if(nombre && direcciones.recogida && direcciones.entrega) {
                 estadoVivian.datos = { nombre, telefono: telefono || "", recogida: direcciones.recogida, entrega: direcciones.entrega, turno: "Mañana (7am)" };
-                if(!telefono) { estadoVivian.paso = "telefono_faltante"; addMessage(`✅ Entendido: ${direcciones.recogida} → ${direcciones.entrega}\n📱 ¿Tu número de teléfono? Así te contacta un mensajero.`, false); return; }
+                if(!telefono) { estadoVivian.paso = "telefono_faltante"; addMsg(`✅ Entendido: ${direcciones.recogida} → ${direcciones.entrega}\n📱 ¿Tu número de teléfono?`); return; }
                 const o = await geocodificarInteligente(direcciones.recogida), d = await geocodificarInteligente(direcciones.entrega);
                 let resp = `✅ Datos recibidos:\n👤 ${nombre}\n📱 ${telefono}\n📍 ${direcciones.recogida} → ${direcciones.entrega}\n`;
-                if(o && d) { const km = distanciaEntrePuntos(o.lat, o.lng, d.lat, d.lng), pr = calcularPrecio(km); resp += `📏 Distancia: ${km} km\n💰 Precio referencia: ${pr.toLocaleString()} CUP\n\n`; }
-                else resp += `⚠️ No pude calcular la distancia exacta.\n\n`;
-                resp += `⏰ ¿Turno preferido? (mañana/tarde)`;
-                estadoVivian.paso = "turno"; addMessage(resp, false); return;
+                if(o && d) { const km = distanciaEntrePuntos(o.lat, o.lng, d.lat, d.lng), pr = calcularPrecioDistancia(km); resp += `📏 Distancia: ${km} km\n💰 Precio referencia: ${pr.toLocaleString()} CUP\n\n`; } else resp += `⚠️ No pude calcular distancia exacta.\n\n`;
+                resp += `⏰ ¿Turno? (mañana/tarde)`; estadoVivian.paso = "turno"; addMsg(resp); return;
             }
-
             switch(estadoVivian.paso) {
-                case "inicio": addMessage("Escríbe **solicitar** o directamente tu pedido completo, ejemplo: *Juan 56382909 Vedado a Miramar*", false); break;
-                case "nombre": if(msg.length<3) { addMessage("Dime tu nombre completo.", false); return; } estadoVivian.datos.nombre = original.charAt(0).toUpperCase()+original.slice(1); estadoVivian.paso="telefono"; addMessage(`Gracias ${estadoVivian.datos.nombre}. 📱 ¿Tu número de teléfono?`, false); break;
-                case "telefono": const tel = extraerTelefono(original); if(!tel) { addMessage("Número inválido. Ejemplo: 56382909", false); return; } estadoVivian.datos.telefono = tel; estadoVivian.paso="recogida"; addMessage("📍 ¿Dirección de recogida? (Calle, municipio, referencia)", false); break;
-                case "telefono_faltante": const tel2 = extraerTelefono(original); if(!tel2) { addMessage("Número inválido. Ejemplo: 56382909", false); return; } estadoVivian.datos.telefono = tel2; const o2 = await geocodificarInteligente(estadoVivian.datos.recogida), d2 = await geocodificarInteligente(estadoVivian.datos.entrega); let r2 = `✅ Datos completos\n👤 ${estadoVivian.datos.nombre}\n📱 ${tel2}\n📍 ${estadoVivian.datos.recogida} → ${estadoVivian.datos.entrega}\n`; if(o2 && d2) { const km = distanciaEntrePuntos(o2.lat, o2.lng, d2.lat, d2.lng), pr = calcularPrecio(km); r2 += `📏 ${km} km\n💰 ${pr.toLocaleString()} CUP\n\n`; } else r2 += `⚠️ No pude calcular distancia.\n\n`; r2 += `⏰ ¿Turno? (mañana/tarde)`; estadoVivian.paso="turno"; addMessage(r2, false); break;
-                case "recogida": if(msg.length<5) { addMessage("Dame una dirección más específica.", false); return; } estadoVivian.datos.recogida = original; estadoVivian.paso="entrega"; addMessage("📍 ¿Dirección de entrega?", false); break;
-                case "entrega": if(msg.length<5) { addMessage("Dame una dirección de entrega.", false); return; } estadoVivian.datos.entrega = original; const o3 = await geocodificarInteligente(estadoVivian.datos.recogida), d3 = await geocodificarInteligente(estadoVivian.datos.entrega); let r3 = ""; if(o3 && d3) { const km = distanciaEntrePuntos(o3.lat, o3.lng, d3.lat, d3.lng), pr = calcularPrecio(km); r3 = `📏 ${km} km\n💰 ${pr.toLocaleString()} CUP\n\n`; } else r3 = "⚠️ No pude calcular distancia.\n\n"; estadoVivian.paso="turno"; addMessage(r3 + "⏰ ¿Turno? (mañana/tarde)", false); break;
-                case "turno": if(msg.includes("mañana")) estadoVivian.datos.turno = "Mañana (7am)"; else if(msg.includes("tarde")) estadoVivian.datos.turno = "Tarde (2pm)"; else { addMessage("Elige: mañana o tarde", false); return; }
-                    const o4 = await geocodificarInteligente(estadoVivian.datos.recogida), d4 = await geocodificarInteligente(estadoVivian.datos.entrega);
-                    const dist = (o4 && d4) ? distanciaEntrePuntos(o4.lat, o4.lng, d4.lat, d4.lng) : null, price = dist ? calcularPrecio(dist) : null;
-                    const msgWA = `🛵 *NUEVO PEDIDO (CHAT)*\n👤 ${estadoVivian.datos.nombre}\n📱 ${estadoVivian.datos.telefono}\n📍 ${estadoVivian.datos.recogida} → ${estadoVivian.datos.entrega}\n${price ? `💰 ${price.toLocaleString()} CUP\n📏 ${dist} km\n` : "💰 Precio a confirmar\n"}⏰ ${estadoVivian.datos.turno}`;
-                    window.open(`https://wa.me/5356382909?text=${encodeURIComponent(msgWA)}`, '_blank');
-                    const nomCliente = estadoVivian.datos.nombre;
-                    estadoVivian = { paso: "inicio", datos: { nombre:"", telefono:"", recogida:"", entrega:"", turno:"Mañana (7am)" } };
-                    addMessage(`✅ ¡Gracias ${nomCliente}! Tu solicitud está lista.\n\n📞 En breve un mensajero real te contactará para confirmar precio y horario.\n\n💚 ¿Necesitas algo más? Escribe **solicitar** para otro pedido.`, false);
-                    setQuickOptions([{text:"📦 Nuevo pedido", value:"solicitar"},{text:"💰 Tarifas", value:"ver tarifas"}]);
-                    break;
-                default: addMessage("Escribe **solicitar** para empezar.", false);
+                case "inicio": addMsg("Escribe **solicitar** o tu pedido completo, ej: *Juan 56382909 Vedado a Miramar*"); break;
+                case "nombre": if(msg.length<3) { addMsg("Dime tu nombre completo."); return; } estadoVivian.datos.nombre = original; estadoVivian.paso="telefono"; addMsg(`Gracias ${estadoVivian.datos.nombre}. 📱 ¿Tu número de teléfono?`); break;
+                case "telefono": const tel = extraerTelefonoMsg(original); if(!tel) { addMsg("Número inválido. Ej: 56382909"); return; } estadoVivian.datos.telefono = tel; estadoVivian.paso="recogida"; addMsg("📍 ¿Dirección de recogida?"); break;
+                case "telefono_faltante": const tel2 = extraerTelefonoMsg(original); if(!tel2) { addMsg("Número inválido."); return; } estadoVivian.datos.telefono = tel2; const oo = await geocodificarInteligente(estadoVivian.datos.recogida), dd = await geocodificarInteligente(estadoVivian.datos.entrega); let rr = `✅ Datos completos\n👤 ${estadoVivian.datos.nombre}\n📱 ${tel2}\n📍 ${estadoVivian.datos.recogida} → ${estadoVivian.datos.entrega}\n`; if(oo && dd) { const km = distanciaEntrePuntos(oo.lat, oo.lng, dd.lat, dd.lng), pr = calcularPrecioDistancia(km); rr += `📏 ${km} km\n💰 ${pr.toLocaleString()} CUP\n\n`; } else rr += `⚠️ No pude calcular distancia.\n\n`; rr += `⏰ ¿Turno?`; estadoVivian.paso="turno"; addMsg(rr); break;
+                case "recogida": if(msg.length<5) { addMsg("Dirección más específica."); return; } estadoVivian.datos.recogida = original; estadoVivian.paso="entrega"; addMsg("📍 ¿Dirección de entrega?"); break;
+                case "entrega": if(msg.length<5) { addMsg("Dirección de entrega."); return; } estadoVivian.datos.entrega = original; const o3 = await geocodificarInteligente(estadoVivian.datos.recogida), d3 = await geocodificarInteligente(estadoVivian.datos.entrega); let r3 = ""; if(o3 && d3) { const km = distanciaEntrePuntos(o3.lat, o3.lng, d3.lat, d3.lng), pr = calcularPrecioDistancia(km); r3 = `📏 ${km} km\n💰 ${pr.toLocaleString()} CUP\n\n`; } else r3 = "⚠️ No pude calcular distancia.\n\n"; estadoVivian.paso="turno"; addMsg(r3 + "⏰ ¿Turno? (mañana/tarde)"); break;
+                case "turno": if(msg.includes("mañana")) estadoVivian.datos.turno = "Mañana (7am)"; else if(msg.includes("tarde")) estadoVivian.datos.turno = "Tarde (2pm)"; else { addMsg("Elige: mañana o tarde"); return; }
+                    const o4 = await geocodificarInteligente(estadoVivian.datos.recogida), d4 = await geocodificarInteligente(estadoVivian.datos.entrega); const dist = (o4 && d4) ? distanciaEntrePuntos(o4.lat, o4.lng, d4.lat, d4.lng) : null, price = dist ? calcularPrecioDistancia(dist) : null;
+                    const msgWA2 = `🛵 *NUEVO PEDIDO (CHAT)*\n👤 ${estadoVivian.datos.nombre}\n📱 ${estadoVivian.datos.telefono}\n📍 ${estadoVivian.datos.recogida} → ${estadoVivian.datos.entrega}\n${price ? `💰 ${price.toLocaleString()} CUP\n📏 ${dist} km` : "💰 Precio a confirmar"}\n⏰ ${estadoVivian.datos.turno}`;
+                    window.open(`https://wa.me/5356382909?text=${encodeURIComponent(msgWA2)}`, '_blank'); const cliente = estadoVivian.datos.nombre; estadoVivian = { paso: "inicio", datos: { nombre:"", telefono:"", recogida:"", entrega:"", turno:"Mañana (7am)" } }; addMsg(`✅ ¡Gracias ${cliente}! Tu solicitud está lista.\n📞 En breve un mensajero real te contactará.\n💚 ¿Necesitas algo más? Escribe **solicitar**.`); setQuickOpts([{text:"📦 Nuevo pedido", value:"solicitar"},{text:"💰 Tarifas", value:"ver tarifas"}]); break;
+                default: addMsg("Escribe **solicitar** para empezar.");
             }
         }
-
-        async function sendMessage() {
-            const msg = chatInput.value.trim();
-            if(!msg) return;
-            addMessage(msg, true);
-            chatInput.value = '';
-            await showTyping();
-            await processUserInput(msg);
-        }
-        function toggleChat() {
-            if(chatWindow.classList.contains('active')) { chatWindow.classList.remove('active'); notificationDot.classList.remove('hidden'); }
-            else { chatWindow.classList.add('active'); notificationDot.classList.add('hidden'); if(chatMessages.children.length===0) { addMessage("🤖 ¡Hola! Soy Vivian. Escribe **solicitar** o directamente tu pedido completo.\n\nEjemplo: *Juan 56382909 Habana Vieja a Miramar*", false); setQuickOptions([{text:"📝 Solicitar", value:"solicitar"},{text:"💰 Ver tarifas", value:"ver tarifas"},{text:"📍 Cobertura", value:"cobertura"}]); } }
-        }
-        toggleBtn.addEventListener('click', toggleChat);
-        closeBtn.addEventListener('click', () => { chatWindow.classList.remove('active'); notificationDot.classList.remove('hidden'); });
-        sendBtn.addEventListener('click', sendMessage);
-        chatInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') sendMessage(); });
-        setTimeout(() => { if(!chatWindow.classList.contains('active')) notificationDot.classList.remove('hidden'); }, 2000);
+        async function sendMsgHandler() { const msg = chatInputField.value.trim(); if(!msg) return; addMsg(msg, true); chatInputField.value = ''; await showTypingGif(); await processUserMsg(msg); }
+        function toggleChatWindow() { if(chatWin.classList.contains('active')) { chatWin.classList.remove('active'); notifDot.classList.remove('hidden'); } else { chatWin.classList.add('active'); notifDot.classList.add('hidden'); if(chatMsgs.children.length===0) { addMsg("🤖 ¡Hola! Soy Vivian.\nEscribe **solicitar** o directamente tu pedido completo.\nEj: *Juan 56382909 Habana Vieja a Miramar*"); setQuickOpts([{text:"📝 Solicitar", value:"solicitar"},{text:"💰 Ver tarifas", value:"ver tarifas"},{text:"📍 Cobertura", value:"cobertura"}]); } } }
+        toggleChat.addEventListener('click', toggleChatWindow); closeChat.addEventListener('click', () => { chatWin.classList.remove('active'); notifDot.classList.remove('hidden'); }); sendChatBtn.addEventListener('click', sendMsgHandler); chatInputField.addEventListener('keypress', (e) => { if(e.key === 'Enter') sendMsgHandler(); });
+        setTimeout(() => { if(!chatWin.classList.contains('active')) notifDot.classList.remove('hidden'); }, 2500);
     </script>
 </body>
 </html>
