@@ -72,24 +72,19 @@
         
         /* ==================== HEADER / HERO ==================== */
         .hero {
-            min-height: 90vh;
+            min-height: 85vh;
             display: flex;
             align-items: center;
+            justify-content: center;
             padding: 60px 0 40px 0;
             position: relative;
             background: #ffffff;
-        }
-        
-        .hero-grid {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 50px;
-            flex-wrap: wrap;
+            text-align: center;
         }
         
         .hero-content {
-            flex: 1;
+            max-width: 800px;
+            margin: 0 auto;
         }
         
         .hero-badge {
@@ -104,7 +99,7 @@
         }
         
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: 3.8rem;
             font-weight: 800;
             line-height: 1.2;
             margin-bottom: 20px;
@@ -119,7 +114,7 @@
         }
         
         .hero p {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: #4b5563;
             margin-bottom: 32px;
             line-height: 1.6;
@@ -131,7 +126,7 @@
         }
         
         .typewriter-text {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: #2E7D32;
             font-weight: 600;
             border-right: 3px solid #FFB300;
@@ -139,19 +134,6 @@
             white-space: nowrap;
             overflow: hidden;
             padding-right: 5px;
-        }
-        
-        .hero-image {
-            flex: 1;
-            text-align: center;
-            animation: float 4s ease-in-out infinite;
-        }
-        
-        .hero-image img {
-            max-width: 100%;
-            max-height: 380px;
-            filter: drop-shadow(0 20px 25px rgba(0,0,0,0.1));
-            border-radius: 20px;
         }
         
         /* Botones */
@@ -204,10 +186,11 @@
             display: flex;
             gap: 16px;
             flex-wrap: wrap;
+            justify-content: center;
             margin-top: 32px;
         }
         
-        /* ==================== PROMO BANNER (SOLO IMAGEN, SIN TEXTO) ==================== */
+        /* ==================== PROMO BANNER (SOLO IMAGEN) ==================== */
         .promo-banner {
             padding: 30px 0;
             background: #ffffff;
@@ -868,8 +851,6 @@
         
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.2rem; }
-            .hero-grid { flex-direction: column; text-align: center; }
-            .hero-image { order: -1; margin-bottom: 30px; }
             .btn-group { justify-content: center; }
             .form-card { padding: 24px; margin: 0 16px; }
             .chat-bot-button { bottom: 20px; right: 90px; width: 56px; height: 56px; }
@@ -883,41 +864,36 @@
 
 <div class="progress-bar" id="progressBar"></div>
 
-<!-- HERO -->
+<!-- HERO (SIN IMAGEN) -->
 <section class="hero">
     <div class="container">
-        <div class="hero-grid">
-            <div class="hero-content">
-                <div class="hero-badge fade-up">
-                    <i class="fas fa-check-circle"></i> Confiable · Rápido · Seguro
-                </div>
-                <h1 class="fade-up delay-1">
-                    Mensajería <span class="gradient-text">El Resolvito</span>
-                </h1>
-                <div class="typewriter-container fade-up delay-2">
-                    <span class="typewriter-text" id="typewriter"></span>
-                </div>
-                <p class="fade-up delay-2">Llegamos a toda La Habana. Confianza, rapidez y seriedad en cada entrega.</p>
-                <div class="btn-group fade-up delay-3">
-                    <button id="openChatBtn" class="btn-vivian">
-                        <i class="fas fa-comment-dots"></i> 💬 Hablar con Vivian
-                    </button>
-                    <a href="#solicitar" class="btn-primary">
-                        <i class="fas fa-paper-plane"></i> Formulario rápido
-                    </a>
-                    <a href="#tarifas" class="btn-outline">
-                        <i class="fas fa-chart-simple"></i> Tarifas
-                    </a>
-                </div>
+        <div class="hero-content">
+            <div class="hero-badge fade-up">
+                <i class="fas fa-check-circle"></i> Confiable · Rápido · Seguro
             </div>
-            <div class="hero-image fade-right">
-                <img src="https://i.postimg.cc/KzZtdgx7/mensajero3.webp" alt="El Resolvito - Mensajero" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1067/1067983.png'">
+            <h1 class="fade-up delay-1">
+                Mensajería <span class="gradient-text">El Resolvito</span>
+            </h1>
+            <div class="typewriter-container fade-up delay-2">
+                <span class="typewriter-text" id="typewriter"></span>
+            </div>
+            <p class="fade-up delay-2">Llegamos a toda La Habana. Confianza, rapidez y seriedad en cada entrega.</p>
+            <div class="btn-group fade-up delay-3">
+                <button id="openChatBtn" class="btn-vivian">
+                    <i class="fas fa-comment-dots"></i> 💬 Hablar con Vivian
+                </button>
+                <a href="#solicitar" class="btn-primary">
+                    <i class="fas fa-paper-plane"></i> Formulario rápido
+                </a>
+                <a href="#tarifas" class="btn-outline">
+                    <i class="fas fa-chart-simple"></i> Tarifas
+                </a>
             </div>
         </div>
     </div>
 </section>
 
-<!-- PROMO BANNER (SOLO IMAGEN, FONDO BLANCO, SIN TEXTO) -->
+<!-- PROMO BANNER (SOLO IMAGEN) -->
 <section class="promo-banner">
     <div class="container">
         <img src="promocion-diaria-mensajeria-1-.webp" alt="Promoción El Resolvito" onerror="this.style.display='none'">
@@ -936,7 +912,7 @@
                 <div class="step-number">1</div>
                 <i class="fas fa-comment-dots"></i>
                 <h3>Habla con Vivian</h3>
-                <p>Haz clic en el botón verde y escribe tu pedido. Ella te ayudará a no olvidar ningún detalle.</p>
+                <p>Haz clic en el botón verde y escribe tu pedido. Ella te guiará para que no olvides ningún detalle.</p>
             </div>
             <div class="step-card fade-up delay-2">
                 <div class="step-number">2</div>
@@ -1041,7 +1017,7 @@
             <p>Precio orientativo por distancia. El mensajero confirmará el valor final.</p>
         </div>
         <div class="tarifas-table fade-up">
-            <table>
+            <tr>
                 <thead>
                     <tr><th>Distancia</th><th>Tarifa (CUP)</th></tr>
                 </thead>
