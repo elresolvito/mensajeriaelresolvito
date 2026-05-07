@@ -26,8 +26,8 @@
                     },
                     colors: {
                         brand: {
-                            blue: '#0056b3', // Matches the shirt
-                            orange: '#ff8c00', // Matches the backpack
+                            blue: '#0056b3', 
+                            orange: '#ff8c00', 
                             light: '#f0f9ff',
                         }
                     },
@@ -35,6 +35,7 @@
                         'marquee': 'marquee 30s linear infinite',
                         'float': 'float 6s ease-in-out infinite',
                         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-custom': 'bounce 2s infinite',
                     },
                     keyframes: {
                         marquee: {
@@ -116,12 +117,65 @@
                 background-attachment: scroll;
             }
         }
+
+        /* Chatbot Styles */
+        .chat-window {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: bottom right;
+        }
+        .chat-hidden {
+            opacity: 0;
+            transform: scale(0.9) translateY(20px);
+            pointer-events: none;
+        }
+        .chat-visible {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: all;
+        }
+        .chat-bubble {
+            max-width: 80%;
+            padding: 10px 14px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            position: relative;
+        }
+        .chat-bubble.user {
+            background-color: #0056b3;
+            color: white;
+            border-bottom-right-radius: 2px;
+            margin-left: auto;
+        }
+        .chat-bubble.bot {
+            background-color: #f1f5f9;
+            color: #1e293b;
+            border-bottom-left-radius: 2px;
+            margin-right: auto;
+        }
+        .typing-indicator span {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background-color: #94a3b8;
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out both;
+            margin: 0 2px;
+        }
+        .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+        .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+        
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 antialiased overflow-x-hidden">
 
     <!-- Navbar -->
-    <nav class="fixed w-full z-50 glass transition-all duration-300" id="navbar">
+    <nav class="fixed w-full z-40 glass transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <div class="flex items-center gap-2">
@@ -146,12 +200,12 @@
             </div>
         </div>
         <!-- Mobile Menu -->
-        <div class="md:hidden hidden bg-white border-t border-gray-100 absolute w-full left-0" id="mobile-menu">
+        <div class="md:hidden hidden bg-white border-t border-gray-100 absolute w-full left-0 shadow-xl" id="mobile-menu">
             <div class="px-4 py-4 space-y-3">
                 <a href="#tarifas" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Tarifas</a>
                 <a href="#calculadora" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Calculadora</a>
                 <a href="#nosotros" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Nosotros</a>
-                <a href="https://wa.me/5356382909" class="block w-full text-center bg-green-500 text-white px-3 py-2 rounded-md font-medium">Contactar WhatsApp</a>
+                <a href="https://wa.me/5356382909" class="block w-full text-center bg-green-500 text-white px-3 py-2 rounded-md font-medium mt-4">Contactar WhatsApp</a>
             </div>
         </div>
     </nav>
@@ -509,7 +563,53 @@
         </div>
     </footer>
 
-    <!-- AOS Library Script -->
+    <!-- Chatbot Widget -->
+    <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-4">
+        
+        <!-- Chat Window -->
+        <div id="chat-window" class="chat-hidden chat-window w-[350px] sm:w-[380px] h-[500px] bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col overflow-hidden mb-2">
+            <!-- Header -->
+            <div class="bg-brand-blue p-4 flex items-center gap-3 shadow-md">
+                <div class="relative">
+                    <img src="https://image.qwenlm.ai/public_source/c24beb3e-b99d-43b2-a853-ce6e313611c0/19b9653a2-e0c6-4d2f-bbbe-26b2670aff49.png" alt="Vivian Avatar" class="w-10 h-10 rounded-full border-2 border-white object-cover">
+                    <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-400 border-2 border-brand-blue rounded-full"></span>
+                </div>
+                <div class="flex-1 text-white">
+                    <h4 class="font-bold text-sm">Vivian</h4>
+                    <p class="text-xs text-blue-200">Asistente Virtual • En línea</p>
+                </div>
+                <button onclick="toggleChat()" class="text-white hover:text-gray-200 transition-colors">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            
+            <!-- Messages Area -->
+            <div id="chat-messages" class="flex-1 p-4 overflow-y-auto bg-gray-50 space-y-2">
+                <!-- Messages will be injected here via JS -->
+            </div>
+
+            <!-- Input Area -->
+            <div class="p-3 bg-white border-t border-gray-100">
+                <div class="flex gap-2 mb-3 overflow-x-auto pb-1 scrollbar-hide" id="quick-options">
+                    <!-- Quick buttons injected via JS -->
+                </div>
+                <div class="flex gap-2">
+                    <input type="text" id="chat-input" placeholder="Escribe tu mensaje..." class="flex-1 bg-gray-100 border-0 rounded-full px-4 py-2 text-sm focus:ring-2 focus:ring-brand-blue/50 focus:outline-none" onkeypress="handleChatKeypress(event)">
+                    <button onclick="sendUserMessage()" class="bg-brand-blue text-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors shadow-md">
+                        <i class="fa-solid fa-paper-plane text-xs"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Button -->
+        <button onclick="toggleChat()" class="relative group w-16 h-16 rounded-full bg-brand-blue shadow-lg shadow-blue-500/40 flex items-center justify-center hover:bg-brand-orange transition-colors duration-300 transform hover:scale-105">
+            <img src="https://image.qwenlm.ai/public_source/c24beb3e-b99d-43b2-a853-ce6e313611c0/19b9653a2-e0c6-4d2f-bbbe-26b2670aff49.png" alt="Vivian Avatar" class="w-14 h-14 rounded-full border-2 border-white object-cover">
+            <span class="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white animate-pulse"></span>
+        </button>
+    </div>
+
+    <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         // Initialize AOS
@@ -537,7 +637,6 @@
             menu.classList.toggle('hidden');
         });
 
-        // Close mobile menu when clicking a link
         menu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 menu.classList.add('hidden');
@@ -560,7 +659,6 @@
             else if (km <= 10) price = 1200;
             else if (km <= 12) price = 1400;
             else {
-                // > 12km
                 const extraKm = km - 12;
                 price = 1400 + (extraKm * 120);
             }
@@ -572,7 +670,6 @@
             distanceValue.textContent = km;
             let price = calculatePrice(km);
             
-            // Animate price change slightly
             priceDisplay.style.transform = "scale(0.95)";
             setTimeout(() => {
                 priceDisplay.innerHTML = `${price.toLocaleString()} <span class="text-lg text-gray-500">CUP</span>`;
@@ -591,13 +688,152 @@
             const price = priceDisplay.innerText.replace(' CUP', '');
 
             if (!name || !phone || !pickup || !delivery) {
-                alert('Por favor completa los campos obligatorios (Nombre, Teléfono, Recogida, Entrega).');
+                alert('Por favor completa los campos obligatorios.');
                 return;
             }
 
-            let message = `Hola El Resolvito! 👋%0A%0AQuiero solicitar un mensajero.%0A%0A👤 *Nombre:* ${name}%0A📞 *Teléfono:* ${phone}%0A📍 *Recogida:* ${pickup}%0A🏁 *Entrega:* ${delivery}%0A📦 *Tipo:* ${document.querySelector('input[name="package"]:checked').value === 'documento' ? 'Documento' : 'Paquete'}%0A📏 *Distancia estimada:* ${km} km%0A💰 *Precio estimado:* ${price}%0A📝 *Notas:* ${notes}`;
-
+            let message = `Hola El Resolvito! 👋%0A%0AQuiero solicitar un mensajero.%0A%0A👤 *Nombre:* ${name}%0A📞 *Teléfono:* ${phone}%0A *Recogida:* ${pickup}%0A🏁 *Entrega:* ${delivery}%0A📏 *Distancia:* ${km} km%0A💰 *Precio:* ${price}%0A📝 *Notas:* ${notes}`;
             window.open(`https://wa.me/5356382909?text=${message}`, '_blank');
+        }
+
+        // --- CHATBOT LOGIC ---
+        const chatWindow = document.getElementById('chat-window');
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        const quickOptions = document.getElementById('quick-options');
+        let isChatOpen = false;
+
+        function toggleChat() {
+            isChatOpen = !isChatOpen;
+            if (isChatOpen) {
+                chatWindow.classList.remove('chat-hidden');
+                chatWindow.classList.add('chat-visible');
+                if (chatMessages.children.length === 0) {
+                    initChat();
+                }
+                chatInput.focus();
+            } else {
+                chatWindow.classList.remove('chat-visible');
+                chatWindow.classList.add('chat-hidden');
+            }
+        }
+
+        function initChat() {
+            addBotMessage("¡Hola! Soy Vivian, tu asistente virtual de El Resolvito. 🚴‍♀️ ¿En qué puedo ayudarte hoy?");
+            setQuickOptions([
+                { text: "💰 Ver Tarifas", value: "tarifas" },
+                { text: "📦 Solicitar Mensajero", value: "solicitar" },
+                { text: "🕒 Horarios", value: "horarios" },
+                { text: "📍 Cobertura", value: "cobertura" }
+            ]);
+        }
+
+        function addBotMessage(text) {
+            const div = document.createElement('div');
+            div.className = "chat-bubble bot animate-fade-in";
+            div.innerHTML = text;
+            chatMessages.appendChild(div);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function addUserMessage(text) {
+            const div = document.createElement('div');
+            div.className = "chat-bubble user";
+            div.textContent = text;
+            chatMessages.appendChild(div);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function showTyping() {
+            const div = document.createElement('div');
+            div.id = "typing-indicator";
+            div.className = "chat-bubble bot typing-indicator";
+            div.innerHTML = "<span></span><span></span><span></span>";
+            chatMessages.appendChild(div);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function removeTyping() {
+            const typing = document.getElementById('typing-indicator');
+            if (typing) typing.remove();
+        }
+
+        function setQuickOptions(options) {
+            quickOptions.innerHTML = '';
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = "flex-shrink-0 bg-white border border-brand-blue/30 text-brand-blue text-xs font-medium px-3 py-1.5 rounded-full hover:bg-brand-blue hover:text-white transition-colors whitespace-nowrap";
+                btn.textContent = opt.text;
+                btn.onclick = () => {
+                    addUserMessage(opt.text);
+                    processUserInput(opt.value);
+                };
+                quickOptions.appendChild(btn);
+            });
+        }
+
+        function handleChatKeypress(e) {
+            if (e.key === 'Enter') sendUserMessage();
+        }
+
+        function sendUserMessage() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+            addUserMessage(text);
+            chatInput.value = '';
+            processUserInput(text.toLowerCase());
+        }
+
+        function processUserInput(text) {
+            showTyping();
+            setQuickOptions([]); // Clear quick options while typing
+
+            setTimeout(() => {
+                removeTyping();
+                let response = "";
+
+                if (text.includes("tarifa") || text.includes("precio") || text.includes("costo")) {
+                    response = "Aquí tienes nuestras tarifas base:<br><br> <b>Hasta 1km:</b> 400 CUP<br>📍 <b>1-2km:</b> 500 CUP<br>📍 <b>2-5km:</b> 600-800 CUP<br> <b>+5km:</b> 1,000+ CUP<br><br>¿Quieres calcular un precio específico? Ve a nuestra <a href='#calculadora' class='text-brand-blue font-bold underline'>calculadora</a>.";
+                    setQuickOptions([
+                        { text: "📦 Solicitar Mensajero", value: "solicitar" },
+                        { text: "🕒 Horarios", value: "horarios" }
+                    ]);
+                } else if (text.includes("solicitar") || text.includes("mensajero") || text.includes("pedido")) {
+                    response = "¡Perfecto! Para solicitar un mensajero tienes dos opciones:<br><br>1️⃣ Llena el <a href='#calculadora' class='text-brand-blue font-bold underline'>formulario aquí mismo</a>.<br>2️⃣ O envíanos un WhatsApp directo al <a href='https://wa.me/5356382909' class='text-green-600 font-bold underline'>+53 5 638 2909</a>.";
+                    setQuickOptions([
+                        { text: "💰 Ver Tarifas", value: "tarifas" },
+                        { text: "📍 Cobertura", value: "cobertura" }
+                    ]);
+                } else if (text.includes("horario") || text.includes("hora") || text.includes("recogida")) {
+                    response = "Nuestros turnos de recogida son:<br><br>🌅 <b>Mañana:</b> 7:00 AM<br>🌇 <b>Tarde:</b> 2:00 PM<br><br>Los pedidos nocturnos se procesan para el turno de la mañana siguiente.";
+                    setQuickOptions([
+                        { text: "📦 Solicitar Mensajero", value: "solicitar" },
+                        { text: "💰 Ver Tarifas", value: "tarifas" }
+                    ]);
+                } else if (text.includes("cobertura") || text.includes("zona") || text.includes("donde")) {
+                    response = "Cubrimos toda La Habana. Desde Habana Vieja hasta Marianao, La Lisa, Boyeros y más. ¡Cualquier municipio cuenta!";
+                    setQuickOptions([
+                        { text: " Solicitar Mensajero", value: "solicitar" },
+                        { text: "💰 Ver Tarifas", value: "tarifas" }
+                    ]);
+                } else if (text.includes("hola") || text.includes("buenas")) {
+                    response = "¡Hola de nuevo! 👋 ¿En qué te puedo ayudar hoy?";
+                    setQuickOptions([
+                        { text: "💰 Ver Tarifas", value: "tarifas" },
+                        { text: " Solicitar Mensajero", value: "solicitar" },
+                        { text: " Horarios", value: "horarios" }
+                    ]);
+                } else {
+                    response = "No estoy segura de entender eso. 🤔 Pero puedo ayudarte con Tarifas, Horarios o Solicitudes. ¿Qué prefieres?";
+                    setQuickOptions([
+                        { text: "💰 Ver Tarifas", value: "tarifas" },
+                        { text: "📦 Solicitar Mensajero", value: "solicitar" },
+                        { text: "🕒 Horarios", value: "horarios" }
+                    ]);
+                }
+                
+                addBotMessage(response);
+            }, 800 + Math.random() * 500);
         }
     </script>
 </body>
