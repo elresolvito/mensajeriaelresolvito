@@ -237,6 +237,26 @@
             margin-top: var(--space-4);
         }
 
+        /* ==================== HERO IMAGE ==================== */
+        .hero-image {
+            margin: var(--space-4) 0 var(--space-2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .hero-image img {
+            max-width: 280px;
+            width: 100%;
+            height: auto;
+            border-radius: var(--radius-lg);
+            filter: drop-shadow(0 8px 20px rgba(18, 140, 126, 0.15));
+            transition: transform var(--transition-base), filter var(--transition-base);
+        }
+        .hero-image img:hover {
+            transform: translateY(-4px) scale(1.02);
+            filter: drop-shadow(0 12px 28px rgba(18, 140, 126, 0.25));
+        }
+
         /* ==================== SCROLL INDICATOR ==================== */
         .scroll-indicator {
             text-align: center;
@@ -438,9 +458,10 @@
         }
         .promo-banner img {
             max-width: 100%;
-            max-height: 80px;
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-sm);
+            max-height: 180px;
+            width: auto;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
             transition: transform var(--transition-base);
         }
         .promo-banner img:hover { transform: scale(1.02); }
@@ -901,11 +922,14 @@
         /* ==================== RESPONSIVE ==================== */
         @media (max-width: 640px) {
             .hero {
-                min-height: 45vh;
+                min-height: auto;
                 padding: var(--space-6) 0 var(--space-3);
             }
             .hero h1 { font-size: 1.9rem; }
             .hero p { font-size: 0.95rem; }
+            .hero-image img {
+                max-width: 220px;
+            }
             .form-card {
                 padding: var(--space-4);
                 margin: 0 var(--space-2);
@@ -985,6 +1009,10 @@
             <p class="fade-up fade-up-delay-3">
                 Llegamos a toda La Habana. Confianza, rapidez y seriedad en cada entrega.
             </p>
+            <div class="hero-image fade-up fade-up-delay-3">
+                <img src="mensajero3.webp" alt="Mensajero El Resolvito" onerror="this.style.display='none'">
+            </div>
+
             <div class="btn-group fade-up fade-up-delay-3">
                 <button id="openChatBtn" class="btn btn-vivian">
                     <i class="fas fa-comment-dots"></i> Hablar con Vivian
