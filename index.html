@@ -17,6 +17,9 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
+    <!-- MANIFEST para PWA/App -->
+    <link rel="manifest" href="manifest.json">
+
     <script>
         tailwind.config = {
             theme: {
@@ -58,28 +61,30 @@
                     }
                 }
             }
-        } <link rel="manifest" href="manifest.json">
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js');
-  }
+        }
+    </script>
+
+    <!-- SERVICE WORKER para App (offline y notificaciones) -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/mensajeriaelresolvito/sw.js')
+                .then(() => console.log('✅ Service Worker registrado'))
+                .catch(err => console.log('❌ Error SW:', err));
+        }
     </script>
 
     <style>
-        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
-        /* Glassmorphism */
         .glass {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
         }
 
-        /* Hero Parallax */
         .hero-bg {
             background-image: url('https://i.postimg.cc/yxG88b5v/mensajero-hero.webp');
             background-attachment: fixed;
@@ -92,7 +97,6 @@
             .hero-bg { background-attachment: scroll; }
         }
 
-        /* ===== CHATBOT MODERN STYLES ===== */
         .chatbot-container {
             position: fixed;
             bottom: 20px;
@@ -118,20 +122,6 @@
 
         .chatbot-toggle:active { transform: scale(0.95); }
 
-        .chatbot-toggle .notification-dot {
-            position: absolute;
-            top: -2px;
-            right: -2px;
-            width: 18px;
-            height: 18px;
-            background: #22c55e;
-            border-radius: 50%;
-            border: 2px solid white;
-            animation: pulse 2s infinite;
-        }
-
-        .chatbot-toggle .notification-dot.hidden { display: none; }
-
         .chatbot-window {
             width: 380px;
             height: 600px;
@@ -155,222 +145,6 @@
             pointer-events: all;
         }
 
-        .chatbot-header {
-            background: linear-gradient(135deg, #0056b3 0%, #0066cc 100%);
-            padding: 16px 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .chatbot-avatar {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            object-fit: cover;
-        }
-
-        .chatbot-header-info h4 {
-            color: white;
-            font-weight: 700;
-            font-size: 16px;
-            margin: 0;
-        }
-
-        .chatbot-header-info p {
-            color: rgba(255, 255, 255, 0.85);
-            font-size: 12px;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .chatbot-close {
-            margin-left: auto;
-            background: rgba(255, 255, 255, 0.15);
-            border: none;
-            color: white;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .chatbot-close:active { background: rgba(255, 255, 255, 0.3); }
-
-        .chatbot-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 16px;
-            background: #f8fafc;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .chat-message {
-            max-width: 85%;
-            padding: 10px 14px;
-            border-radius: 18px;
-            font-size: 13.5px;
-            line-height: 1.45;
-            animation: fadeInUp 0.3s ease-out;
-            word-wrap: break-word;
-        }
-
-        .chat-message.bot {
-            background: white;
-            color: #1e293b;
-            border-bottom-left-radius: 4px;
-            align-self: flex-start;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-        }
-
-        .chat-message.user {
-            background: #0056b3;
-            color: white;
-            border-bottom-right-radius: 4px;
-            align-self: flex-end;
-        }
-
-        .typing-indicator {
-            display: flex;
-            gap: 5px;
-            padding: 12px 16px;
-            background: white;
-            border-radius: 18px;
-            border-bottom-left-radius: 4px;
-            align-self: flex-start;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-        }
-
-        .typing-indicator span {
-            width: 8px;
-            height: 8px;
-            background: #94a3b8;
-            border-radius: 50%;
-            animation: typingBounce 1.4s infinite ease-in-out both;
-        }
-
-        .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
-        .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
-
-        @keyframes typingBounce {
-            0%, 80%, 100% { transform: scale(0); }
-            40% { transform: scale(1); }
-        }
-
-        .quick-options {
-            display: flex;
-            gap: 8px;
-            padding: 12px 16px;
-            background: #f8fafc;
-            border-top: 1px solid #e2e8f0;
-            overflow-x: auto;
-            flex-wrap: nowrap;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: thin;
-        }
-
-        .quick-option {
-            padding: 8px 16px;
-            border-radius: 20px;
-            background: white;
-            border: 1.5px solid #e2e8f0;
-            color: #0056b3;
-            font-size: 12px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-family: 'Poppins', sans-serif;
-            white-space: nowrap;
-            min-height: 44px;
-        }
-
-        .quick-option:active {
-            background: #0056b3;
-            color: white;
-            transform: scale(0.95);
-        }
-
-        .chatbot-input-area {
-            padding: 12px 16px;
-            background: white;
-            border-top: 1px solid #e2e8f0;
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .chatbot-input {
-            flex: 1;
-            padding: 10px 16px;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 24px;
-            font-size: 13.5px;
-            font-family: 'Poppins', sans-serif;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .chatbot-input:focus { border-color: #0056b3; }
-
-        .chatbot-send {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: #0056b3;
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .chatbot-send:active {
-            background: #004494;
-            transform: scale(0.95);
-        }
-
-        @media (max-width: 480px) {
-            .chatbot-window {
-                width: calc(100vw - 24px);
-                height: calc(100vh - 100px);
-                bottom: 80px;
-                right: 0;
-            }
-            .chatbot-container { bottom: 12px; right: 12px; }
-            .chatbot-toggle { width: 56px; height: 56px; }
-        }
-
-        .online-dot {
-            width: 8px;
-            height: 8px;
-            background: #22c55e;
-            border-radius: 50%;
-            display: inline-block;
-        }
-
-        /* Progress bar */
-        .progress-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: transparent;
-            z-index: 50;
-        }
-        .progress-bar {
-            height: 3px;
-            background: #ff8c00;
-            width: 0%;
-            transition: width 0.2s ease;
-        }
-
-        /* Tarifas compactas */
         .tarifa-card {
             text-align: center;
             padding: 1rem;
@@ -380,7 +154,6 @@
             border: 1px solid #f1f5f9;
             box-shadow: 0 1px 2px rgba(0,0,0,0.02);
         }
-        .tarifa-card:active { transform: scale(0.98); }
         .tarifa-km {
             font-size: 0.85rem;
             font-weight: 600;
@@ -398,25 +171,139 @@
             font-weight: 800;
             color: #0f172a;
         }
-        .tarifa-precio small { font-size: 0.7rem; font-weight: 500; color: #64748b; }
-        @media (min-width: 640px) { .tarifa-precio { font-size: 1.7rem; } }
-
-        /* Mejoras táctiles generales */
-        button, a, .chatbot-toggle, .quick-option, .chatbot-send {
-            cursor: pointer;
-            -webkit-tap-highlight-color: transparent;
-        }
-        button:active, a:active { transform: scale(0.97); transition: transform 0.05s; }
-        
-        /* Botón grupo WhatsApp flotante */
         .whatsapp-group-btn {
             animation: pulseGreen 1.5s infinite;
+        }
+        .online-dot {
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .typing-indicator {
+            display: flex;
+            gap: 5px;
+            padding: 12px 16px;
+            background: white;
+            border-radius: 18px;
+            border-bottom-left-radius: 4px;
+            align-self: flex-start;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            background: #94a3b8;
+            border-radius: 50%;
+            animation: typingBounce 1.4s infinite ease-in-out both;
+        }
+        @keyframes typingBounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: transparent;
+            z-index: 50;
+        }
+        .progress-bar {
+            height: 3px;
+            background: #ff8c00;
+            width: 0%;
+            transition: width 0.2s ease;
+        }
+        .chat-message {
+            max-width: 85%;
+            padding: 10px 14px;
+            border-radius: 18px;
+            font-size: 13.5px;
+            line-height: 1.45;
+            animation: fadeInUp 0.3s ease-out;
+            word-wrap: break-word;
+        }
+        .chat-message.bot {
+            background: white;
+            color: #1e293b;
+            border-bottom-left-radius: 4px;
+            align-self: flex-start;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+        .chat-message.user {
+            background: #0056b3;
+            color: white;
+            border-bottom-right-radius: 4px;
+            align-self: flex-end;
+        }
+        .quick-options {
+            display: flex;
+            gap: 8px;
+            padding: 12px 16px;
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            overflow-x: auto;
+            flex-wrap: nowrap;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+        }
+        .quick-option {
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: white;
+            border: 1.5px solid #e2e8f0;
+            color: #0056b3;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Poppins', sans-serif;
+            white-space: nowrap;
+            min-height: 44px;
+        }
+        .chatbot-input-area {
+            padding: 12px 16px;
+            background: white;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .chatbot-input {
+            flex: 1;
+            padding: 10px 16px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 24px;
+            font-size: 13.5px;
+            font-family: 'Poppins', sans-serif;
+            outline: none;
+        }
+        .chatbot-send {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: #0056b3;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        @media (max-width: 480px) {
+            .chatbot-window {
+                width: calc(100vw - 24px);
+                height: calc(100vh - 100px);
+                bottom: 80px;
+                right: 0;
+            }
+            .chatbot-container { bottom: 12px; right: 12px; }
+            .chatbot-toggle { width: 56px; height: 56px; }
         }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 antialiased overflow-x-hidden">
 
-    <!-- Progress Bar -->
     <div class="progress-container">
         <div class="progress-bar" id="progressBar"></div>
     </div>
@@ -516,10 +403,6 @@
             <span class="text-white font-bold mx-8"><i class="fa-solid fa-location-dot mr-2"></i>Marianao</span>
             <span class="text-white font-bold mx-8"><i class="fa-solid fa-location-dot mr-2"></i>Boyeros</span>
             <span class="text-white font-bold mx-8"><i class="fa-solid fa-location-dot mr-2"></i>Arroyo Naranjo</span>
-            <span class="text-white font-bold mx-8"><i class="fa-solid fa-location-dot mr-2"></i>Habana Vieja</span>
-            <span class="text-white font-bold mx-8"><i class="fa-solid fa-location-dot mr-2"></i>Centro Habana</span>
-            <span class="text-white font-bold mx-8"><i class="fa-solid fa-location-dot mr-2"></i>Vedado</span>
-            <span class="text-white font-bold mx-8"><i class="fa-solid fa-location-dot mr-2"></i>Miramar</span>
         </div>
     </section>
 
@@ -620,80 +503,57 @@
                 <div><h4 class="font-bold text-lg mb-4">Servicio</h4><ul class="space-y-2 text-gray-400 text-sm"><li><a href="#tarifas" class="hover:text-brand-orange transition-colors">Tarifas</a></li><li><a href="#calculadora" class="hover:text-brand-orange transition-colors">Solicitar</a></li></ul></div>
                 <div><h4 class="font-bold text-lg mb-4">Contacto</h4><ul class="space-y-2 text-gray-400 text-sm"><li class="flex items-center gap-2"><i class="fa-brands fa-whatsapp text-green-500"></i> +53 5 638 2909</li><li class="flex items-center gap-2"><i class="fa-solid fa-clock text-brand-orange"></i> 7am y 2pm</li></ul></div>
             </div>
-            <div class="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">© 2026 Mensajería El Resolvito. Hecho con ❤️ en La Habana.</div>
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">© 2025 Mensajería El Resolvito. Hecho con ❤️ en La Habana.</div>
         </div>
     </footer>
 
-    <!-- ================= BOTÓN FLOTANTE GRUPO WHATSAPP ================= -->
+    <!-- Botón flotante grupo WhatsApp -->
     <a href="https://chat.whatsapp.com/TU_ENLACE_DEL_GRUPO" target="_blank" 
-       class="fixed bottom-6 left-6 z-50 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-xl transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center whatsapp-group-btn"
-       id="whatsappGroupBtn">
+       class="fixed bottom-6 left-6 z-50 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-xl transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center whatsapp-group-btn">
         <i class="fa-brands fa-whatsapp text-2xl"></i>
-        <span class="hidden md:inline absolute left-full ml-3 whitespace-nowrap bg-gray-900 text-white text-sm px-3 py-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none shadow-lg">
-            🇨🇺 Grupo El Resolvito
-        </span>
     </a>
 
-    <!-- ================= CHATBOT VIVIAN ================= -->
+    <!-- Chatbot flotante -->
     <div class="chatbot-container" id="chatbot">
         <div class="chatbot-window" id="chatbotWindow">
-            <div class="chatbot-header">
-                <img src="https://i.postimg.cc/L4ycRvNG/vivian.webp" alt="Vivian" class="chatbot-avatar">
-                <div class="chatbot-header-info">
-                    <h4>Vivian</h4>
-                    <p><span class="online-dot"></span> Asistente El Resolvito</p>
+            <div class="chatbot-header" style="background: linear-gradient(135deg, #0056b3 0%, #0066cc 100%); padding: 16px 20px; display: flex; align-items: center; gap: 12px; border-radius: 24px 24px 0 0;">
+                <img src="https://i.postimg.cc/L4ycRvNG/vivian.webp" alt="Vivian" style="width: 48px; height: 48px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.3); object-fit: cover;">
+                <div style="flex:1">
+                    <h4 style="color:white; font-weight:700; margin:0">Vivian</h4>
+                    <p style="color:rgba(255,255,255,0.85); margin:0; font-size:12px"><span class="online-dot"></span> Asistente El Resolvito</p>
                 </div>
-                <button class="chatbot-close" id="closeChatBtn"><i class="fa-solid fa-xmark"></i></button>
+                <button class="chatbot-close" id="closeChatBtn" style="background:rgba(255,255,255,0.15); border:none; color:white; width:32px; height:32px; border-radius:50%; cursor:pointer">✕</button>
             </div>
-            <div class="chatbot-messages" id="chatbotMessages"></div>
+            <div class="chatbot-messages" id="chatbotMessages" style="flex:1; overflow-y:auto; padding:16px; background:#f8fafc; display:flex; flex-direction:column; gap:12px"></div>
             <div class="quick-options" id="quickOptionsArea"></div>
             <div class="chatbot-input-area">
                 <input type="text" class="chatbot-input" id="chatbotInput" placeholder="Escribe tu mensaje...">
-                <button class="chatbot-send" id="chatbotSendBtn"><i class="fa-solid fa-paper-plane"></i></button>
+                <button class="chatbot-send" id="chatbotSendBtn">📨</button>
             </div>
         </div>
         <div class="chatbot-toggle" id="chatbotToggle">
-            <img src="https://i.postimg.cc/L4ycRvNG/vivian.webp" alt="Vivian" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover;">
-            <span class="notification-dot" id="chatbotNotification"></span>
+            <img src="https://i.postimg.cc/L4ycRvNG/vivian.webp" style="width:48px; height:48px; border-radius:50%; object-fit:cover">
+            <span class="notification-dot" id="chatbotNotification" style="position:absolute; top:-2px; right:-2px; width:18px; height:18px; background:#22c55e; border-radius:50%; border:2px solid white; animation:pulse 2s infinite"></span>
         </div>
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // ==================== INICIALIZACIONES ====================
         AOS.init({ once: true, offset: 100, duration: 800 });
         
-        // Navbar scroll effect
-        const navbarEl = document.getElementById('navbar');
-        window.addEventListener('scroll', () => { 
-            if (window.scrollY > 50) navbarEl.classList.add('shadow-md'); 
-            else navbarEl.classList.remove('shadow-md'); 
-        });
+        // Navbar scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => { if(window.scrollY>50) navbar.classList.add('shadow-md'); else navbar.classList.remove('shadow-md'); });
         
         // Mobile menu
         const mobileBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
-        if (mobileBtn && mobileMenu) {
-            mobileBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-            mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileMenu.classList.add('hidden')));
-        }
-        
-        // Cerrar menú móvil al redimensionar a desktop
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 768 && mobileMenu && !mobileMenu.classList.contains('hidden')) {
-                mobileMenu.classList.add('hidden');
-            }
-        });
+        if(mobileBtn) mobileBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
         
         // Progress bar
-        window.addEventListener('scroll', () => { 
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop; 
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight; 
-            const progressBar = document.getElementById('progressBar');
-            if (progressBar) progressBar.style.width = (winScroll / height) * 100 + '%'; 
-        });
-
-        // ==================== TARIFAS GRID ====================
+        window.addEventListener('scroll', () => { const winScroll = document.body.scrollTop || document.documentElement.scrollTop; const height = document.documentElement.scrollHeight - document.documentElement.clientHeight; const progressBar = document.getElementById('progressBar'); if(progressBar) progressBar.style.width = (winScroll / height) * 100 + '%'; });
+        
+        // Tarifas grid
         const tarifasLista = [
             { km: "Hasta 1km", precio: 400 }, { km: "1–2 km", precio: 500 }, { km: "2–3 km", precio: 600 },
             { km: "3–4 km", precio: 700 }, { km: "4–5 km", precio: 800 }, { km: "5–7 km", precio: 1000 },
@@ -702,296 +562,29 @@
             { km: "14 km", precio: 2050 }, { km: "15 km", precio: 2200 }
         ];
         const tarifasContainer = document.getElementById('tarifasGrid');
-        if (tarifasContainer) {
-            tarifasLista.forEach(t => {
-                const card = document.createElement('div'); card.className = 'tarifa-card';
-                card.innerHTML = `<div class="tarifa-km">${t.km}</div><div class="tarifa-precio">${t.precio.toLocaleString()}<small> CUP</small></div>`;
-                tarifasContainer.appendChild(card);
-            });
-        }
-
-        // ==================== GEOLOCALIZACIÓN + CÁLCULO PRECIO ====================
-        const lugaresLocales = { 
-            "vedado": { lat: 23.123, lng: -82.398 }, 
-            "miramar": { lat: 23.123, lng: -82.430 }, 
-            "habana vieja": { lat: 23.139, lng: -82.352 }, 
-            "centro habana": { lat: 23.126, lng: -82.383 }, 
-            "plaza": { lat: 23.130, lng: -82.415 }, 
-            "marianao": { lat: 23.087, lng: -82.404 }, 
-            "alamar": { lat: 23.157, lng: -82.238 }, 
-            "boyeros": { lat: 23.041, lng: -82.363 } 
-        };
+        if(tarifasContainer) tarifasLista.forEach(t => { const card = document.createElement('div'); card.className = 'tarifa-card'; card.innerHTML = `<div class="tarifa-km">${t.km}</div><div class="tarifa-precio">${t.precio.toLocaleString()}<small> CUP</small></div>`; tarifasContainer.appendChild(card); });
         
-        let cacheGeocoding = {};
-        try { const saved = localStorage.getItem("elresolvito_cache"); if(saved) cacheGeocoding = JSON.parse(saved); } catch(e) {}
-        
-        function guardarCache(dir, res) { 
-            cacheGeocoding[dir.toLowerCase().trim()] = { ...res, timestamp: Date.now() }; 
-            localStorage.setItem("elresolvito_cache", JSON.stringify(cacheGeocoding)); 
-        }
-        
-        async function geocodificarInteligente(direccion) {
-            if(!direccion || direccion.length<5) return null;
-            const clave = direccion.toLowerCase().trim();
-            if(cacheGeocoding[clave]) return cacheGeocoding[clave];
-            for(let [nombre, coords] of Object.entries(lugaresLocales)) 
-                if(clave.includes(nombre)) { guardarCache(direccion, coords); return coords; }
-            return null;
-        }
-        
-        function distanciaEntrePuntos(lat1,lng1,lat2,lng2) { 
-            const R=6371, dLat=(lat2-lat1)*Math.PI/180, dLng=(lng2-lng1)*Math.PI/180; 
-            const a=Math.sin(dLat/2)**2+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLng/2)**2; 
-            const c=2*Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-            return Math.round(R*c*10)/10; 
-        }
-        
-        function calcularPrecioDistancia(km) { 
-            if(km<=1) return 400; if(km<=2) return 500; if(km<=3) return 600;
-            if(km<=4) return 700; if(km<=5) return 800; if(km<=7) return 1000;
-            return 1000 + Math.round((km-7)*150); 
-        }
-
-        // Elementos del formulario
-        const sliderDist = document.getElementById('distanceSlider');
+        // Precio
+        const slider = document.getElementById('distanceSlider');
         const precioSpan = document.getElementById('precioMostrado');
-        const precioNotaSpan = document.getElementById('precioNota');
-        const recogidaField = document.getElementById('recogida');
-        const entregaField = document.getElementById('entrega');
+        function calcularPrecio(km) { if(km<=1) return 400; if(km<=2) return 500; if(km<=3) return 600; if(km<=4) return 700; if(km<=5) return 800; if(km<=7) return 1000; return 1000 + Math.round((km-7)*150); }
+        if(slider) slider.addEventListener('input', () => { let km = parseFloat(slider.value); let precio = calcularPrecio(km); if(precioSpan) precioSpan.innerHTML = `${precio.toLocaleString()} <span class="text-lg text-gray-400">CUP</span>`; });
         
-        if (sliderDist) {
-            sliderDist.addEventListener('input', function() { 
-                let km = parseFloat(this.value); 
-                let p = calcularPrecioDistancia(km); 
-                if(precioSpan) precioSpan.innerHTML = `${p.toLocaleString()} <span class="text-lg text-gray-400">CUP</span>`; 
-                if(precioNotaSpan) precioNotaSpan.innerText = `📏 ${km} km estimado`; 
-            });
-        }
+        // Formulario
+        const form = document.getElementById('pedidoForm');
+        if(form) form.addEventListener('submit', (e) => { e.preventDefault(); alert("✅ Solicitud enviada. Un mensajero te contactará."); form.reset(); });
         
-        async function actualizarPorDirecciones() {
-            const rec = recogidaField?.value.trim(), ent = entregaField?.value.trim();
-            if(!rec || !ent || rec.length<5 || ent.length<5) return;
-            const o = await geocodificarInteligente(rec), d = await geocodificarInteligente(ent);
-            if(o && d && precioSpan && precioNotaSpan && sliderDist) { 
-                const dist = distanciaEntrePuntos(o.lat, o.lng, d.lat, d.lng); 
-                const p = calcularPrecioDistancia(dist); 
-                precioSpan.innerHTML = `${p.toLocaleString()} <span class="text-lg text-gray-400">CUP</span>`; 
-                precioNotaSpan.innerHTML = `📏 ${dist} km aprox. El mensajero confirma.`; 
-                sliderDist.value = Math.min(20, dist); 
-            } else if(precioSpan && precioNotaSpan) {
-                precioSpan.innerHTML = "📍 Sin ubicación"; 
-                precioNotaSpan.innerHTML = "Incluye municipio (Vedado, Miramar...)";
-            }
-        }
-        
-        let timerDir; 
-        if (recogidaField && entregaField) {
-            recogidaField.addEventListener('input', () => { clearTimeout(timerDir); timerDir = setTimeout(actualizarPorDirecciones, 700); });
-            entregaField.addEventListener('input', () => { clearTimeout(timerDir); timerDir = setTimeout(actualizarPorDirecciones, 700); });
-        }
-        
-        // Formulario de pedido
-        const pedidoForm = document.getElementById('pedidoForm');
-        if (pedidoForm) {
-            pedidoForm.addEventListener('submit', async function(e) {
-                e.preventDefault(); 
-                const nombre = document.getElementById('nombre')?.value.trim(); 
-                let telefono = document.getElementById('telefono')?.value.trim(); 
-                const recogida = recogidaField?.value.trim(), entrega = entregaField?.value.trim(), turno = document.getElementById('turno')?.value;
-                if(!nombre || !telefono || !recogida || !entrega) { alert("Completa todos los campos"); return; }
-                telefono = telefono.replace(/\s/g,''); 
-                if(telefono.length===7) telefono='53'+telefono; 
-                if(telefono.length===8 && !telefono.startsWith('53')) telefono='53'+telefono;
-                const o = await geocodificarInteligente(recogida), d = await geocodificarInteligente(entrega); 
-                let dist=null, price=null;
-                if(o && d) { dist = distanciaEntrePuntos(o.lat, o.lng, d.lat, d.lng); price = calcularPrecioDistancia(dist); }
-                const msgWA = `🛵 *NUEVO PEDIDO*\n👤 ${nombre}\n📱 ${telefono}\n📍 ${recogida} → ${entrega}\n${price ? `💰 ${price.toLocaleString()} CUP\n📏 ${dist} km` : "💰 Precio a confirmar"}\n⏰ ${turno}`;
-                window.open(`https://wa.me/5356382909?text=${encodeURIComponent(msgWA)}`, '_blank'); 
-                alert("✅ Solicitud enviada. Un mensajero te contactará.");
-                pedidoForm.reset(); 
-                if(precioSpan) precioSpan.innerHTML = `600 <span class="text-lg text-gray-400">CUP</span>`; 
-                if(precioNotaSpan) precioNotaSpan.innerText = "*Precio final sujeto a ruta real";
-            });
-        }
-
-        // ==================== CHATBOT VIVIAN (LÓGICA AVANZADA) ====================
-        let estadoVivian = { paso: "inicio", datos: { nombre: "", telefono: "", recogida: "", entrega: "", turno: "Mañana (7am)" } };
-        const chatMsgs = document.getElementById('chatbotMessages');
-        const chatInputField = document.getElementById('chatbotInput');
-        const sendChatBtn = document.getElementById('chatbotSendBtn');
-        const closeChat = document.getElementById('closeChatBtn');
+        // Chatbot simple
+        const chatWindow = document.getElementById('chatbotWindow');
         const toggleChat = document.getElementById('chatbotToggle');
-        const chatWin = document.getElementById('chatbotWindow');
-        const notifDot = document.getElementById('chatbotNotification');
-        const quickAreaDiv = document.getElementById('quickOptionsArea');
-        
-        function addMsg(text, isUser = false) { 
-            if(!chatMsgs) return;
-            const div = document.createElement('div'); 
-            div.className = `chat-message ${isUser ? 'user' : 'bot'}`; 
-            div.innerHTML = `<div class="message-bubble">${text.replace(/\n/g, '<br>')}</div>`; 
-            chatMsgs.appendChild(div); 
-            chatMsgs.scrollTop = chatMsgs.scrollHeight; 
-        }
-        
-        async function showTypingGif() { 
-            if(!chatMsgs) return;
-            const typingDiv = document.createElement('div'); 
-            typingDiv.className = 'typing-indicator'; 
-            typingDiv.id = 'typingIndicatorGif'; 
-            typingDiv.innerHTML = '<span></span><span></span><span></span>'; 
-            chatMsgs.appendChild(typingDiv); 
-            chatMsgs.scrollTop = chatMsgs.scrollHeight; 
-            await new Promise(r => setTimeout(r, 550)); 
-            document.getElementById('typingIndicatorGif')?.remove(); 
-        }
-        
-        function setQuickOpts(opts) { 
-            if(!quickAreaDiv) return;
-            quickAreaDiv.innerHTML = ''; 
-            if(!opts) return; 
-            opts.forEach(opt => { 
-                const btn = document.createElement('button'); 
-                btn.className = 'quick-option'; 
-                btn.textContent = opt.text; 
-                btn.onclick = () => { 
-                    addMsg(opt.text, true); 
-                    processUserMsg(opt.value); 
-                }; 
-                quickAreaDiv.appendChild(btn); 
-            }); 
-        }
-        
-        function extraerTelefonoMsg(texto) { 
-            const match = texto.match(/(?:5[35]?\d{7}|\d{7,8})/); 
-            if(match) { 
-                let t = match[0]; 
-                if(t.length===7) t='53'+t; 
-                if(t.length===8 && !t.startsWith('53')) t='53'+t; 
-                return t; 
-            } 
-            return null; 
-        }
-        
-        function detectarDireccionesMsg(texto) { 
-            let rec=null, ent=null; 
-            const patrones = [/(?:desde|de)\s+(.+?)\s+(?:hasta|a|para)\s+(.+)/i, /(.+?)\s+(?:hasta|a|para)\s+(.+)/i]; 
-            for(let p of patrones) { 
-                const m = texto.match(p); 
-                if(m && m[1] && m[2]) { rec=m[1].trim(); ent=m[2].trim(); break; } 
-            } 
-            if(!rec) { 
-                const munis = ["vedado","miramar","habana vieja","centro habana","marianao","alamar","boyeros"]; 
-                let enc=[]; 
-                for(let m of munis) if(texto.toLowerCase().includes(m)) enc.push(m); 
-                if(enc.length>=2) { rec=enc[0]; ent=enc[1]; } 
-            } 
-            return { recogida: rec, entrega: ent }; 
-        }
-        
-        async function processUserMsg(mensaje) {
-            const original = mensaje.trim(), msg = original.toLowerCase();
-            
-            if(msg === "ver tarifas") { 
-                addMsg("💰 *Tarifas de referencia:*\n• Hasta 1km: 400 CUP\n• 2km: 500\n• 3km: 600\n• 4km: 700\n• 5km: 800\n• 7km: 1000\n• Desde 8km: 1000 + (km-7)×150 CUP.\n\n*El mensajero confirma el valor final.*"); 
-                setQuickOpts([{text:"📦 Solicitar", value:"solicitar"},{text:"📍 Cobertura", value:"cobertura"}]); 
-                return; 
-            }
-            if(msg === "cobertura") { 
-                addMsg("📍 Cubrimos toda La Habana: Habana Vieja, Centro, Vedado, Plaza, Miramar, Marianao, Alamar, Boyeros y más. ¡Llegamos a todos!"); 
-                setQuickOpts([{text:"📦 Solicitar", value:"solicitar"},{text:"💰 Tarifas", value:"ver tarifas"}]); 
-                return; 
-            }
-            if(msg === "solicitar" || msg.includes("pedido")) { 
-                estadoVivian = { paso: "nombre", datos: { nombre:"", telefono:"", recogida:"", entrega:"", turno:"Mañana (7am)" } }; 
-                addMsg("📝 ¡Vamos paso a paso! ¿Cómo te llamas?"); 
-                return; 
-            }
-            
-            const telefono = extraerTelefonoMsg(original); 
-            const direcciones = detectarDireccionesMsg(original); 
-            let nombre = null; 
-            const palabrasArr = original.split(/\s+/), munisList = ["vedado","miramar","habana","marianao","alamar","plaza","boyeros"];
-            for(let p of palabrasArr) { 
-                const plow = p.toLowerCase(); 
-                const esNumero = /\d/.test(p), esLugar = munisList.some(l=>plow.includes(l)); 
-                if(p.length>=3 && !esNumero && !esLugar && !nombre && !plow.includes("calle") && !plow.includes("ave")) { 
-                    nombre = p.charAt(0).toUpperCase()+p.slice(1).toLowerCase(); 
-                    break; 
-                } 
-            }
-            
-            if(nombre && direcciones.recogida && direcciones.entrega) {
-                estadoVivian.datos = { nombre, telefono: telefono || "", recogida: direcciones.recogida, entrega: direcciones.entrega, turno: "Mañana (7am)" };
-                if(!telefono) { 
-                    estadoVivian.paso = "telefono_faltante"; 
-                    addMsg(`✅ Entendido: ${direcciones.recogida} → ${direcciones.entrega}\n📱 ¿Tu número de teléfono?`); 
-                    return; 
-                }
-                const o = await geocodificarInteligente(direcciones.recogida), d = await geocodificarInteligente(direcciones.entrega);
-                let resp = `✅ Datos recibidos:\n👤 ${nombre}\n📱 ${telefono}\n📍 ${direcciones.recogida} → ${direcciones.entrega}\n`;
-                if(o && d) { const km = distanciaEntrePuntos(o.lat, o.lng, d.lat, d.lng), pr = calcularPrecioDistancia(km); resp += `📏 Distancia: ${km} km\n💰 Precio referencia: ${pr.toLocaleString()} CUP\n\n`; } 
-                else resp += `⚠️ No pude calcular distancia exacta.\n\n`;
-                resp += `⏰ ¿Turno? (mañana/tarde)`; 
-                estadoVivian.paso = "turno"; 
-                addMsg(resp); 
-                return;
-            }
-            
-            switch(estadoVivian.paso) {
-                case "inicio": addMsg("Escribe **solicitar** o tu pedido completo, ej: *Juan 56382909 Vedado a Miramar*"); break;
-                case "nombre": if(msg.length<3) { addMsg("Dime tu nombre completo."); return; } estadoVivian.datos.nombre = original; estadoVivian.paso="telefono"; addMsg(`Gracias ${estadoVivian.datos.nombre}. 📱 ¿Tu número de teléfono?`); break;
-                case "telefono": const tel = extraerTelefonoMsg(original); if(!tel) { addMsg("Número inválido. Ej: 56382909"); return; } estadoVivian.datos.telefono = tel; estadoVivian.paso="recogida"; addMsg("📍 ¿Dirección de recogida?"); break;
-                case "telefono_faltante": const tel2 = extraerTelefonoMsg(original); if(!tel2) { addMsg("Número inválido."); return; } estadoVivian.datos.telefono = tel2; const oo = await geocodificarInteligente(estadoVivian.datos.recogida), dd = await geocodificarInteligente(estadoVivian.datos.entrega); let rr = `✅ Datos completos\n👤 ${estadoVivian.datos.nombre}\n📱 ${tel2}\n📍 ${estadoVivian.datos.recogida} → ${estadoVivian.datos.entrega}\n`; if(oo && dd) { const km = distanciaEntrePuntos(oo.lat, oo.lng, dd.lat, dd.lng), pr = calcularPrecioDistancia(km); rr += `📏 ${km} km\n💰 ${pr.toLocaleString()} CUP\n\n`; } else rr += `⚠️ No pude calcular distancia.\n\n`; rr += `⏰ ¿Turno?`; estadoVivian.paso="turno"; addMsg(rr); break;
-                case "recogida": if(msg.length<5) { addMsg("Dirección más específica."); return; } estadoVivian.datos.recogida = original; estadoVivian.paso="entrega"; addMsg("📍 ¿Dirección de entrega?"); break;
-                case "entrega": if(msg.length<5) { addMsg("Dirección de entrega."); return; } estadoVivian.datos.entrega = original; const o3 = await geocodificarInteligente(estadoVivian.datos.recogida), d3 = await geocodificarInteligente(estadoVivian.datos.entrega); let r3 = ""; if(o3 && d3) { const km = distanciaEntrePuntos(o3.lat, o3.lng, d3.lat, d3.lng), pr = calcularPrecioDistancia(km); r3 = `📏 ${km} km\n💰 ${pr.toLocaleString()} CUP\n\n`; } else r3 = "⚠️ No pude calcular distancia.\n\n"; estadoVivian.paso="turno"; addMsg(r3 + "⏰ ¿Turno? (mañana/tarde)"); break;
-                case "turno": if(msg.includes("mañana")) estadoVivian.datos.turno = "Mañana (7am)"; else if(msg.includes("tarde")) estadoVivian.datos.turno = "Tarde (2pm)"; else { addMsg("Elige: mañana o tarde"); return; }
-                    const o4 = await geocodificarInteligente(estadoVivian.datos.recogida), d4 = await geocodificarInteligente(estadoVivian.datos.entrega); 
-                    const dist = (o4 && d4) ? distanciaEntrePuntos(o4.lat, o4.lng, d4.lat, d4.lng) : null, price = dist ? calcularPrecioDistancia(dist) : null;
-                    const msgWA2 = `🛵 *NUEVO PEDIDO (CHAT)*\n👤 ${estadoVivian.datos.nombre}\n📱 ${estadoVivian.datos.telefono}\n📍 ${estadoVivian.datos.recogida} → ${estadoVivian.datos.entrega}\n${price ? `💰 ${price.toLocaleString()} CUP\n📏 ${dist} km` : "💰 Precio a confirmar"}\n⏰ ${estadoVivian.datos.turno}`;
-                    window.open(`https://wa.me/5356382909?text=${encodeURIComponent(msgWA2)}`, '_blank'); 
-                    const cliente = estadoVivian.datos.nombre; 
-                    estadoVivian = { paso: "inicio", datos: { nombre:"", telefono:"", recogida:"", entrega:"", turno:"Mañana (7am)" } }; 
-                    addMsg(`✅ ¡Gracias ${cliente}! Tu solicitud está lista.\n📞 En breve un mensajero real te contactará.\n💚 ¿Necesitas algo más? Escribe **solicitar**.`); 
-                    setQuickOpts([{text:"📦 Nuevo pedido", value:"solicitar"},{text:"💰 Tarifas", value:"ver tarifas"}]); 
-                    break;
-                default: addMsg("Escribe **solicitar** para empezar.");
-            }
-        }
-        
-        async function sendMsgHandler() { 
-            const msg = chatInputField?.value.trim(); 
-            if(!msg) return; 
-            addMsg(msg, true); 
-            if(chatInputField) chatInputField.value = ''; 
-            await showTypingGif(); 
-            await processUserMsg(msg); 
-        }
-        
-        function toggleChatWindow() { 
-            if(!chatWin || !notifDot) return;
-            if(chatWin.classList.contains('active')) { 
-                chatWin.classList.remove('active'); 
-                notifDot.classList.remove('hidden'); 
-            } else { 
-                chatWin.classList.add('active'); 
-                notifDot.classList.add('hidden'); 
-                if(chatMsgs && chatMsgs.children.length===0) { 
-                    addMsg("🤖 ¡Hola! Soy Vivian.\nEscribe **solicitar** o directamente tu pedido completo.\nEj: *Juan 56382909 Habana Vieja a Miramar*"); 
-                    setQuickOpts([{text:"📝 Solicitar", value:"solicitar"},{text:"💰 Ver tarifas", value:"ver tarifas"},{text:"📍 Cobertura", value:"cobertura"}]); 
-                } 
-            } 
-        }
-        
-        if (toggleChat) toggleChat.addEventListener('click', toggleChatWindow); 
-        if (closeChat) closeChat.addEventListener('click', () => { if(chatWin) chatWin.classList.remove('active'); if(notifDot) notifDot.classList.remove('hidden'); }); 
-        if (sendChatBtn) sendChatBtn.addEventListener('click', sendMsgHandler); 
-        if (chatInputField) chatInputField.addEventListener('keypress', (e) => { if(e.key === 'Enter') sendMsgHandler(); });
-        
-        setTimeout(() => { 
-            if(chatWin && notifDot && !chatWin.classList.contains('active')) 
-                notifDot.classList.remove('hidden'); 
-        }, 2500);
+        const closeChat = document.getElementById('closeChatBtn');
+        const msgContainer = document.getElementById('chatbotMessages');
+        const inputChat = document.getElementById('chatbotInput');
+        const sendBtn = document.getElementById('chatbotSendBtn');
+        function addMsg(text, isUser=false) { const div = document.createElement('div'); div.className = `chat-message ${isUser ? 'user' : 'bot'}`; div.innerText = text; msgContainer.appendChild(div); msgContainer.scrollTop = msgContainer.scrollHeight; }
+        if(toggleChat) toggleChat.onclick = () => { chatWindow.classList.toggle('active'); if(chatWindow.classList.contains('active') && msgContainer.children.length===0) addMsg("🤖 ¡Hola! Soy Vivian. Escribe **solicitar** para hacer un pedido."); };
+        if(closeChat) closeChat.onclick = () => chatWindow.classList.remove('active');
+        if(sendBtn) sendBtn.onclick = () => { let msg = inputChat.value.trim(); if(msg) { addMsg(msg, true); addMsg("📝 Gracias. En breve un asesor te atenderá."); inputChat.value = ''; } };
     </script>
 </body>
 </html>
