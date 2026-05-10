@@ -648,7 +648,11 @@
         const GEMINI_API_KEY = "AIzaSyAtEVSpE-kviXtDJHM3voSmDkUmTH3HA3Y";
         const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
 
-     const VIVIAN_SYSTEM_PROMPT = `Eres Vivian, asistente virtual de "El Resolvito", una mensajería en La Habana, Cuba.
+    // ==================== CHATBOT VIVIAN CON IA GEMINI ====================
+const GEMINI_API_KEY = "AIzaSyAtEVSpE-kviXtDJHM3voSmDkUmTH3HA3Y";
+const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+
+const VIVIAN_SYSTEM_PROMPT = `Eres Vivian, asistente virtual de "El Resolvito", una mensajería en La Habana, Cuba.
 
 INSTRUCCIONES IMPORTANTES:
 1. Responde SIEMPRE en español, de forma natural y directa. Como hablaría cualquier persona en La Habana: sin afectaciones, con claridad y respeto.
@@ -672,34 +676,44 @@ INSTRUCCIONES IMPORTANTES:
 7. Responde de forma breve y al punto. Sin rodeos innecesarios.
 8. Si no sabes algo, sugiere contactar por WhatsApp al +53 5 638 2909.
 
-TU PERSONALIDAD: Directa, práctica, confiable. Ayudas a resolver sin complicar. Nada de frases hechas ni estereotipos.``;
+TU PERSONALIDAD: Directa, práctica, confiable. Ayudas a resolver sin complicar. Nada de frases hechas ni estereotipos.`;
 
-        async function preguntarAGemini(mensajeUsuario) {
-            try {
-                const response = await fetch(GEMINI_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        system_instruction: { parts: [{ text: VIVIAN_SYSTEM_PROMPT }] },
-                        contents: [{ parts: [{ text: mensajeUsuario }] }],
-                        generationConfig: {
-                            temperature: 0.7,
-                            maxOutputTokens: 350,
-                        }
-                    })
-                });
-                
-                const data = await response.json();
-                if (data.candidates && data.candidates[0]?.content?.parts[0]?.text) {
-                    return data.candidates[0].content.parts[0].text;
+async function preguntarAGemini(mensajeUsuario) {
+    try {
+        // Combinar instrucción del sistema con el mensaje del usuario
+        const promptCompleto = `${VIVIAN_SYSTEM_PROMPT}\n\nUsuario: ${mensajeUsuario}\n\nVivian:`;
+        
+        const response = await fetch(GEMINI_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                contents: [{
+                    parts: [{ text: promptCompleto }]
+                }],
+                generationConfig: {
+                    temperature: 0.7,
+                    maxOutputTokens: 350,
                 }
-                return null;
-            } catch (error) {
-                console.error("Error con Gemini:", error);
-                return null;
-            }
+            })
+        });
+        
+        const data = await response.json();
+        
+        // Depuración: ver qué responde la API
+        console.log("Respuesta de Gemini:", data);
+        
+        if (data.candidates && data.candidates[0]?.content?.parts[0]?.text) {
+            return data.candidates[0].content.parts[0].text;
+        } else if (data.error) {
+            console.error("Error de Gemini API:", data.error);
+            return null;
         }
-
+        return null;
+    } catch (error) {
+        console.error("Error al llamar a Gemini:", error);
+        return null;
+    }
+}
         // Chatbot UI
         let estadoVivian = { paso: "inicio", datos: { nombre: "", telefono: "", recogida: "", entrega: "", turno: "Mañana (7am)" } };
         
