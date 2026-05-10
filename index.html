@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>El Resolvito — Mensajería en La Habana</title>
+    <title>El Resolvito — Mensajería en La Habana con IA</title>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -55,14 +55,12 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html, body { max-width: 100%; overflow-x: hidden; }
 
-        /* Glassmorphism */
         .glass {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(0,0,0,0.1);
         }
 
-        /* Hero con overlay reducido (se ve la imagen) */
         .hero-bg {
             background-image: url('https://i.postimg.cc/yxG88b5v/mensajero-hero.webp');
             background-position: center;
@@ -72,8 +70,10 @@
         @media (max-width: 768px) {
             .hero-bg { background-attachment: scroll; }
         }
+        .hero-overlay {
+            background: linear-gradient(135deg, rgba(0,86,179,0.6) 0%, rgba(0,86,179,0.4) 100%);
+        }
 
-        /* Tarjetas de tarifas */
         .tarifa-card {
             text-align: center;
             padding: 0.75rem;
@@ -99,7 +99,7 @@
             color: #0f172a;
         }
 
-        /* Chatbot moderno */
+        /* Chatbot IA */
         .chatbot-container {
             position: fixed;
             bottom: 20px;
@@ -289,9 +289,14 @@
         }
         button:active, a:active { transform: scale(0.97); transition: transform 0.05s; }
         
-        /* Overlay hero reducido para que se vea la imagen */
-        .hero-overlay {
-            background: linear-gradient(135deg, rgba(0,86,179,0.7) 0%, rgba(0,86,179,0.5) 100%);
+        /* Indicador de que Vivian está pensando con IA */
+        .ai-badge {
+            font-size: 8px;
+            background: #10b981;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 20px;
+            margin-left: 8px;
         }
     </style>
 </head>
@@ -330,7 +335,7 @@
         </div>
     </nav>
 
-    <!-- HERO (overlay reducido para que se vea la imagen) -->
+    <!-- HERO -->
     <section class="relative min-h-screen flex items-center justify-center hero-bg pt-16">
         <div class="absolute inset-0 hero-overlay"></div>
         <div class="relative z-10 max-w-7xl mx-auto px-4 w-full py-12 text-center text-white">
@@ -394,7 +399,7 @@
                     <form id="pedidoForm" class="space-y-3">
                         <input type="text" id="nombre" placeholder="Tu nombre completo" required class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-2 text-white placeholder-white/50 focus:outline-none focus:border-white">
                         <input type="tel" id="telefono" placeholder="Teléfono (ej: 56382909)" required class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-2 text-white placeholder-white/50 focus:outline-none focus:border-white">
-                        <input type="text" id="recogida" placeholder="Dirección de recogida (ej: Vedado, Calle 23)" required class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-2 text-white placeholder-white/50 focus:outline-none focus:border-white">
+                        <input type="text" id="recogida" placeholder="Dirección de recogida (ej: Vedado)" required class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-2 text-white placeholder-white/50 focus:outline-none focus:border-white">
                         <input type="text" id="entrega" placeholder="Dirección de entrega (ej: Miramar)" required class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-2 text-white placeholder-white/50 focus:outline-none focus:border-white">
                         <select id="turno" class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-2 text-white">
                             <option value="Mañana (7am)">Mañana (7am)</option>
@@ -438,14 +443,21 @@
         © 2025 El Resolvito · Mensajería en La Habana · +53 5 638 2909
     </footer>
 
-    <!-- CHATBOT VIVIAN (COMPLETAMENTE FUNCIONAL) -->
+    <!-- BOTÓN FLOTANTE GRUPO WHATSAPP -->
+    <a href="https://chat.whatsapp.com/TU_ENLACE_DEL_GRUPO" target="_blank" 
+       class="fixed bottom-6 left-6 z-50 bg-green-500 hover:bg-green-600 text-white p-3 rounded-full shadow-xl transition-all active:scale-95 flex items-center justify-center"
+       style="width: 50px; height: 50px;">
+        <i class="fa-brands fa-whatsapp text-xl"></i>
+    </a>
+
+    <!-- CHATBOT VIVIAN CON IA -->
     <div class="chatbot-container">
         <div class="chatbot-window" id="chatbotWindow">
             <div class="chatbot-header">
                 <img src="https://i.postimg.cc/L4ycRvNG/vivian.webp" alt="Vivian" class="chatbot-avatar">
                 <div class="text-white">
-                    <strong>Vivian</strong><br>
-                    <span class="text-xs opacity-90">Asistente · En línea</span>
+                    <strong>Vivian <span class="ai-badge">IA</span></strong><br>
+                    <span class="text-xs opacity-90">Asistente inteligente · En línea</span>
                 </div>
                 <button id="closeChatBtn" class="ml-auto text-white text-xl bg-transparent border-0 cursor-pointer">✕</button>
             </div>
@@ -484,7 +496,7 @@
             });
         }
 
-        // ==================== GEOLOCALIZACIÓN (simplificada pero funcional) ====================
+        // ==================== GEOLOCALIZACIÓN ====================
         const lugaresLocales = {
             "vedado": { lat: 23.123, lng: -82.398 },
             "miramar": { lat: 23.123, lng: -82.430 },
@@ -546,7 +558,7 @@
             updatePrecio();
         }
 
-        // Formulario con cálculo real de distancia
+        // Formulario
         const recogidaInput = document.getElementById('recogida');
         const entregaInput = document.getElementById('entrega');
         let timeoutCalc;
@@ -573,7 +585,6 @@
             entregaInput.addEventListener('input', () => { clearTimeout(timeoutCalc); timeoutCalc = setTimeout(actualizarPrecioPorDirecciones, 800); });
         }
 
-        // Envío de formulario a WhatsApp real
         const pedidoForm = document.getElementById('pedidoForm');
         if (pedidoForm) {
             pedidoForm.addEventListener('submit', async (e) => {
@@ -633,11 +644,67 @@
             if (progressBar) progressBar.style.width = (winScroll / height) * 100 + '%';
         });
 
-        // ==================== CHATBOT VIVIAN (COMPLETO E INTELIGENTE) ====================
+        // ==================== CHATBOT VIVIAN CON IA GEMINI ====================
+        const GEMINI_API_KEY = "AIzaSyAtEVSpE-kviXtDJHM3voSmDkUmTH3HA3Y";
+        const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+
+     const VIVIAN_SYSTEM_PROMPT = `Eres Vivian, asistente virtual de "El Resolvito", una mensajería en La Habana, Cuba.
+
+INSTRUCCIONES IMPORTANTES:
+1. Responde SIEMPRE en español, de forma natural y directa. Como hablaría cualquier persona en La Habana: sin afectaciones, con claridad y respeto.
+2. Si el usuario quiere solicitar un mensajero, pídele: nombre, teléfono, dirección de recogida, dirección de entrega y turno (mañana 7am o tarde 2pm).
+3. Las tarifas de referencia son:
+   - Hasta 1km: 400 CUP
+   - 1 a 2km: 500 CUP
+   - 2 a 3km: 600 CUP
+   - 3 a 4km: 700 CUP
+   - 4 a 5km: 800 CUP
+   - 5 a 7km: 1000 CUP
+   - 7 a 8km: 1150 CUP
+   - 8 a 9km: 1300 CUP
+   - 9 a 10km: 1450 CUP
+   - 10 a 11km: 1600 CUP
+   - 11 a 12km: 1750 CUP
+   - Más de 12km: 1750 + (km-12) × 150 CUP
+4. SIEMPRE aclara que el precio final lo confirma un mensajero real.
+5. Horarios: recogidas 7am (entrega antes 1pm) y 2pm (entrega antes 6pm).
+6. Cobertura: toda La Habana (Habana Vieja, Centro, Vedado, Plaza, Miramar, Marianao, Alamar, Boyeros, Arroyo Naranjo, etc.)
+7. Responde de forma breve y al punto. Sin rodeos innecesarios.
+8. Si no sabes algo, sugiere contactar por WhatsApp al +53 5 638 2909.
+
+TU PERSONALIDAD: Directa, práctica, confiable. Ayudas a resolver sin complicar. Nada de frases hechas ni estereotipos.``;
+
+        async function preguntarAGemini(mensajeUsuario) {
+            try {
+                const response = await fetch(GEMINI_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        system_instruction: { parts: [{ text: VIVIAN_SYSTEM_PROMPT }] },
+                        contents: [{ parts: [{ text: mensajeUsuario }] }],
+                        generationConfig: {
+                            temperature: 0.7,
+                            maxOutputTokens: 350,
+                        }
+                    })
+                });
+                
+                const data = await response.json();
+                if (data.candidates && data.candidates[0]?.content?.parts[0]?.text) {
+                    return data.candidates[0].content.parts[0].text;
+                }
+                return null;
+            } catch (error) {
+                console.error("Error con Gemini:", error);
+                return null;
+            }
+        }
+
+        // Chatbot UI
         let estadoVivian = { paso: "inicio", datos: { nombre: "", telefono: "", recogida: "", entrega: "", turno: "Mañana (7am)" } };
         
         const chatMessages = document.getElementById('chatbotMessages');
-        const chatInput = document.getElementById('chatbotInput');
+        const chatInputField = document.getElementById('chatbotInput');
         const chatSendBtn = document.getElementById('chatbotSendBtn');
         const chatToggle = document.getElementById('chatbotToggle');
         const chatWindow = document.getElementById('chatbotWindow');
@@ -714,14 +781,19 @@
             const original = mensaje.trim();
             const msg = original.toLowerCase();
 
-            // Comandos rápidos
+            // Comandos rápidos que NO van a IA (para respuestas instantáneas)
             if (msg === "ver tarifas") {
-                addMessage("💰 *Tarifas de referencia:*\n• Hasta 1km: 400 CUP\n• 1-2km: 500 CUP\n• 2-3km: 600 CUP\n• 3-4km: 700 CUP\n• 4-5km: 800 CUP\n• 5-7km: 1000 CUP\n• +8km: 1000 + (km-7)×150 CUP\n\n*El mensajero confirma el precio final.*");
-                setQuickOptions([{text:"📦 Solicitar", value:"solicitar"}, {text:"📍 Cobertura", value:"cobertura"}]);
+                addMessage("💰 *Tarifas de referencia:*\n• Hasta 1km: 400 CUP\n• 1-2km: 500 CUP\n• 2-3km: 600 CUP\n• 3-4km: 700 CUP\n• 4-5km: 800 CUP\n• 5-7km: 1000 CUP\n• 7-8km: 1150 CUP\n• 8-9km: 1300 CUP\n• 9-10km: 1450 CUP\n• 10-11km: 1600 CUP\n• 11-12km: 1750 CUP\n• +12km: 1750 + (km-12)×150 CUP\n\n*El mensajero confirma el precio final.*");
+                setQuickOptions([{text:"📦 Solicitar", value:"solicitar"}, {text:"📍 Cobertura", value:"cobertura"}, {text:"🕒 Horarios", value:"horarios"}]);
                 return;
             }
             if (msg === "cobertura") {
-                addMessage("📍 Cubrimos toda La Habana: Habana Vieja, Centro, Vedado, Plaza, Miramar, Marianao, Alamar, Boyeros y más.");
+                addMessage("📍 *Cobertura:* Cubrimos toda La Habana: Habana Vieja, Centro Habana, Vedado, Plaza de la Revolución, Miramar, Marianao, Alamar, Boyeros, Arroyo Naranjo y más. ¡Llegamos a todos!");
+                setQuickOptions([{text:"📦 Solicitar", value:"solicitar"}, {text:"💰 Tarifas", value:"ver tarifas"}]);
+                return;
+            }
+            if (msg === "horarios") {
+                addMessage("🕒 *Horarios de recogida:*\n• Mañana: 7:00 AM (entrega antes de 1:00 PM)\n• Tarde: 2:00 PM (entrega antes de 6:00 PM)\n\n¡Entregas el mismo día!");
                 setQuickOptions([{text:"📦 Solicitar", value:"solicitar"}, {text:"💰 Tarifas", value:"ver tarifas"}]);
                 return;
             }
@@ -732,7 +804,7 @@
                 return;
             }
 
-            // Extraer datos de un mensaje completo
+            // Extraer datos de un mensaje completo sin IA
             const telefono = extraerTelefono(original);
             const direcciones = detectarDirecciones(original);
             let nombre = null;
@@ -775,94 +847,101 @@
                 return;
             }
 
-            // Flujo paso a paso
-            switch (estadoVivian.paso) {
-                case "inicio":
-                    addMessage("🤖 ¡Hola! Soy Vivian, tu asistente.\n\nEscribe **solicitar** para empezar o directamente tu pedido completo, por ejemplo:\n*Juan 56382909 Vedado a Miramar*");
-                    setQuickOptions([{text:"📝 Solicitar", value:"solicitar"}, {text:"💰 Ver tarifas", value:"ver tarifas"}, {text:"📍 Cobertura", value:"cobertura"}]);
-                    break;
-                case "nombre":
-                    if (msg.length < 3) { addMessage("Dime tu nombre completo."); return; }
-                    estadoVivian.datos.nombre = original.charAt(0).toUpperCase() + original.slice(1);
-                    estadoVivian.paso = "telefono";
-                    addMessage(`Gracias ${estadoVivian.datos.nombre}. 📱 ¿Cuál es tu número de teléfono?`);
-                    break;
-                case "telefono":
-                    const tel = extraerTelefono(original);
-                    if (!tel) { addMessage("Número inválido. Ejemplo: 56382909"); return; }
-                    estadoVivian.datos.telefono = tel;
-                    estadoVivian.paso = "recogida";
-                    addMessage("📍 ¿Dirección de recogida? (Calle, municipio o punto de referencia)");
-                    break;
-                case "telefono_faltante":
-                    const tel2 = extraerTelefono(original);
-                    if (!tel2) { addMessage("Número inválido. Ejemplo: 56382909"); return; }
-                    estadoVivian.datos.telefono = tel2;
-                    const o2 = geocodificarInteligente(estadoVivian.datos.recogida);
-                    const d2 = geocodificarInteligente(estadoVivian.datos.entrega);
-                    let r2 = `✅ *Datos completos*\n👤 ${estadoVivian.datos.nombre}\n📱 ${tel2}\n📍 ${estadoVivian.datos.recogida} → ${estadoVivian.datos.entrega}\n\n`;
-                    if (o2 && d2) {
-                        const km = distanciaEntrePuntos(o2.lat, o2.lng, d2.lat, d2.lng);
-                        const price = calcularPrecioDistancia(km);
-                        r2 += `📏 Distancia: ${km} km\n💰 Precio referencia: ${price.toLocaleString()} CUP\n\n`;
-                    } else {
-                        r2 += `⚠️ No pude calcular la distancia.\n\n`;
-                    }
-                    r2 += `⏰ ¿Turno? (mañana/tarde)`;
-                    estadoVivian.paso = "turno";
-                    addMessage(r2);
-                    break;
-                case "recogida":
-                    if (msg.length < 5) { addMessage("Dame una dirección más específica."); return; }
-                    estadoVivian.datos.recogida = original;
-                    estadoVivian.paso = "entrega";
-                    addMessage("📍 ¿Dirección de entrega?");
-                    break;
-                case "entrega":
-                    if (msg.length < 5) { addMessage("Dame una dirección de entrega."); return; }
-                    estadoVivian.datos.entrega = original;
-                    const o3 = geocodificarInteligente(estadoVivian.datos.recogida);
-                    const d3 = geocodificarInteligente(estadoVivian.datos.entrega);
-                    let r3 = "";
-                    if (o3 && d3) {
-                        const km = distanciaEntrePuntos(o3.lat, o3.lng, d3.lat, d3.lng);
-                        const price = calcularPrecioDistancia(km);
-                        r3 = `📏 ${km} km\n💰 ${price.toLocaleString()} CUP de referencia\n\n`;
-                    } else {
-                        r3 = `⚠️ No pude calcular la distancia.\n\n`;
-                    }
-                    estadoVivian.paso = "turno";
-                    addMessage(r3 + "⏰ ¿Turno? (mañana/tarde)");
-                    break;
-                case "turno":
-                    if (msg.includes("mañana")) estadoVivian.datos.turno = "Mañana (7am)";
-                    else if (msg.includes("tarde")) estadoVivian.datos.turno = "Tarde (2pm)";
-                    else { addMessage("Elige: mañana o tarde"); return; }
-                    
-                    const o4 = geocodificarInteligente(estadoVivian.datos.recogida);
-                    const d4 = geocodificarInteligente(estadoVivian.datos.entrega);
-                    const dist = (o4 && d4) ? distanciaEntrePuntos(o4.lat, o4.lng, d4.lat, d4.lng) : null;
-                    const priceFinal = dist ? calcularPrecioDistancia(dist) : null;
-                    
-                    const msgWA2 = `🛵 *NUEVO PEDIDO (CHAT)*\n👤 ${estadoVivian.datos.nombre}\n📱 ${estadoVivian.datos.telefono}\n📍 ${estadoVivian.datos.recogida} → ${estadoVivian.datos.entrega}\n${priceFinal ? `💰 ${priceFinal.toLocaleString()} CUP\n📏 ${dist} km` : "💰 Precio a confirmar"}\n⏰ ${estadoVivian.datos.turno}\n\n⚠️ El mensajero confirma el servicio y el valor final.`;
-                    
-                    window.open(`https://wa.me/5356382909?text=${encodeURIComponent(msgWA2)}`, '_blank');
-                    
-                    const nombreCliente = estadoVivian.datos.nombre;
-                    estadoVivian = { paso: "inicio", datos: { nombre: "", telefono: "", recogida: "", entrega: "", turno: "Mañana (7am)" } };
-                    addMessage(`✅ ¡Gracias ${nombreCliente}! Tu solicitud está lista.\n\n📞 En breve un **mensajero real de El Resolvito** se comunicará contigo para confirmar todos los detalles y el precio exacto.\n\n💚 ¿Necesitas algo más? Escribe **solicitar** para otro pedido.`);
-                    setQuickOptions([{text:"📦 Nuevo pedido", value:"solicitar"}, {text:"💰 Ver tarifas", value:"ver tarifas"}]);
-                    break;
-                default:
-                    addMessage("Escribe **solicitar** para empezar.");
+            // Si estamos en un flujo paso a paso, continuar sin IA
+            if (estadoVivian.paso !== "inicio") {
+                switch (estadoVivian.paso) {
+                    case "nombre":
+                        if (msg.length < 3) { addMessage("Dime tu nombre completo."); return; }
+                        estadoVivian.datos.nombre = original.charAt(0).toUpperCase() + original.slice(1);
+                        estadoVivian.paso = "telefono";
+                        addMessage(`Gracias ${estadoVivian.datos.nombre}. 📱 ¿Cuál es tu número de teléfono?`);
+                        return;
+                    case "telefono":
+                        const tel = extraerTelefono(original);
+                        if (!tel) { addMessage("Número inválido. Ejemplo: 56382909"); return; }
+                        estadoVivian.datos.telefono = tel;
+                        estadoVivian.paso = "recogida";
+                        addMessage("📍 ¿Dirección de recogida? (Calle, municipio o punto de referencia)");
+                        return;
+                    case "telefono_faltante":
+                        const tel2 = extraerTelefono(original);
+                        if (!tel2) { addMessage("Número inválido. Ejemplo: 56382909"); return; }
+                        estadoVivian.datos.telefono = tel2;
+                        const o2 = geocodificarInteligente(estadoVivian.datos.recogida);
+                        const d2 = geocodificarInteligente(estadoVivian.datos.entrega);
+                        let r2 = `✅ *Datos completos*\n👤 ${estadoVivian.datos.nombre}\n📱 ${tel2}\n📍 ${estadoVivian.datos.recogida} → ${estadoVivian.datos.entrega}\n\n`;
+                        if (o2 && d2) {
+                            const km = distanciaEntrePuntos(o2.lat, o2.lng, d2.lat, d2.lng);
+                            const price = calcularPrecioDistancia(km);
+                            r2 += `📏 Distancia: ${km} km\n💰 Precio referencia: ${price.toLocaleString()} CUP\n\n`;
+                        } else {
+                            r2 += `⚠️ No pude calcular la distancia.\n\n`;
+                        }
+                        r2 += `⏰ ¿Turno? (mañana/tarde)`;
+                        estadoVivian.paso = "turno";
+                        addMessage(r2);
+                        return;
+                    case "recogida":
+                        if (msg.length < 5) { addMessage("Dame una dirección más específica."); return; }
+                        estadoVivian.datos.recogida = original;
+                        estadoVivian.paso = "entrega";
+                        addMessage("📍 ¿Dirección de entrega?");
+                        return;
+                    case "entrega":
+                        if (msg.length < 5) { addMessage("Dame una dirección de entrega."); return; }
+                        estadoVivian.datos.entrega = original;
+                        const o3 = geocodificarInteligente(estadoVivian.datos.recogida);
+                        const d3 = geocodificarInteligente(estadoVivian.datos.entrega);
+                        let r3 = "";
+                        if (o3 && d3) {
+                            const km = distanciaEntrePuntos(o3.lat, o3.lng, d3.lat, d3.lng);
+                            const price = calcularPrecioDistancia(km);
+                            r3 = `📏 ${km} km\n💰 ${price.toLocaleString()} CUP de referencia\n\n`;
+                        } else {
+                            r3 = `⚠️ No pude calcular la distancia.\n\n`;
+                        }
+                        estadoVivian.paso = "turno";
+                        addMessage(r3 + "⏰ ¿Turno? (mañana/tarde)");
+                        return;
+                    case "turno":
+                        if (msg.includes("mañana")) estadoVivian.datos.turno = "Mañana (7am)";
+                        else if (msg.includes("tarde")) estadoVivian.datos.turno = "Tarde (2pm)";
+                        else { addMessage("Elige: mañana o tarde"); return; }
+                        
+                        const o4 = geocodificarInteligente(estadoVivian.datos.recogida);
+                        const d4 = geocodificarInteligente(estadoVivian.datos.entrega);
+                        const dist = (o4 && d4) ? distanciaEntrePuntos(o4.lat, o4.lng, d4.lat, d4.lng) : null;
+                        const priceFinal = dist ? calcularPrecioDistancia(dist) : null;
+                        
+                        const msgWA2 = `🛵 *NUEVO PEDIDO (CHAT)*\n👤 ${estadoVivian.datos.nombre}\n📱 ${estadoVivian.datos.telefono}\n📍 ${estadoVivian.datos.recogida} → ${estadoVivian.datos.entrega}\n${priceFinal ? `💰 ${priceFinal.toLocaleString()} CUP\n📏 ${dist} km` : "💰 Precio a confirmar"}\n⏰ ${estadoVivian.datos.turno}\n\n⚠️ El mensajero confirma el servicio y el valor final.`;
+                        
+                        window.open(`https://wa.me/5356382909?text=${encodeURIComponent(msgWA2)}`, '_blank');
+                        const nombreCliente = estadoVivian.datos.nombre;
+                        estadoVivian = { paso: "inicio", datos: { nombre: "", telefono: "", recogida: "", entrega: "", turno: "Mañana (7am)" } };
+                        addMessage(`✅ ¡Gracias ${nombreCliente}! Tu solicitud está lista.\n\n📞 En breve un **mensajero real de El Resolvito** se comunicará contigo para confirmar todos los detalles y el precio exacto.\n\n💚 ¿Necesitas algo más? Escribe **solicitar** para otro pedido.`);
+                        setQuickOptions([{text:"📦 Nuevo pedido", value:"solicitar"}, {text:"💰 Ver tarifas", value:"ver tarifas"}]);
+                        return;
+                }
+            }
+
+            // Si llegamos aquí, usar IA Gemini para responder
+            const iaResponse = await preguntarAGemini(original);
+            
+            if (iaResponse) {
+                addMessage(iaResponse);
+                setQuickOptions([{text:"📝 Solicitar", value:"solicitar"}, {text:"💰 Ver tarifas", value:"ver tarifas"}, {text:"📍 Cobertura", value:"cobertura"}]);
+            } else {
+                // Fallback si la IA falla
+                addMessage("🤖 ¡Hola! Soy Vivian, tu asistente.\n\nEscribe **solicitar** para empezar o directamente tu pedido completo, por ejemplo:\n*Juan 56382909 Vedado a Miramar*\n\nTambién puedes preguntarme por **tarifas**, **horarios** o **cobertura**.");
+                setQuickOptions([{text:"📝 Solicitar", value:"solicitar"}, {text:"💰 Ver tarifas", value:"ver tarifas"}, {text:"📍 Cobertura", value:"cobertura"}]);
             }
         }
 
         async function sendMessage() {
-            const msg = chatInput?.value.trim();
+            const msg = chatInputField?.value.trim();
             if (!msg) return;
             addMessage(msg, true);
-            if (chatInput) chatInput.value = '';
+            if (chatInputField) chatInputField.value = '';
             await showTyping();
             await processUserMessage(msg);
         }
@@ -873,15 +952,15 @@
                 chatWindow.classList.toggle('active');
                 if (chatWindow.classList.contains('active') && chatMessages && chatMessages.children.length === 0) {
                     setTimeout(() => {
-                        addMessage("🤖 ¡Hola! Soy Vivian, tu asistente virtual.\n\n📋 *¿Cómo empezamos?*\n\n1️⃣ Escribe **solicitar** y te guío paso a paso\n2️⃣ O escríbelo todo de una vez, por ejemplo:\n*Juan, 56382909, Vedado a Miramar*\n\n⚠️ El precio que calculo es de referencia. El valor final lo confirma el mensajero.");
-                        setQuickOptions([{text:"📝 Solicitar", value:"solicitar"}, {text:"💰 Ver tarifas", value:"ver tarifas"}, {text:"📍 Cobertura", value:"cobertura"}]);
-                    }, 100);
+                        addMessage("🤖 ¡Hola! Soy **Vivian**, tu asistente virtual con inteligencia artificial.\n\n📋 *¿Cómo empezamos?*\n\n1️⃣ Escribe **solicitar** y te guío paso a paso\n2️⃣ O escríbelo todo de una vez, por ejemplo:\n*Juan, 56382909, Vedado a Miramar*\n3️⃣ Pregúntame sobre **tarifas**, **horarios** o **cobertura**\n\n⚠️ El precio que calculo es de referencia. El valor final lo confirma el mensajero.");
+                        setQuickOptions([{text:"📝 Solicitar", value:"solicitar"}, {text:"💰 Ver tarifas", value:"ver tarifas"}, {text:"📍 Cobertura", value:"cobertura"}, {text:"🕒 Horarios", value:"horarios"}]);
+                    }, 200);
                 }
             };
         }
         if (closeChatBtn) closeChatBtn.onclick = () => chatWindow.classList.remove('active');
         if (chatSendBtn) chatSendBtn.onclick = sendMessage;
-        if (chatInput) chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMessage(); });
+        if (chatInputField) chatInputField.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMessage(); });
     </script>
 </body>
 </html>
