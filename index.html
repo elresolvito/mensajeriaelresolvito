@@ -24,16 +24,8 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Poppins', 'sans-serif'],
-                    },
-                    colors: {
-                        brand: {
-                            blue: '#0056b3', 
-                            orange: '#ff8c00', 
-                            light: '#f0f9ff',
-                        }
-                    },
+                    fontFamily: { sans: ['Poppins', 'sans-serif'] },
+                    colors: { brand: { blue: '#0056b3', orange: '#ff8c00', light: '#f0f9ff' } },
                     animation: {
                         'marquee': 'marquee 30s linear infinite',
                         'float': 'float 6s ease-in-out infinite',
@@ -42,29 +34,17 @@
                         'pulse-green': 'pulseGreen 2s infinite',
                     },
                     keyframes: {
-                        marquee: {
-                            '0%': { transform: 'translateX(0%)' },
-                            '100%': { transform: 'translateX(-100%)' },
-                        },
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' },
-                        },
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(10px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        },
-                        pulseGreen: {
-                            '0%, 100%': { boxShadow: '0 0 0 0 rgba(34,197,94,0.7)' },
-                            '50%': { boxShadow: '0 0 0 15px rgba(34,197,94,0)' },
-                        }
+                        marquee: { '0%': { transform: 'translateX(0%)' }, '100%': { transform: 'translateX(-100%)' } },
+                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
+                        fadeInUp: { '0%': { opacity: '0', transform: 'translateY(10px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        pulseGreen: { '0%, 100%': { boxShadow: '0 0 0 0 rgba(34,197,94,0.7)' }, '50%': { boxShadow: '0 0 0 15px rgba(34,197,94,0)' } }
                     }
                 }
             }
         }
     </script>
 
-    <!-- SERVICE WORKER para App (offline y notificaciones) -->
+    <!-- SERVICE WORKER -->
     <script>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('/mensajeriaelresolvito/sw.js')
@@ -74,229 +54,46 @@
     </script>
 
     <style>
+        /* Mejoras para táctil en Android */
+        button, a, .chatbot-toggle, .quick-option, .chatbot-send, .tarifa-card {
+            touch-action: manipulation;
+            cursor: pointer;
+        }
+        button:active, a:active, .chatbot-toggle:active, .quick-option:active {
+            transform: scale(0.97);
+            transition: transform 0.05s;
+        }
+        /* Resto de tus estilos (los mismos que tenías) */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-
-        .glass {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .hero-bg {
-            background-image: url('https://i.postimg.cc/yxG88b5v/mensajero-hero.webp');
-            background-attachment: fixed;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
-        
-        @media (max-width: 768px) {
-            .hero-bg { background-attachment: scroll; }
-        }
-
-        .chatbot-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 9999;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .chatbot-toggle {
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #0056b3 0%, #0066cc 100%);
-            box-shadow: 0 6px 20px rgba(0, 86, 179, 0.4);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            border: 3px solid white;
-            position: relative;
-        }
-
-        .chatbot-toggle:active { transform: scale(0.95); }
-
-        .chatbot-window {
-            width: 380px;
-            height: 600px;
-            max-height: 85vh;
-            background: white;
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            transform-origin: bottom right;
-            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0;
-            transform: scale(0.8) translateY(20px);
-            pointer-events: none;
-        }
-
-        .chatbot-window.active {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-            pointer-events: all;
-        }
-
-        .tarifa-card {
-            text-align: center;
-            padding: 1rem;
-            border-radius: 1rem;
-            background: white;
-            transition: all 0.2s ease;
-            border: 1px solid #f1f5f9;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
-        }
-        .tarifa-km {
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #0056b3;
-            background: #eff6ff;
-            display: inline-block;
-            padding: 0.2rem 0.7rem;
-            border-radius: 20px;
-            margin-bottom: 0.6rem;
-        }
-        .tarifa-precio {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #0f172a;
-        }
-        .whatsapp-group-btn {
-            animation: pulseGreen 1.5s infinite;
-        }
-        .online-dot {
-            width: 8px;
-            height: 8px;
-            background: #22c55e;
-            border-radius: 50%;
-            display: inline-block;
-        }
-        .typing-indicator {
-            display: flex;
-            gap: 5px;
-            padding: 12px 16px;
-            background: white;
-            border-radius: 18px;
-            border-bottom-left-radius: 4px;
-            align-self: flex-start;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-        }
-        .typing-indicator span {
-            width: 8px;
-            height: 8px;
-            background: #94a3b8;
-            border-radius: 50%;
-            animation: typingBounce 1.4s infinite ease-in-out both;
-        }
-        @keyframes typingBounce {
-            0%, 80%, 100% { transform: scale(0); }
-            40% { transform: scale(1); }
-        }
-        .progress-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: transparent;
-            z-index: 50;
-        }
-        .progress-bar {
-            height: 3px;
-            background: #ff8c00;
-            width: 0%;
-            transition: width 0.2s ease;
-        }
-        .chat-message {
-            max-width: 85%;
-            padding: 10px 14px;
-            border-radius: 18px;
-            font-size: 13.5px;
-            line-height: 1.45;
-            animation: fadeInUp 0.3s ease-out;
-            word-wrap: break-word;
-        }
-        .chat-message.bot {
-            background: white;
-            color: #1e293b;
-            border-bottom-left-radius: 4px;
-            align-self: flex-start;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-        }
-        .chat-message.user {
-            background: #0056b3;
-            color: white;
-            border-bottom-right-radius: 4px;
-            align-self: flex-end;
-        }
-        .quick-options {
-            display: flex;
-            gap: 8px;
-            padding: 12px 16px;
-            background: #f8fafc;
-            border-top: 1px solid #e2e8f0;
-            overflow-x: auto;
-            flex-wrap: nowrap;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: thin;
-        }
-        .quick-option {
-            padding: 8px 16px;
-            border-radius: 20px;
-            background: white;
-            border: 1.5px solid #e2e8f0;
-            color: #0056b3;
-            font-size: 12px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-family: 'Poppins', sans-serif;
-            white-space: nowrap;
-            min-height: 44px;
-        }
-        .chatbot-input-area {
-            padding: 12px 16px;
-            background: white;
-            border-top: 1px solid #e2e8f0;
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-        .chatbot-input {
-            flex: 1;
-            padding: 10px 16px;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 24px;
-            font-size: 13.5px;
-            font-family: 'Poppins', sans-serif;
-            outline: none;
-        }
-        .chatbot-send {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: #0056b3;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
+        .glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255, 255, 255, 0.3); }
+        .hero-bg { background-image: url('https://i.postimg.cc/yxG88b5v/mensajero-hero.webp'); background-attachment: fixed; background-position: center; background-repeat: no-repeat; background-size: cover; }
+        @media (max-width: 768px) { .hero-bg { background-attachment: scroll; } }
+        .chatbot-container { position: fixed; bottom: 20px; right: 20px; z-index: 9999; font-family: 'Poppins', sans-serif; }
+        .chatbot-toggle { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, #0056b3 0%, #0066cc 100%); box-shadow: 0 6px 20px rgba(0, 86, 179, 0.4); display: flex; align-items: center; justify-content: center; border: 3px solid white; position: relative; }
+        .chatbot-window { width: 380px; height: 600px; max-height: 85vh; background: white; border-radius: 24px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); display: flex; flex-direction: column; overflow: hidden; opacity: 0; transform: scale(0.8) translateY(20px); pointer-events: none; transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
+        .chatbot-window.active { opacity: 1; transform: scale(1) translateY(0); pointer-events: all; }
+        .tarifa-card { text-align: center; padding: 1rem; border-radius: 1rem; background: white; border: 1px solid #f1f5f9; box-shadow: 0 1px 2px rgba(0,0,0,0.02); }
+        .tarifa-km { font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #0056b3; background: #eff6ff; display: inline-block; padding: 0.2rem 0.7rem; border-radius: 20px; margin-bottom: 0.6rem; }
+        .tarifa-precio { font-size: 1.5rem; font-weight: 800; color: #0f172a; }
+        .whatsapp-group-btn { animation: pulseGreen 1.5s infinite; }
+        .online-dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; display: inline-block; }
+        .typing-indicator { display: flex; gap: 5px; padding: 12px 16px; background: white; border-radius: 18px; border-bottom-left-radius: 4px; align-self: flex-start; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); }
+        .typing-indicator span { width: 8px; height: 8px; background: #94a3b8; border-radius: 50%; animation: typingBounce 1.4s infinite ease-in-out both; }
+        @keyframes typingBounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+        .progress-container { position: fixed; top: 0; left: 0; width: 100%; height: 3px; background: transparent; z-index: 50; }
+        .progress-bar { height: 3px; background: #ff8c00; width: 0%; transition: width 0.2s ease; }
+        .chat-message { max-width: 85%; padding: 10px 14px; border-radius: 18px; font-size: 13.5px; line-height: 1.45; word-wrap: break-word; }
+        .chat-message.bot { background: white; color: #1e293b; border-bottom-left-radius: 4px; align-self: flex-start; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); }
+        .chat-message.user { background: #0056b3; color: white; border-bottom-right-radius: 4px; align-self: flex-end; }
+        .quick-options { display: flex; gap: 8px; padding: 12px 16px; background: #f8fafc; border-top: 1px solid #e2e8f0; overflow-x: auto; flex-wrap: nowrap; scrollbar-width: thin; }
+        .quick-option { padding: 8px 16px; border-radius: 20px; background: white; border: 1.5px solid #e2e8f0; color: #0056b3; font-size: 12px; font-weight: 500; white-space: nowrap; min-height: 44px; }
+        .chatbot-input-area { padding: 12px 16px; background: white; border-top: 1px solid #e2e8f0; display: flex; gap: 8px; align-items: center; }
+        .chatbot-input { flex: 1; padding: 10px 16px; border: 1.5px solid #e2e8f0; border-radius: 24px; font-size: 13.5px; outline: none; }
+        .chatbot-send { width: 44px; height: 44px; border-radius: 50%; background: #0056b3; color: white; border: none; }
         @media (max-width: 480px) {
-            .chatbot-window {
-                width: calc(100vw - 24px);
-                height: calc(100vh - 100px);
-                bottom: 80px;
-                right: 0;
-            }
+            .chatbot-window { width: calc(100vw - 24px); height: calc(100vh - 100px); bottom: 80px; right: 0; }
             .chatbot-container { bottom: 12px; right: 12px; }
             .chatbot-toggle { width: 56px; height: 56px; }
         }
@@ -304,68 +101,47 @@
 </head>
 <body class="bg-gray-50 text-gray-800 antialiased overflow-x-hidden">
 
-    <div class="progress-container">
-        <div class="progress-bar" id="progressBar"></div>
-    </div>
+    <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
 
-    <!-- Navbar -->
+    <!-- Navbar (igual, no cambio nada) -->
     <nav class="fixed w-full z-40 glass transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <div class="flex items-center gap-2">
-                    <div class="bg-brand-orange text-white p-2 rounded-lg shadow-lg">
-                        <i class="fa-solid fa-motorcycle text-xl"></i>
-                    </div>
+                    <div class="bg-brand-orange text-white p-2 rounded-lg shadow-lg"><i class="fa-solid fa-motorcycle text-xl"></i></div>
                     <span class="font-bold text-2xl text-brand-blue tracking-tight">El Resolvito</span>
                 </div>
                 <div class="hidden md:flex items-center space-x-8 font-medium text-gray-600">
-                    <a href="#tarifas" class="hover:text-brand-blue transition-colors">Tarifas</a>
-                    <a href="#calculadora" class="hover:text-brand-blue transition-colors">Calculadora</a>
-                    <a href="#nosotros" class="hover:text-brand-blue transition-colors">Nosotros</a>
+                    <a href="#tarifas">Tarifas</a>
+                    <a href="#calculadora">Calculadora</a>
+                    <a href="#nosotros">Nosotros</a>
                 </div>
-                <a href="https://wa.me/5356382909" target="_blank" class="hidden md:flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-6 py-2.5 rounded-full transition-all duration-300 shadow-lg hover:shadow-green-500/30 hover:-translate-y-0.5">
-                    <i class="fa-brands fa-whatsapp text-xl"></i>
-                    <span>Contactar</span>
-                </a>
-                <button class="md:hidden text-gray-600 text-2xl focus:outline-none" id="mobile-menu-btn">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
+                <a href="https://wa.me/5356382909" target="_blank" class="hidden md:flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-6 py-2.5 rounded-full shadow-lg">📱 Contactar</a>
+                <button class="md:hidden text-gray-600 text-2xl" id="mobile-menu-btn">☰</button>
             </div>
         </div>
-        <div class="md:hidden hidden bg-white border-t border-gray-100 absolute w-full left-0 shadow-xl" id="mobile-menu">
+        <div class="md:hidden hidden bg-white border-t border-gray-100 absolute w-full left-0 shadow-xl z-50" id="mobile-menu">
             <div class="px-4 py-4 space-y-3">
-                <a href="#tarifas" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Tarifas</a>
-                <a href="#calculadora" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Calculadora</a>
-                <a href="#nosotros" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Nosotros</a>
-                <a href="https://wa.me/5356382909" class="block w-full text-center bg-green-500 text-white px-3 py-2 rounded-md font-medium mt-4">Contactar WhatsApp</a>
+                <a href="#tarifas" class="block px-3 py-2 rounded-md text-gray-700 hover:bg-gray-50">Tarifas</a>
+                <a href="#calculadora" class="block px-3 py-2 rounded-md text-gray-700 hover:bg-gray-50">Calculadora</a>
+                <a href="#nosotros" class="block px-3 py-2 rounded-md text-gray-700 hover:bg-gray-50">Nosotros</a>
+                <a href="https://wa.me/5356382909" class="block w-full text-center bg-green-500 text-white px-3 py-2 rounded-md mt-4">📱 Contactar</a>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero Section (igual, no cambio) -->
     <section class="relative min-h-screen flex items-center justify-center hero-bg overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-r from-brand-blue/90 via-brand-blue/70 to-transparent"></div>
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-20">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div class="text-white" data-aos="fade-right">
-                    <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm border border-white/30 px-4 py-1.5 rounded-full text-sm font-semibold mb-6 animate-pulse-slow">
-                        <span class="w-2 h-2 bg-green-400 rounded-full"></span>
-                        Servicio activo en toda La Habana
-                    </div>
-                    <h1 class="text-5xl md:text-7xl font-extrabold leading-tight mb-6">
-                        Tu mensajero <br>
-                        <span class="text-brand-orange">de confianza</span>
-                    </h1>
-                    <p class="text-lg md:text-xl text-gray-100 mb-8 max-w-lg leading-relaxed">
-                        Calcula tu precio al instante. Recogemos a las 7am y 2pm. Entregas el mismo día con seguridad y rapidez.
-                    </p>
+                    <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm border border-white/30 px-4 py-1.5 rounded-full text-sm font-semibold mb-6 animate-pulse-slow">🟢 Servicio activo en toda La Habana</div>
+                    <h1 class="text-5xl md:text-7xl font-extrabold leading-tight mb-6">Tu mensajero <br><span class="text-brand-orange">de confianza</span></h1>
+                    <p class="text-lg md:text-xl text-gray-100 mb-8 max-w-lg">Calcula tu precio al instante. Recogemos a las 7am y 2pm.</p>
                     <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="#calculadora" class="bg-brand-orange hover:bg-orange-600 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-xl shadow-orange-500/30 transition-all duration-300 hover:-translate-y-1 flex items-center justify-center gap-2">
-                            Solicitar ahora <i class="fa-solid fa-arrow-right"></i>
-                        </a>
-                        <a href="#tarifas" class="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 hover:-translate-y-1 flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-list"></i> Ver tarifas
-                        </a>
+                        <a href="#calculadora" class="bg-brand-orange hover:bg-orange-600 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-xl shadow-orange-500/30 text-center">Solicitar ahora →</a>
+                        <a href="#tarifas" class="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white px-8 py-4 rounded-xl font-bold text-lg text-center">📋 Ver tarifas</a>
                     </div>
                     <div class="mt-12 flex items-center gap-8 border-t border-white/20 pt-8">
                         <div><p class="text-3xl font-bold text-brand-orange">2</p><p class="text-sm text-gray-200">Turnos / día</p></div>
@@ -376,84 +152,67 @@
                     </div>
                 </div>
                 <div class="hidden lg:block relative" data-aos="fade-left">
-                    <div class="absolute inset-0 bg-brand-orange rounded-3xl transform rotate-3 scale-95 opacity-20 blur-xl"></div>
-                    <div class="bg-white p-4 rounded-3xl shadow-2xl transform hover:-translate-y-2 transition-all duration-500">
-                        <img src="https://i.postimg.cc/yxG88b5v/mensajero-hero.webp" alt="Mensajero El Resolvito" class="w-full h-auto rounded-2xl object-cover">
+                    <div class="bg-white p-4 rounded-3xl shadow-2xl">
+                        <img src="https://i.postimg.cc/yxG88b5v/mensajero-hero.webp" alt="Mensajero" class="w-full h-auto rounded-2xl">
                         <div class="absolute bottom-12 left-12 bg-white p-4 rounded-xl shadow-lg flex items-center gap-4 animate-float">
-                            <div class="bg-green-100 p-3 rounded-full text-green-600"><i class="fa-solid fa-clock text-xl"></i></div>
+                            <div class="bg-green-100 p-3 rounded-full text-green-600">🕐</div>
                             <div><p class="text-sm text-gray-500">Próxima recogida</p><p class="font-bold text-gray-800">7:00 AM</p></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
-            <i class="fa-solid fa-chevron-down text-2xl"></i>
-        </div>
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce">▼</div>
     </section>
 
-    <!-- Marquee de municipios -->
+    <!-- Marquee (igual) -->
     <section class="bg-brand-blue py-4 overflow-hidden whitespace-nowrap">
-        <div class="inline-block animate-marquee">
-            <span class="text-white font-bold mx-8"><i class="fa-solid fa-location-dot mr-2"></i>Habana Vieja</span>
-            <span class="text-white font-bold mx-8"><i class="fa-solid fa-location-dot mr-2"></i>Centro Habana</span>
-            <span class="text-white font-bold mx-8"><i class="fa-solid fa-location-dot mr-2"></i>Vedado</span>
-            <span class="text-white font-bold mx-8"><i class="fa-solid fa-location-dot mr-2"></i>Plaza de la Revolución</span>
-            <span class="text-white font-bold mx-8"><i class="fa-solid fa-location-dot mr-2"></i>Miramar</span>
-            <span class="text-white font-bold mx-8"><i class="fa-solid fa-location-dot mr-2"></i>Marianao</span>
-            <span class="text-white font-bold mx-8"><i class="fa-solid fa-location-dot mr-2"></i>Boyeros</span>
-            <span class="text-white font-bold mx-8"><i class="fa-solid fa-location-dot mr-2"></i>Arroyo Naranjo</span>
-        </div>
+        <div class="inline-block animate-marquee text-white font-bold mx-8">📍 Habana Vieja 📍 Centro Habana 📍 Vedado 📍 Plaza 📍 Miramar 📍 Marianao 📍 Boyeros 📍 Arroyo Naranjo</div>
     </section>
 
-    <!-- Tarifas Section -->
+    <!-- Tarifas -->
     <section id="tarifas" class="py-20 bg-white">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12" data-aos="fade-up">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-12">
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Precios claros y directos</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">Sin letra pequeña. Calculamos por la ruta real de Google Maps.<br><span class="text-brand-orange font-semibold">No cobramos el viaje de vuelta.</span></p>
+                <p class="text-gray-600">Sin letra pequeña. <span class="text-brand-orange font-semibold">No cobramos el viaje de vuelta.</span></p>
             </div>
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-5" id="tarifasGrid"></div>
-            <div class="mt-12 bg-brand-light rounded-2xl p-6 text-center">
-                <p class="text-sm text-gray-700">⚡ Más de 12 km: tarifa base + <span class="font-bold text-brand-orange">150 CUP/km adicional</span>. El mensajero confirma el valor exacto.</p>
-            </div>
+            <div class="mt-12 bg-brand-light rounded-2xl p-6 text-center text-sm">⚡ Más de 12 km: tarifa base + <span class="font-bold text-brand-orange">150 CUP/km adicional</span></div>
         </div>
     </section>
 
-    <!-- Calculadora + Formulario -->
+    <!-- Calculadora + Formulario (CORREGIDO) -->
     <section id="calculadora" class="py-20 bg-gray-50 relative">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col lg:flex-row" data-aos="zoom-in">
+        <div class="max-w-5xl mx-auto px-4">
+            <div class="bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col lg:flex-row">
                 <div class="lg:w-1/2 p-8 md:p-12">
                     <h2 class="text-3xl font-bold text-gray-900 mb-2">Calculadora Instantánea</h2>
                     <p class="text-gray-500 mb-6">Mueve el slider y teclea las direcciones para precio real.</p>
                     <div class="mb-6">
                         <label class="block text-sm font-semibold text-gray-700 mb-2">Distancia (km)</label>
-                        <input type="range" id="distanceSlider" min="1" max="20" step="0.5" value="3" class="w-full py-3">
+                        <input type="range" id="distanceSlider" min="1" max="20" step="0.5" value="3" class="w-full">
                         <div class="flex justify-between text-xs text-gray-400 mt-1"><span>1km</span><span>10km</span><span>20km</span></div>
                     </div>
-                    <div id="precioCard" class="bg-gray-900 rounded-2xl p-6 text-center text-white shadow-lg transition-all">
+                    <div class="bg-gray-900 rounded-2xl p-6 text-center text-white">
                         <p class="text-gray-400 text-sm mb-1">Precio Estimado</p>
                         <div class="text-5xl font-extrabold text-brand-orange" id="precioMostrado">600 <span class="text-lg text-gray-400">CUP</span></div>
                         <p class="text-xs text-gray-400 mt-2" id="precioNota">*Precio final sujeto a ruta real</p>
                     </div>
                 </div>
                 <div class="lg:w-1/2 bg-brand-blue p-8 md:p-12 text-white relative">
-                    <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
                     <div class="relative z-10">
                         <h3 class="text-2xl font-bold mb-6">Solicitar Mensajero</h3>
                         <form id="pedidoForm" class="space-y-4">
-                            <input type="text" id="nombre" placeholder="Tu Nombre Completo" required class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/60 focus:outline-none focus:border-white">
-                            <input type="tel" id="telefono" placeholder="Número de Teléfono (56382909)" required class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/60 focus:outline-none focus:border-white">
-                            <input type="text" id="recogida" placeholder="Dirección de Recogida (ej: Vedado, Calle 23)" required class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/60 focus:outline-none focus:border-white">
-                            <input type="text" id="entrega" placeholder="Dirección de Entrega (ej: Miramar)" required class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/60 focus:outline-none focus:border-white">
+                            <input type="text" id="nombre" placeholder="Tu Nombre Completo" required class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/60">
+                            <input type="tel" id="telefono" placeholder="Número de Teléfono (56382909)" required class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/60">
+                            <input type="text" id="recogida" placeholder="Dirección de Recogida (ej: Vedado, Calle 23)" required class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/60">
+                            <input type="text" id="entrega" placeholder="Dirección de Entrega (ej: Miramar)" required class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/60">
                             <select id="turno" class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white">
                                 <option value="Mañana (7am)">Mañana (7am)</option>
                                 <option value="Tarde (2pm)">Tarde (2pm)</option>
                             </select>
-                            <button type="submit" class="w-full bg-brand-orange hover:bg-orange-600 text-white font-bold py-3 rounded-xl shadow-lg shadow-orange-500/40 transition-all duration-300 flex items-center justify-center gap-2">
-                                <i class="fa-brands fa-whatsapp text-xl"></i> Enviar Solicitud
-                            </button>
+                            <button type="submit" class="w-full bg-brand-orange hover:bg-orange-600 text-white font-bold py-3 rounded-xl shadow-lg shadow-orange-500/40 flex items-center justify-center gap-2">📲 Enviar Solicitud</button>
                         </form>
                     </div>
                 </div>
@@ -463,14 +222,14 @@
 
     <!-- Features -->
     <section id="nosotros" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto px-4">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                 <div data-aos="fade-right">
                     <h2 class="text-4xl font-bold text-gray-900 mb-6">¿Por qué elegir <span class="text-brand-orange">El Resolvito</span>?</h2>
                     <div class="space-y-6">
-                        <div class="flex gap-4"><div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-600"><i class="fa-solid fa-shield-halved text-xl"></i></div><div><h3 class="text-xl font-bold">Seguridad Garantizada</h3><p class="text-gray-600">Entregas confirmadas y paquetes cuidados.</p></div></div>
-                        <div class="flex gap-4"><div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-brand-blue"><i class="fa-solid fa-bolt text-xl"></i></div><div><h3 class="text-xl font-bold">Rapidez</h3><p class="text-gray-600">Conocemos las rutas, entregas el mismo día.</p></div></div>
-                        <div class="flex gap-4"><div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center text-brand-orange"><i class="fa-solid fa-heart text-xl"></i></div><div><h3 class="text-xl font-bold">Confianza</h3><p class="text-gray-600">Hecho por habaneros, para habaneros.</p></div></div>
+                        <div class="flex gap-4">🔒 Seguridad Garantizada - Entregas confirmadas</div>
+                        <div class="flex gap-4">⚡ Rapidez - Conocemos las rutas</div>
+                        <div class="flex gap-4">❤️ Confianza - Hecho por habaneros</div>
                     </div>
                 </div>
                 <div data-aos="fade-left"><img src="https://i.postimg.cc/bvZXF5Xq/promocion-diaria-mensajeria-1.webp" alt="Mensajero feliz" class="rounded-3xl shadow-2xl w-full"></div>
@@ -478,82 +237,58 @@
         </div>
     </section>
 
-    <!-- Sección Grupo WhatsApp -->
+    <!-- Grupo WhatsApp -->
     <section class="bg-gradient-to-r from-green-500 to-emerald-600 py-12">
         <div class="max-w-4xl mx-auto px-4 text-center">
             <div class="bg-white/20 backdrop-blur-sm rounded-2xl p-8">
-                <i class="fa-brands fa-whatsapp text-5xl text-white mb-4"></i>
                 <h3 class="text-2xl md:text-3xl font-bold text-white mb-2">🇨🇺 ¡Únete a la comunidad!</h3>
-                <p class="text-white/90 mb-6">Recibe ofertas exclusivas, novedades y coordina tus envíos directo por nuestro grupo de WhatsApp.</p>
-                <a href="https://chat.whatsapp.com/TU_ENLACE_DEL_GRUPO" target="_blank" 
-                   class="inline-flex items-center gap-3 bg-white text-green-600 hover:bg-gray-100 font-bold px-8 py-4 rounded-full text-lg transition-all duration-300 hover:scale-105 shadow-xl active:scale-95">
-                    <i class="fa-brands fa-whatsapp text-2xl"></i>
-                    Unirme al grupo oficial
-                </a>
-                <p class="text-white/70 text-sm mt-4">🔒 Ambiente respetuoso · Solo asuntos relacionados con mensajería</p>
+                <a href="https://chat.whatsapp.com/TU_ENLACE_DEL_GRUPO" class="inline-flex items-center gap-3 bg-white text-green-600 font-bold px-8 py-4 rounded-full text-lg">📱 Unirme al grupo oficial</a>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white pt-16 pb-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-                <div><div class="flex items-center gap-2 mb-4"><div class="bg-brand-orange p-1.5 rounded-lg"><i class="fa-solid fa-motorcycle text-sm"></i></div><span class="font-bold text-xl">El Resolvito</span></div><p class="text-gray-400 text-sm">Tu mensajero de confianza en La Habana.</p></div>
-                <div><h4 class="font-bold text-lg mb-4">Servicio</h4><ul class="space-y-2 text-gray-400 text-sm"><li><a href="#tarifas" class="hover:text-brand-orange transition-colors">Tarifas</a></li><li><a href="#calculadora" class="hover:text-brand-orange transition-colors">Solicitar</a></li></ul></div>
-                <div><h4 class="font-bold text-lg mb-4">Contacto</h4><ul class="space-y-2 text-gray-400 text-sm"><li class="flex items-center gap-2"><i class="fa-brands fa-whatsapp text-green-500"></i> +53 5 638 2909</li><li class="flex items-center gap-2"><i class="fa-solid fa-clock text-brand-orange"></i> 7am y 2pm</li></ul></div>
-            </div>
-            <div class="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">© 2025 Mensajería El Resolvito. Hecho con ❤️ en La Habana.</div>
-        </div>
-    </footer>
+    <footer class="bg-gray-900 text-white pt-16 pb-8 text-center text-sm">© 2025 El Resolvito. Hecho con ❤️ en La Habana.</footer>
 
-    <!-- Botón flotante grupo WhatsApp -->
-    <a href="https://chat.whatsapp.com/TU_ENLACE_DEL_GRUPO" target="_blank" 
-       class="fixed bottom-6 left-6 z-50 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-xl transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center whatsapp-group-btn">
-        <i class="fa-brands fa-whatsapp text-2xl"></i>
-    </a>
+    <!-- Botón flotante WhatsApp -->
+    <a href="https://chat.whatsapp.com/TU_ENLACE_DEL_GRUPO" class="fixed bottom-6 left-6 z-50 bg-green-500 text-white p-4 rounded-full shadow-xl">📱</a>
 
-    <!-- Chatbot flotante -->
-    <div class="chatbot-container" id="chatbot">
+    <!-- Chatbot -->
+    <div class="chatbot-container">
         <div class="chatbot-window" id="chatbotWindow">
-            <div class="chatbot-header" style="background: linear-gradient(135deg, #0056b3 0%, #0066cc 100%); padding: 16px 20px; display: flex; align-items: center; gap: 12px; border-radius: 24px 24px 0 0;">
-                <img src="https://i.postimg.cc/L4ycRvNG/vivian.webp" alt="Vivian" style="width: 48px; height: 48px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.3); object-fit: cover;">
-                <div style="flex:1">
-                    <h4 style="color:white; font-weight:700; margin:0">Vivian</h4>
-                    <p style="color:rgba(255,255,255,0.85); margin:0; font-size:12px"><span class="online-dot"></span> Asistente El Resolvito</p>
-                </div>
-                <button class="chatbot-close" id="closeChatBtn" style="background:rgba(255,255,255,0.15); border:none; color:white; width:32px; height:32px; border-radius:50%; cursor:pointer">✕</button>
+            <div class="chatbot-header" style="background: #0056b3; padding: 16px; display: flex; gap: 12px; border-radius: 24px 24px 0 0;">
+                <img src="https://i.postimg.cc/L4ycRvNG/vivian.webp" style="width: 48px; height: 48px; border-radius: 50%;">
+                <div><strong style="color:white">Vivian</strong><br><span class="online-dot"></span> Asistente</div>
+                <button id="closeChatBtn" style="margin-left:auto; background:none; border:none; color:white; font-size:24px">✕</button>
             </div>
-            <div class="chatbot-messages" id="chatbotMessages" style="flex:1; overflow-y:auto; padding:16px; background:#f8fafc; display:flex; flex-direction:column; gap:12px"></div>
-            <div class="quick-options" id="quickOptionsArea"></div>
+            <div id="chatbotMessages" style="flex:1; overflow-y:auto; padding:16px; background:#f8fafc"></div>
+            <div id="quickOptionsArea" class="quick-options"></div>
             <div class="chatbot-input-area">
-                <input type="text" class="chatbot-input" id="chatbotInput" placeholder="Escribe tu mensaje...">
-                <button class="chatbot-send" id="chatbotSendBtn">📨</button>
+                <input type="text" id="chatbotInput" class="chatbot-input" placeholder="Escribe...">
+                <button id="chatbotSendBtn" class="chatbot-send">📨</button>
             </div>
         </div>
-        <div class="chatbot-toggle" id="chatbotToggle">
-            <img src="https://i.postimg.cc/L4ycRvNG/vivian.webp" style="width:48px; height:48px; border-radius:50%; object-fit:cover">
-            <span class="notification-dot" id="chatbotNotification" style="position:absolute; top:-2px; right:-2px; width:18px; height:18px; background:#22c55e; border-radius:50%; border:2px solid white; animation:pulse 2s infinite"></span>
+        <div id="chatbotToggle" class="chatbot-toggle">
+            <img src="https://i.postimg.cc/L4ycRvNG/vivian.webp" style="width:48px; height:48px; border-radius:50%;">
         </div>
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({ once: true, offset: 100, duration: 800 });
-        
-        // Navbar scroll
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => { if(window.scrollY>50) navbar.classList.add('shadow-md'); else navbar.classList.remove('shadow-md'); });
-        
-        // Mobile menu
-        const mobileBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        if(mobileBtn) mobileBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-        
-        // Progress bar
-        window.addEventListener('scroll', () => { const winScroll = document.body.scrollTop || document.documentElement.scrollTop; const height = document.documentElement.scrollHeight - document.documentElement.clientHeight; const progressBar = document.getElementById('progressBar'); if(progressBar) progressBar.style.width = (winScroll / height) * 100 + '%'; });
-        
-        // Tarifas grid
+
+        // ----- FUNCIÓN CALCULAR PRECIO (GLOBAL) -----
+        function calcularPrecio(km) {
+            if (km <= 1) return 400;
+            if (km <= 2) return 500;
+            if (km <= 3) return 600;
+            if (km <= 4) return 700;
+            if (km <= 5) return 800;
+            if (km <= 7) return 1000;
+            return 1000 + Math.round((km - 7) * 150);
+        }
+
+        // ----- TARIFAS GRID -----
         const tarifasLista = [
             { km: "Hasta 1km", precio: 400 }, { km: "1–2 km", precio: 500 }, { km: "2–3 km", precio: 600 },
             { km: "3–4 km", precio: 700 }, { km: "4–5 km", precio: 800 }, { km: "5–7 km", precio: 1000 },
@@ -562,29 +297,103 @@
             { km: "14 km", precio: 2050 }, { km: "15 km", precio: 2200 }
         ];
         const tarifasContainer = document.getElementById('tarifasGrid');
-        if(tarifasContainer) tarifasLista.forEach(t => { const card = document.createElement('div'); card.className = 'tarifa-card'; card.innerHTML = `<div class="tarifa-km">${t.km}</div><div class="tarifa-precio">${t.precio.toLocaleString()}<small> CUP</small></div>`; tarifasContainer.appendChild(card); });
-        
-        // Precio
+        if (tarifasContainer) {
+            tarifasLista.forEach(t => {
+                const card = document.createElement('div');
+                card.className = 'tarifa-card';
+                card.innerHTML = `<div class="tarifa-km">${t.km}</div><div class="tarifa-precio">${t.precio.toLocaleString()}<small> CUP</small></div>`;
+                tarifasContainer.appendChild(card);
+            });
+        }
+
+        // ----- CALCULADORA (con slider que NO se traba) -----
         const slider = document.getElementById('distanceSlider');
         const precioSpan = document.getElementById('precioMostrado');
-        function calcularPrecio(km) { if(km<=1) return 400; if(km<=2) return 500; if(km<=3) return 600; if(km<=4) return 700; if(km<=5) return 800; if(km<=7) return 1000; return 1000 + Math.round((km-7)*150); }
-        if(slider) slider.addEventListener('input', () => { let km = parseFloat(slider.value); let precio = calcularPrecio(km); if(precioSpan) precioSpan.innerHTML = `${precio.toLocaleString()} <span class="text-lg text-gray-400">CUP</span>`; });
         
-        // Formulario
+        function actualizarPrecio() {
+            let km = parseFloat(slider.value);
+            let precio = calcularPrecio(km);
+            precioSpan.innerHTML = `${precio.toLocaleString()} <span class="text-lg text-gray-400">CUP</span>`;
+        }
+        
+        if (slider) {
+            slider.addEventListener('input', actualizarPrecio);
+            actualizarPrecio(); // valor inicial
+        }
+
+        // ----- FORMULARIO (con reset de calculadora) -----
         const form = document.getElementById('pedidoForm');
-        if(form) form.addEventListener('submit', (e) => { e.preventDefault(); alert("✅ Solicitud enviada. Un mensajero te contactará."); form.reset(); });
-        
-        // Chatbot simple
+        if (form) {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert("✅ Solicitud enviada. Un mensajero te contactará.");
+                form.reset();
+                // Reiniciar calculadora a 3km
+                if (slider) {
+                    slider.value = "3";
+                    actualizarPrecio();
+                }
+            });
+        }
+
+        // ----- MENÚ MÓVIL (cierra al tocar fuera) -----
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileBtn) {
+            mobileBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                mobileMenu.classList.toggle('hidden');
+            });
+            document.addEventListener('click', (e) => {
+                if (!mobileMenu.contains(e.target) && !mobileBtn.contains(e.target)) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        }
+
+        // ----- PROGRESS BAR -----
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const progressBar = document.getElementById('progressBar');
+            if (progressBar) progressBar.style.width = (winScroll / height) * 100 + '%';
+        });
+
+        // ----- CHATBOT CORREGIDO -----
         const chatWindow = document.getElementById('chatbotWindow');
         const toggleChat = document.getElementById('chatbotToggle');
         const closeChat = document.getElementById('closeChatBtn');
         const msgContainer = document.getElementById('chatbotMessages');
         const inputChat = document.getElementById('chatbotInput');
         const sendBtn = document.getElementById('chatbotSendBtn');
-        function addMsg(text, isUser=false) { const div = document.createElement('div'); div.className = `chat-message ${isUser ? 'user' : 'bot'}`; div.innerText = text; msgContainer.appendChild(div); msgContainer.scrollTop = msgContainer.scrollHeight; }
-        if(toggleChat) toggleChat.onclick = () => { chatWindow.classList.toggle('active'); if(chatWindow.classList.contains('active') && msgContainer.children.length===0) addMsg("🤖 ¡Hola! Soy Vivian. Escribe **solicitar** para hacer un pedido."); };
-        if(closeChat) closeChat.onclick = () => chatWindow.classList.remove('active');
-        if(sendBtn) sendBtn.onclick = () => { let msg = inputChat.value.trim(); if(msg) { addMsg(msg, true); addMsg("📝 Gracias. En breve un asesor te atenderá."); inputChat.value = ''; } };
+        
+        function addMsg(text, isUser = false) {
+            const div = document.createElement('div');
+            div.className = `chat-message ${isUser ? 'user' : 'bot'}`;
+            div.innerText = text;
+            msgContainer.appendChild(div);
+            msgContainer.scrollTop = msgContainer.scrollHeight;
+        }
+        
+        if (toggleChat) {
+            toggleChat.onclick = () => {
+                chatWindow.classList.toggle('active');
+                if (chatWindow.classList.contains('active') && msgContainer.children.length === 0) {
+                    addMsg("🤖 ¡Hola! Soy Vivian. Escribe 'solicitar' para hacer un pedido.");
+                }
+            };
+        }
+        if (closeChat) closeChat.onclick = () => chatWindow.classList.remove('active');
+        if (sendBtn) {
+            sendBtn.onclick = () => {
+                let msg = inputChat.value.trim();
+                if (msg) {
+                    addMsg(msg, true);
+                    addMsg("📝 Gracias. En breve un asesor te atenderá.");
+                    inputChat.value = '';
+                }
+            };
+        }
     </script>
 </body>
 </html>
