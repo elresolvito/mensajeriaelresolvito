@@ -3,10 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>El Resolvito — Mensajería en La Habana con IA</title>
+    <title>El Resolvito — Mensajería en La Habana con IA y Mapa</title>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Leaflet CSS (para el mapa) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <!-- Animate On Scroll (AOS) -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -277,10 +281,17 @@
             width: 0%;
         }
 
+        #map {
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
         @media (max-width: 480px) {
             .chatbot-container { bottom: 12px; right: 12px; }
             .chatbot-window { width: calc(100vw - 24px); bottom: 70px; }
             .chatbot-toggle { width: 52px; height: 52px; }
+            #map { height: 200px; }
         }
 
         button, a, .chatbot-toggle, .quick-option {
@@ -289,7 +300,6 @@
         }
         button:active, a:active { transform: scale(0.97); transition: transform 0.05s; }
         
-        /* Indicador de que Vivian está pensando con IA */
         .ai-badge {
             font-size: 8px;
             background: #10b981;
@@ -363,7 +373,7 @@
     <!-- MARQUEE MUNICIPIOS -->
     <div class="bg-brand-blue py-3 overflow-hidden whitespace-nowrap">
         <div class="inline-block animate-marquee text-white font-semibold text-sm">
-            📍 Habana Vieja 📍 Centro Habana 📍 Vedado 📍 Plaza 📍 Miramar 📍 Marianao 📍 Boyeros 📍 Arroyo Naranjo 📍
+            📍 Habana Vieja 📍 Centro Habana 📍 Vedado 📍 Plaza 📍 Miramar 📍 Marianao 📍 Boyeros 📍 Arroyo Naranjo 📍 Luyano 📍 Alamar 📍 Guanabo 📍 Cojímar 📍 Lawton 📍 Santos Suárez
         </div>
     </div>
 
@@ -377,30 +387,41 @@
         </div>
     </section>
 
-    <!-- CALCULADORA + FORMULARIO -->
+    <!-- CALCULADORA + FORMULARIO + MAPA -->
     <section id="calculadora" class="py-16 bg-gray-100">
         <div class="max-w-5xl mx-auto px-4">
             <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
                 <div class="p-6">
                     <h2 class="text-2xl font-bold text-center">Calculadora Instantánea</h2>
-                    <p class="text-gray-500 text-center mb-4">Mueve el slider o escribe las direcciones</p>
+                    <p class="text-gray-500 text-center mb-4">Escribe las direcciones o usa el mapa</p>
                     
-                    <label class="block font-semibold mb-2">Distancia (km)</label>
-                    <input type="range" id="distanceSlider" min="1" max="20" step="0.5" value="3" class="w-full mb-4 py-2">
-                    
-                    <div class="bg-gray-900 rounded-xl p-6 text-center">
-                        <p class="text-gray-400 text-sm">Precio Estimado</p>
-                        <div class="text-3xl font-bold text-brand-orange" id="precioMostrado">600 CUP</div>
-                        <p class="text-xs text-gray-400 mt-2" id="precioNota">*Precio final lo confirma el mensajero</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block font-semibold mb-2">Distancia (km)</label>
+                            <input type="range" id="distanceSlider" min="1" max="20" step="0.5" value="3" class="w-full mb-4 py-2">
+                            
+                            <div class="bg-gray-900 rounded-xl p-6 text-center">
+                                <p class="text-gray-400 text-sm">Precio Estimado</p>
+                                <div class="text-3xl font-bold text-brand-orange" id="precioMostrado">600 CUP</div>
+                                <p class="text-xs text-gray-400 mt-2" id="precioNota">*Precio final lo confirma el mensajero</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Mapa -->
+                        <div>
+                            <div id="map" style="height: 280px; border-radius: 16px;"></div>
+                            <p class="text-xs text-gray-500 text-center mt-2">📍 Ubicación aproximada por municipio o reparto</p>
+                        </div>
                     </div>
                 </div>
+                
                 <div class="bg-brand-blue p-6 text-white">
                     <h3 class="text-xl font-bold mb-3">Solicitar Mensajero</h3>
                     <form id="pedidoForm" class="space-y-3">
                         <input type="text" id="nombre" placeholder="Tu nombre completo" required class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-2 text-white placeholder-white/50 focus:outline-none focus:border-white">
                         <input type="tel" id="telefono" placeholder="Teléfono (ej: 56382909)" required class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-2 text-white placeholder-white/50 focus:outline-none focus:border-white">
-                        <input type="text" id="recogida" placeholder="Dirección de recogida (ej: Vedado)" required class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-2 text-white placeholder-white/50 focus:outline-none focus:border-white">
-                        <input type="text" id="entrega" placeholder="Dirección de entrega (ej: Miramar)" required class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-2 text-white placeholder-white/50 focus:outline-none focus:border-white">
+                        <input type="text" id="recogida" placeholder="Dirección de recogida (ej: Vedado, Luyano)" required class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-2 text-white placeholder-white/50 focus:outline-none focus:border-white">
+                        <input type="text" id="entrega" placeholder="Dirección de entrega (ej: Miramar, Alamar)" required class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-2 text-white placeholder-white/50 focus:outline-none focus:border-white">
                         <select id="turno" class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-2 text-white">
                             <option value="Mañana (7am)">Mañana (7am)</option>
                             <option value="Tarde (2pm)">Tarde (2pm)</option>
@@ -496,30 +517,102 @@
             });
         }
 
-        // ==================== GEOLOCALIZACIÓN ====================
-        const lugaresLocales = {
-            "vedado": { lat: 23.123, lng: -82.398 },
-            "miramar": { lat: 23.123, lng: -82.430 },
-            "habana vieja": { lat: 23.139, lng: -82.352 },
-            "centro habana": { lat: 23.126, lng: -82.383 },
-            "plaza": { lat: 23.130, lng: -82.415 },
-            "marianao": { lat: 23.087, lng: -82.404 },
-            "alamar": { lat: 23.157, lng: -82.238 },
-            "boyeros": { lat: 23.041, lng: -82.363 }
+        // ==================== BASE DE DATOS DE LA HABANA (Municipios y Repartos) ====================
+        const habanaLugares = {
+            // Habana del Este
+            "alamar": { lat: 23.157, lng: -82.238, nombre: "Alamar", municipio: "Habana del Este" },
+            "guanabo": { lat: 23.170, lng: -82.150, nombre: "Guanabo", municipio: "Habana del Este" },
+            "cojímar": { lat: 23.163, lng: -82.285, nombre: "Cojímar", municipio: "Habana del Este" },
+            "camilo cienfuegos": { lat: 23.165, lng: -82.270, nombre: "Camilo Cienfuegos", municipio: "Habana del Este" },
+            "villa panamericana": { lat: 23.160, lng: -82.260, nombre: "Villa Panamericana", municipio: "Habana del Este" },
+            "reparto guiteras": { lat: 23.155, lng: -82.245, nombre: "Reparto Guiteras", municipio: "Habana del Este" },
+            "habana del este": { lat: 23.158, lng: -82.240, nombre: "Habana del Este", municipio: "Habana del Este" },
+            
+            // Diez de Octubre
+            "luyano": { lat: 23.150, lng: -82.250, nombre: "Luyano", municipio: "Diez de Octubre" },
+            "lawton": { lat: 23.140, lng: -82.300, nombre: "Lawton", municipio: "Diez de Octubre" },
+            "santos suárez": { lat: 23.130, lng: -82.310, nombre: "Santos Suárez", municipio: "Diez de Octubre" },
+            "santos suarez": { lat: 23.130, lng: -82.310, nombre: "Santos Suárez", municipio: "Diez de Octubre" },
+            "casino deportivo": { lat: 23.120, lng: -82.320, nombre: "Casino Deportivo", municipio: "Diez de Octubre" },
+            "la víbora": { lat: 23.125, lng: -82.340, nombre: "La Víbora", municipio: "Diez de Octubre" },
+            "la vibora": { lat: 23.125, lng: -82.340, nombre: "La Víbora", municipio: "Diez de Octubre" },
+            "diez de octubre": { lat: 23.135, lng: -82.320, nombre: "Diez de Octubre", municipio: "Diez de Octubre" },
+            
+            // Plaza de la Revolución
+            "vedado": { lat: 23.123, lng: -82.398, nombre: "Vedado", municipio: "Plaza de la Revolución" },
+            "nuevo vedado": { lat: 23.110, lng: -82.405, nombre: "Nuevo Vedado", municipio: "Plaza de la Revolución" },
+            "pueblo nuevo": { lat: 23.128, lng: -82.390, nombre: "Pueblo Nuevo", municipio: "Plaza de la Revolución" },
+            "el carmelo": { lat: 23.130, lng: -82.410, nombre: "El Carmelo", municipio: "Plaza de la Revolución" },
+            "príncipe": { lat: 23.135, lng: -82.370, nombre: "Príncipe", municipio: "Plaza de la Revolución" },
+            "plaza": { lat: 23.130, lng: -82.415, nombre: "Plaza de la Revolución", municipio: "Plaza de la Revolución" },
+            
+            // Centro Habana
+            "cayo hueso": { lat: 23.126, lng: -82.380, nombre: "Cayo Hueso", municipio: "Centro Habana" },
+            "colón": { lat: 23.130, lng: -82.375, nombre: "Colón", municipio: "Centro Habana" },
+            "dragones": { lat: 23.128, lng: -82.360, nombre: "Dragones", municipio: "Centro Habana" },
+            "los sitios": { lat: 23.124, lng: -82.370, nombre: "Los Sitios", municipio: "Centro Habana" },
+            "centro habana": { lat: 23.126, lng: -82.383, nombre: "Centro Habana", municipio: "Centro Habana" },
+            
+            // Habana Vieja
+            "habana vieja": { lat: 23.139, lng: -82.352, nombre: "Habana Vieja", municipio: "Habana Vieja" },
+            "plaza vieja": { lat: 23.136, lng: -82.351, nombre: "Plaza Vieja", municipio: "Habana Vieja" },
+            "san isidro": { lat: 23.133, lng: -82.347, nombre: "San Isidro", municipio: "Habana Vieja" },
+            
+            // Playa (Miramar)
+            "miramar": { lat: 23.123, lng: -82.430, nombre: "Miramar", municipio: "Playa" },
+            "santa fe": { lat: 23.090, lng: -82.480, nombre: "Santa Fe", municipio: "Playa" },
+            "bauta": { lat: 23.080, lng: -82.500, nombre: "Bauta", municipio: "Playa" },
+            "jaimanitas": { lat: 23.095, lng: -82.460, nombre: "Jaimanitas", municipio: "Playa" },
+            "playa": { lat: 23.100, lng: -82.450, nombre: "Playa", municipio: "Playa" },
+            
+            // Marianao
+            "marianao": { lat: 23.087, lng: -82.404, nombre: "Marianao", municipio: "Marianao" },
+            "los pocitos": { lat: 23.080, lng: -82.410, nombre: "Los Pocitos", municipio: "Marianao" },
+            "la coronela": { lat: 23.075, lng: -82.420, nombre: "La Coronela", municipio: "Marianao" },
+            
+            // Boyeros
+            "boyeros": { lat: 23.041, lng: -82.363, nombre: "Boyeros", municipio: "Boyeros" },
+            "santiago de las vegas": { lat: 23.030, lng: -82.350, nombre: "Santiago de las Vegas", municipio: "Boyeros" },
+            "la piragua": { lat: 23.050, lng: -82.370, nombre: "La Piragua", municipio: "Boyeros" },
+            
+            // Arroyo Naranjo
+            "arroyo naranjo": { lat: 23.051, lng: -82.330, nombre: "Arroyo Naranjo", municipio: "Arroyo Naranjo" },
+            "la guinera": { lat: 23.045, lng: -82.320, nombre: "La Guinera", municipio: "Arroyo Naranjo" },
+            "poey": { lat: 23.055, lng: -82.340, nombre: "Poey", municipio: "Arroyo Naranjo" },
+            
+            // Cerro
+            "cerro": { lat: 23.101, lng: -82.374, nombre: "Cerro", municipio: "Cerro" },
+            "las cañas": { lat: 23.105, lng: -82.380, nombre: "Las Cañas", municipio: "Cerro" },
+            
+            // Cotorro
+            "cotorro": { lat: 23.031, lng: -82.285, nombre: "Cotorro", municipio: "Cotorro" },
+            "san miguel": { lat: 23.035, lng: -82.290, nombre: "San Miguel", municipio: "Cotorro", alias: "san miguel del padron" },
+            
+            // Regla
+            "regla": { lat: 23.126, lng: -82.332, nombre: "Regla", municipio: "Regla" },
+            "casablanca": { lat: 23.145, lng: -82.340, nombre: "Casablanca", municipio: "Regla" },
+            
+            // Guanabacoa
+            "guanabacoa": { lat: 23.120, lng: -82.300, nombre: "Guanabacoa", municipio: "Guanabacoa" },
+            
+            // La Lisa
+            "la lisa": { lat: 23.060, lng: -82.420, nombre: "La Lisa", municipio: "La Lisa" },
+            "san agustín": { lat: 23.055, lng: -82.430, nombre: "San Agustín", municipio: "La Lisa" }
         };
 
-        function extraerMunicipio(direccion) {
-            const lower = direccion.toLowerCase();
-            for (let m of Object.keys(lugaresLocales)) {
-                if (lower.includes(m)) return m;
-            }
-            return null;
-        }
+        // Crear lista de lugares conocidos para búsqueda
+        const lugaresConocidosList = Object.keys(habanaLugares);
 
         function geocodificarInteligente(direccion) {
-            if (!direccion || direccion.length < 5) return null;
-            const mun = extraerMunicipio(direccion);
-            if (mun && lugaresLocales[mun]) return lugaresLocales[mun];
+            if (!direccion || direccion.length < 2) return null;
+            const lower = direccion.toLowerCase().trim();
+            
+            // Buscar coincidencia exacta o parcial
+            for (let [lugar, data] of Object.entries(habanaLugares)) {
+                if (lower.includes(lugar)) {
+                    return { lat: data.lat, lng: data.lng, nombre: data.nombre, municipio: data.municipio };
+                }
+            }
             return null;
         }
 
@@ -539,10 +632,62 @@
             if (km <= 4) return 700;
             if (km <= 5) return 800;
             if (km <= 7) return 1000;
-            return 1000 + Math.round((km - 7) * 150);
+            if (km <= 8) return 1150;
+            if (km <= 9) return 1300;
+            if (km <= 10) return 1450;
+            if (km <= 11) return 1600;
+            if (km <= 12) return 1750;
+            return 1750 + Math.round((km - 12) * 150);
         }
 
-        // Calculadora
+        // ==================== MAPA CON LEAFLET ====================
+        let map = null;
+        let recogidaMarker = null;
+        let entregaMarker = null;
+        let routeLine = null;
+
+        function initMap() {
+            if (document.getElementById('map') && !map) {
+                map = L.map('map').setView([23.113, -82.366], 11);
+                L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; CartoDB'
+                }).addTo(map);
+            }
+        }
+
+        function actualizarMapa(recogidaCoords, entregaCoords) {
+            if (!map) initMap();
+            if (!map) return;
+            
+            if (recogidaMarker) map.removeLayer(recogidaMarker);
+            if (entregaMarker) map.removeLayer(entregaMarker);
+            if (routeLine) map.removeLayer(routeLine);
+            
+            if (recogidaCoords) {
+                recogidaMarker = L.marker([recogidaCoords.lat, recogidaCoords.lng])
+                    .bindPopup(`📍 Recogida: ${recogidaCoords.nombre || 'Ubicación'}`)
+                    .addTo(map);
+            }
+            
+            if (entregaCoords) {
+                entregaMarker = L.marker([entregaCoords.lat, entregaCoords.lng])
+                    .bindPopup(`🎯 Entrega: ${entregaCoords.nombre || 'Ubicación'}`)
+                    .addTo(map);
+            }
+            
+            if (recogidaCoords && entregaCoords) {
+                const puntos = [[recogidaCoords.lat, recogidaCoords.lng], [entregaCoords.lat, entregaCoords.lng]];
+                routeLine = L.polyline(puntos, { color: '#ff8c00', weight: 3, opacity: 0.7 }).addTo(map);
+                const bounds = L.latLngBounds(puntos);
+                map.fitBounds(bounds, { padding: [50, 50] });
+            } else if (recogidaCoords) {
+                map.setView([recogidaCoords.lat, recogidaCoords.lng], 12);
+            } else if (entregaCoords) {
+                map.setView([entregaCoords.lat, entregaCoords.lng], 12);
+            }
+        }
+
+        // ==================== CALCULADORA ====================
         const slider = document.getElementById('distanceSlider');
         const precioSpan = document.getElementById('precioMostrado');
         const precioNota = document.getElementById('precioNota');
@@ -558,7 +703,7 @@
             updatePrecio();
         }
 
-        // Formulario
+        // ==================== FORMULARIO CON MAPA ====================
         const recogidaInput = document.getElementById('recogida');
         const entregaInput = document.getElementById('entrega');
         let timeoutCalc;
@@ -566,25 +711,33 @@
         async function actualizarPrecioPorDirecciones() {
             const rec = recogidaInput?.value.trim();
             const ent = entregaInput?.value.trim();
-            if (!rec || !ent || rec.length < 5 || ent.length < 5) return;
             
-            const o = geocodificarInteligente(rec);
-            const d = geocodificarInteligente(ent);
+            const o = rec ? geocodificarInteligente(rec) : null;
+            const d = ent ? geocodificarInteligente(ent) : null;
+            
+            actualizarMapa(o, d);
             
             if (o && d && slider && precioSpan && precioNota) {
                 const dist = distanciaEntrePuntos(o.lat, o.lng, d.lat, d.lng);
                 const price = calcularPrecioDistancia(dist);
                 precioSpan.innerHTML = price.toLocaleString() + " CUP";
-                precioNota.innerHTML = `📍 Distancia calculada: ${dist} km aprox. El mensajero confirma el precio final.`;
+                precioNota.innerHTML = `📍 ${o.nombre} → ${d.nombre}: ${dist} km aprox. El mensajero confirma el precio final.`;
                 slider.value = Math.min(20, dist);
+            } else if (o) {
+                precioNota.innerHTML = `📍 Recogida: ${o.nombre} (${o.municipio}). Esperando dirección de entrega.`;
+            } else if (d) {
+                precioNota.innerHTML = `📍 Entrega: ${d.nombre} (${d.municipio}). Esperando dirección de recogida.`;
             }
         }
 
         if (recogidaInput && entregaInput) {
-            recogidaInput.addEventListener('input', () => { clearTimeout(timeoutCalc); timeoutCalc = setTimeout(actualizarPrecioPorDirecciones, 800); });
-            entregaInput.addEventListener('input', () => { clearTimeout(timeoutCalc); timeoutCalc = setTimeout(actualizarPrecioPorDirecciones, 800); });
+            recogidaInput.addEventListener('input', () => { clearTimeout(timeoutCalc); timeoutCalc = setTimeout(actualizarPrecioPorDirecciones, 500); });
+            entregaInput.addEventListener('input', () => { clearTimeout(timeoutCalc); timeoutCalc = setTimeout(actualizarPrecioPorDirecciones, 500); });
         }
 
+        setTimeout(() => { initMap(); actualizarPrecioPorDirecciones(); }, 100);
+
+        // Formulario de pedido
         const pedidoForm = document.getElementById('pedidoForm');
         if (pedidoForm) {
             pedidoForm.addEventListener('submit', async (e) => {
@@ -618,6 +771,7 @@
                 alert("✅ Solicitud enviada. Un mensajero te contactará por WhatsApp.");
                 pedidoForm.reset();
                 if (slider) { slider.value = "3"; updatePrecio(); }
+                actualizarMapa(null, null);
             });
         }
 
@@ -648,72 +802,42 @@
         const GEMINI_API_KEY = "AIzaSyAtEVSpE-kviXtDJHM3voSmDkUmTH3HA3Y";
         const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
 
-    // ==================== CHATBOT VIVIAN CON IA GEMINI ====================
-const GEMINI_API_KEY = "AIzaSyAtEVSpE-kviXtDJHM3voSmDkUmTH3HA3Y";
-const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
-
-const VIVIAN_SYSTEM_PROMPT = `Eres Vivian, asistente virtual de "El Resolvito", una mensajería en La Habana, Cuba.
+        const VIVIAN_SYSTEM_PROMPT = `Eres Vivian, asistente virtual de "El Resolvito", una mensajería en La Habana, Cuba.
 
 INSTRUCCIONES IMPORTANTES:
-1. Responde SIEMPRE en español, de forma natural y directa. Como hablaría cualquier persona en La Habana: sin afectaciones, con claridad y respeto.
-2. Si el usuario quiere solicitar un mensajero, pídele: nombre, teléfono, dirección de recogida, dirección de entrega y turno (mañana 7am o tarde 2pm).
-3. Las tarifas de referencia son:
-   - Hasta 1km: 400 CUP
-   - 1 a 2km: 500 CUP
-   - 2 a 3km: 600 CUP
-   - 3 a 4km: 700 CUP
-   - 4 a 5km: 800 CUP
-   - 5 a 7km: 1000 CUP
-   - 7 a 8km: 1150 CUP
-   - 8 a 9km: 1300 CUP
-   - 9 a 10km: 1450 CUP
-   - 10 a 11km: 1600 CUP
-   - 11 a 12km: 1750 CUP
-   - Más de 12km: 1750 + (km-12) × 150 CUP
-4. SIEMPRE aclara que el precio final lo confirma un mensajero real.
-5. Horarios: recogidas 7am (entrega antes 1pm) y 2pm (entrega antes 6pm).
-6. Cobertura: toda La Habana (Habana Vieja, Centro, Vedado, Plaza, Miramar, Marianao, Alamar, Boyeros, Arroyo Naranjo, etc.)
-7. Responde de forma breve y al punto. Sin rodeos innecesarios.
-8. Si no sabes algo, sugiere contactar por WhatsApp al +53 5 638 2909.
+1. Responde SIEMPRE en español, de forma natural y directa.
+2. Tu objetivo es ayudar al usuario a solicitar un mensajero. No le des largas instrucciones al principio.
+3. Si el usuario escribe algo como "quiero enviar un paquete para luyano", entiende que QUIERE UN MENSAJERO y responde preguntando desde dónde.
+4. Las tarifas de referencia: 1km=400CUP, 2km=500, 3km=600, 4km=700, 5km=800, 7km=1000, +8km=1000+(km-7)*150.
+5. SIEMPRE aclara que el precio final lo confirma un mensajero real.
+6. Horarios: mañana 7am, tarde 2pm.
+7. Cobertura: toda La Habana (Vedado, Miramar, Alamar, Luyano, Guanabo, Lawton, etc.)
+8. Responde breve y al punto. No repitas las mismas instrucciones.
+9. IMPORTANTE: Si el usuario menciona un lugar (Luyano, Alamar, Vedado, etc.), NO lo confundas con un nombre de persona. Es un lugar.
+10. Sé práctica y útil. El usuario no quiere leer un manual.`;
 
-TU PERSONALIDAD: Directa, práctica, confiable. Ayudas a resolver sin complicar. Nada de frases hechas ni estereotipos.`;
-
-async function preguntarAGemini(mensajeUsuario) {
-    try {
-        // Combinar instrucción del sistema con el mensaje del usuario
-        const promptCompleto = `${VIVIAN_SYSTEM_PROMPT}\n\nUsuario: ${mensajeUsuario}\n\nVivian:`;
-        
-        const response = await fetch(GEMINI_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                contents: [{
-                    parts: [{ text: promptCompleto }]
-                }],
-                generationConfig: {
-                    temperature: 0.7,
-                    maxOutputTokens: 350,
+        async function preguntarAGemini(mensajeUsuario) {
+            try {
+                const promptCompleto = `${VIVIAN_SYSTEM_PROMPT}\n\nUsuario: ${mensajeUsuario}\n\nVivian:`;
+                const response = await fetch(GEMINI_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: promptCompleto }] }],
+                        generationConfig: { temperature: 0.7, maxOutputTokens: 350 }
+                    })
+                });
+                const data = await response.json();
+                if (data.candidates && data.candidates[0]?.content?.parts[0]?.text) {
+                    return data.candidates[0].content.parts[0].text;
                 }
-            })
-        });
-        
-        const data = await response.json();
-        
-        // Depuración: ver qué responde la API
-        console.log("Respuesta de Gemini:", data);
-        
-        if (data.candidates && data.candidates[0]?.content?.parts[0]?.text) {
-            return data.candidates[0].content.parts[0].text;
-        } else if (data.error) {
-            console.error("Error de Gemini API:", data.error);
-            return null;
+                return null;
+            } catch (error) {
+                console.error("Error Gemini:", error);
+                return null;
+            }
         }
-        return null;
-    } catch (error) {
-        console.error("Error al llamar a Gemini:", error);
-        return null;
-    }
-}
+
         // Chatbot UI
         let estadoVivian = { paso: "inicio", datos: { nombre: "", telefono: "", recogida: "", entrega: "", turno: "Mañana (7am)" } };
         
@@ -771,38 +895,18 @@ async function preguntarAGemini(mensajeUsuario) {
             return null;
         }
 
-        function detectarDirecciones(texto) {
-            let rec = null, ent = null;
-            const patrones = [/(?:desde|de)\s+(.+?)\s+(?:hasta|a|para)\s+(.+)/i, /(.+?)\s+(?:hasta|a|para)\s+(.+)/i];
-            for (let p of patrones) {
-                const m = texto.match(p);
-                if (m && m[1] && m[2]) {
-                    rec = m[1].trim();
-                    ent = m[2].trim();
-                    break;
-                }
-            }
-            if (!rec) {
-                const munis = ["vedado", "miramar", "habana vieja", "centro habana", "marianao", "alamar"];
-                let encontrados = [];
-                for (let m of munis) if (texto.toLowerCase().includes(m)) encontrados.push(m);
-                if (encontrados.length >= 2) { rec = encontrados[0]; ent = encontrados[1]; }
-            }
-            return { recogida: rec, entrega: ent };
-        }
-
         async function processUserMessage(mensaje) {
             const original = mensaje.trim();
             const msg = original.toLowerCase();
 
-            // Comandos rápidos que NO van a IA (para respuestas instantáneas)
+            // ========== COMANDOS EXPLÍCITOS ==========
             if (msg === "ver tarifas") {
                 addMessage("💰 *Tarifas de referencia:*\n• Hasta 1km: 400 CUP\n• 1-2km: 500 CUP\n• 2-3km: 600 CUP\n• 3-4km: 700 CUP\n• 4-5km: 800 CUP\n• 5-7km: 1000 CUP\n• 7-8km: 1150 CUP\n• 8-9km: 1300 CUP\n• 9-10km: 1450 CUP\n• 10-11km: 1600 CUP\n• 11-12km: 1750 CUP\n• +12km: 1750 + (km-12)×150 CUP\n\n*El mensajero confirma el precio final.*");
                 setQuickOptions([{text:"📦 Solicitar", value:"solicitar"}, {text:"📍 Cobertura", value:"cobertura"}, {text:"🕒 Horarios", value:"horarios"}]);
                 return;
             }
             if (msg === "cobertura") {
-                addMessage("📍 *Cobertura:* Cubrimos toda La Habana: Habana Vieja, Centro Habana, Vedado, Plaza de la Revolución, Miramar, Marianao, Alamar, Boyeros, Arroyo Naranjo y más. ¡Llegamos a todos!");
+                addMessage(`📍 *Cobertura:* Cubrimos toda La Habana. Incluyendo: Vedado, Miramar, Habana Vieja, Centro Habana, Plaza, Marianao, Alamar, Boyeros, Luyano, Lawton, Santos Suárez, Guanabo, Cojímar, Camilo Cienfuegos y muchos más. ¡Llegamos a todos!`);
                 setQuickOptions([{text:"📦 Solicitar", value:"solicitar"}, {text:"💰 Tarifas", value:"ver tarifas"}]);
                 return;
             }
@@ -811,143 +915,185 @@ async function preguntarAGemini(mensajeUsuario) {
                 setQuickOptions([{text:"📦 Solicitar", value:"solicitar"}, {text:"💰 Tarifas", value:"ver tarifas"}]);
                 return;
             }
-            if (msg === "solicitar" || msg.includes("pedido")) {
-                estadoVivian = { paso: "nombre", datos: { nombre: "", telefono: "", recogida: "", entrega: "", turno: "Mañana (7am)" } };
-                addMessage("📝 ¡Vamos paso a paso! ¿Cómo te llamas?");
+            
+            // ========== DETECCIÓN DE INTENCIONES ==========
+            
+            // Intención: Pregunta de precio directa (ej: "cuánto sale de vedado a miramar")
+            const precioPattern = /(?:cuánto|costo|precio|sale|cuesta)\s+(?:de|desde)\s+([a-záéíóúñ]+)\s+(?:a|para)\s+([a-záéíóúñ]+)/i;
+            const precioMatch = original.match(precioPattern);
+            if (precioMatch) {
+                const origen = precioMatch[1].toLowerCase();
+                const destino = precioMatch[2].toLowerCase();
+                const coordsOrigen = geocodificarInteligente(origen);
+                const coordsDestino = geocodificarInteligente(destino);
+                
+                if (coordsOrigen && coordsDestino) {
+                    const dist = distanciaEntrePuntos(coordsOrigen.lat, coordsOrigen.lng, coordsDestino.lat, coordsDestino.lng);
+                    const price = calcularPrecioDistancia(dist);
+                    addMessage(`📏 *${coordsOrigen.nombre} → ${coordsDestino.nombre}*\n📏 Distancia: ${dist} km\n💰 Precio referencia: ${price.toLocaleString()} CUP\n\n¿Quieres hacer el pedido? Escríbe *solicitar*`);
+                } else if (coordsOrigen) {
+                    addMessage(`📍 Veo que recoges en ${coordsOrigen.nombre}. ¿Cuál es el destino?`);
+                } else if (coordsDestino) {
+                    addMessage(`📍 Veo que entregas en ${coordsDestino.nombre}. ¿Desde dónde?`);
+                } else {
+                    addMessage("Dime los municipios o repartos. Ej: *Vedado a Miramar*");
+                }
+                setQuickOptions([{text:"📦 Solicitar", value:"solicitar"}, {text:"💰 Ver tarifas", value:"ver tarifas"}]);
+                return;
+            }
+            
+            // Intención: Frases de solicitud sin detalles (ej: "quiero enviar un paquete para luyano")
+            const lugaresEncontrados = [];
+            for (let lugar of lugaresConocidosList) {
+                if (msg.includes(lugar)) lugaresEncontrados.push(lugar);
+            }
+            
+            // Si hay un solo lugar mencionado y es una solicitud de envío
+            if (lugaresEncontrados.length === 1 && (msg.includes("enviar") || msg.includes("paquete") || msg.includes("mandar") || msg.includes("para") || msg.includes("quiero"))) {
+                const lugarDetectado = habanaLugares[lugaresEncontrados[0]];
+                addMessage(`✅ Entendido: quieres enviar a **${lugarDetectado.nombre}** (${lugarDetectado.municipio}).\n\n📍 ¿Desde dónde envías? Dame la dirección de recogida.`);
+                estadoVivian = { 
+                    paso: "recogida", 
+                    datos: { 
+                        nombre: "", 
+                        telefono: "", 
+                        recogida: "", 
+                        entrega: lugaresEncontrados[0], 
+                        turno: "Mañana (7am)" 
+                    } 
+                };
                 setQuickOptions(null);
                 return;
             }
-
-            // Extraer datos de un mensaje completo sin IA
-            const telefono = extraerTelefono(original);
-            const direcciones = detectarDirecciones(original);
-            let nombre = null;
-            const palabras = original.split(/\s+/);
-            const lugaresConocidos = ["vedado", "miramar", "habana", "marianao", "alamar", "plaza"];
             
-            for (let p of palabras) {
-                const pLower = p.toLowerCase();
-                const esNumero = /\d/.test(p);
-                const esLugar = lugaresConocidos.some(l => pLower.includes(l));
-                const esDireccion = pLower.includes("calle") || pLower.includes("ave") || pLower.includes("entre");
-                if (p.length >= 3 && !esNumero && !esLugar && !esDireccion && !nombre) {
-                    nombre = p.charAt(0).toUpperCase() + p.slice(1).toLowerCase();
-                    break;
-                }
-            }
-
-            // Si detecta nombre y direcciones, procesa directamente
-            if (nombre && direcciones.recogida && direcciones.entrega) {
-                estadoVivian.datos = { nombre, telefono: telefono || "", recogida: direcciones.recogida, entrega: direcciones.entrega, turno: "Mañana (7am)" };
-                if (!telefono) {
-                    estadoVivian.paso = "telefono_faltante";
-                    addMessage(`✅ Entendido: ${direcciones.recogida} → ${direcciones.entrega}\n\n📱 ¿Cuál es tu número de teléfono? Así te contacta un mensajero.`);
-                    return;
+            // Si hay dos lugares mencionados
+            if (lugaresEncontrados.length >= 2) {
+                const recogidaDetectada = lugaresEncontrados[0];
+                const entregaDetectada = lugaresEncontrados[1];
+                const coordsO = geocodificarInteligente(recogidaDetectada);
+                const coordsD = geocodificarInteligente(entregaDetectada);
+                
+                let respuesta = `✅ *${habanaLugares[recogidaDetectada]?.nombre || recogidaDetectada} → ${habanaLugares[entregaDetectada]?.nombre || entregaDetectada}*`;
+                
+                if (coordsO && coordsD) {
+                    const dist = distanciaEntrePuntos(coordsO.lat, coordsO.lng, coordsD.lat, coordsD.lng);
+                    const price = calcularPrecioDistancia(dist);
+                    respuesta += `\n📏 ${dist} km\n💰 Precio referencia: ${price.toLocaleString()} CUP\n\n✅ ¿Confirmamos? Dame tu nombre y teléfono.`;
+                } else {
+                    respuesta += `\n\n✅ ¿Confirmamos? Dame tu nombre y teléfono.`;
                 }
                 
-                const o = geocodificarInteligente(direcciones.recogida);
-                const d = geocodificarInteligente(direcciones.entrega);
-                let resp = `✅ *Datos recibidos*\n👤 ${nombre}\n📱 ${telefono}\n📍 ${direcciones.recogida} → ${direcciones.entrega}\n\n`;
-                if (o && d) {
-                    const km = distanciaEntrePuntos(o.lat, o.lng, d.lat, d.lng);
-                    const price = calcularPrecioDistancia(km);
-                    resp += `📏 Distancia: ${km} km\n💰 Precio referencia: ${price.toLocaleString()} CUP\n\n`;
-                } else {
-                    resp += `⚠️ No pude calcular la distancia exacta.\n\n`;
-                }
-                resp += `⏰ ¿Qué turno prefieres? (mañana/tarde)`;
-                estadoVivian.paso = "turno";
-                addMessage(resp);
+                addMessage(respuesta);
+                estadoVivian = { 
+                    paso: "nombre", 
+                    datos: { 
+                        nombre: "", 
+                        telefono: "", 
+                        recogida: recogidaDetectada, 
+                        entrega: entregaDetectada, 
+                        turno: "Mañana (7am)" 
+                    } 
+                };
+                setQuickOptions([{text:"📞 Dar teléfono", value:"Mi teléfono es 56382909"}]);
                 return;
             }
-
-            // Si estamos en un flujo paso a paso, continuar sin IA
+            
+            // Intención: Saludos simples
+            if (msg.match(/^(hola|buenas|saludos|hey|hello|quiubo|buenas tardes|buenas noches)$/i)) {
+                addMessage("¡Hola! ¿Necesitas un mensajero? Dime desde dónde y hasta dónde. Ej: *Vedado a Miramar*");
+                setQuickOptions([{text:"📦 Solicitar mensajero", value:"solicitar"}, {text:"💰 Ver tarifas", value:"ver tarifas"}]);
+                return;
+            }
+            
+            // Intención: Frases de solicitud genéricas
+            if (msg.match(/mensajero|paquete|enviar|mandar|recoger|entregar|necesito/) && !msg.includes("solicitar")) {
+                addMessage("Claro, te ayudo. ¿Desde dónde recogemos y dónde entregamos?");
+                setQuickOptions([{text:"📍 Vedado a Miramar", value:"Vedado a Miramar"}, {text:"📍 Luyano a Alamar", value:"Luyano a Alamar"}, {text:"📍 Lawton a Vedado", value:"Lawton a Vedado"}]);
+                return;
+            }
+            
+            // ========== FLUJO PASO A PASO ==========
             if (estadoVivian.paso !== "inicio") {
                 switch (estadoVivian.paso) {
                     case "nombre":
-                        if (msg.length < 3) { addMessage("Dime tu nombre completo."); return; }
-                        estadoVivian.datos.nombre = original.charAt(0).toUpperCase() + original.slice(1);
+                        if (msg.length < 2) { addMessage("Dime tu nombre."); return; }
+                        estadoVivian.datos.nombre = original.charAt(0).toUpperCase() + original.slice(1).toLowerCase();
                         estadoVivian.paso = "telefono";
-                        addMessage(`Gracias ${estadoVivian.datos.nombre}. 📱 ¿Cuál es tu número de teléfono?`);
+                        addMessage(`Gracias ${estadoVivian.datos.nombre}. 📱 ¿Tu número de teléfono?`);
                         return;
                     case "telefono":
                         const tel = extraerTelefono(original);
-                        if (!tel) { addMessage("Número inválido. Ejemplo: 56382909"); return; }
+                        if (!tel) { addMessage("Número inválido. Ej: 56382909"); return; }
                         estadoVivian.datos.telefono = tel;
-                        estadoVivian.paso = "recogida";
-                        addMessage("📍 ¿Dirección de recogida? (Calle, municipio o punto de referencia)");
-                        return;
-                    case "telefono_faltante":
-                        const tel2 = extraerTelefono(original);
-                        if (!tel2) { addMessage("Número inválido. Ejemplo: 56382909"); return; }
-                        estadoVivian.datos.telefono = tel2;
-                        const o2 = geocodificarInteligente(estadoVivian.datos.recogida);
-                        const d2 = geocodificarInteligente(estadoVivian.datos.entrega);
-                        let r2 = `✅ *Datos completos*\n👤 ${estadoVivian.datos.nombre}\n📱 ${tel2}\n📍 ${estadoVivian.datos.recogida} → ${estadoVivian.datos.entrega}\n\n`;
-                        if (o2 && d2) {
-                            const km = distanciaEntrePuntos(o2.lat, o2.lng, d2.lat, d2.lng);
-                            const price = calcularPrecioDistancia(km);
-                            r2 += `📏 Distancia: ${km} km\n💰 Precio referencia: ${price.toLocaleString()} CUP\n\n`;
-                        } else {
-                            r2 += `⚠️ No pude calcular la distancia.\n\n`;
+                        
+                        if (estadoVivian.datos.recogida && estadoVivian.datos.entrega) {
+                            estadoVivian.paso = "turno";
+                            const o = geocodificarInteligente(estadoVivian.datos.recogida);
+                            const d = geocodificarInteligente(estadoVivian.datos.entrega);
+                            let msgPrecio = "";
+                            if (o && d) {
+                                const dist = distanciaEntrePuntos(o.lat, o.lng, d.lat, d.lng);
+                                const price = calcularPrecioDistancia(dist);
+                                msgPrecio = `\n📏 ${dist} km\n💰 Precio referencia: ${price.toLocaleString()} CUP`;
+                            }
+                            addMessage(`✅ ${estadoVivian.datos.recogida} → ${estadoVivian.datos.entrega}${msgPrecio}\n\n⏰ ¿Turno? (mañana/tarde)`);
+                        } else if (!estadoVivian.datos.recogida) {
+                            estadoVivian.paso = "recogida";
+                            addMessage("📍 ¿Dirección de recogida?");
+                        } else if (!estadoVivian.datos.entrega) {
+                            estadoVivian.paso = "entrega";
+                            addMessage("📍 ¿Dirección de entrega?");
                         }
-                        r2 += `⏰ ¿Turno? (mañana/tarde)`;
-                        estadoVivian.paso = "turno";
-                        addMessage(r2);
                         return;
                     case "recogida":
-                        if (msg.length < 5) { addMessage("Dame una dirección más específica."); return; }
+                        if (msg.length < 2) { addMessage("Dime una dirección."); return; }
                         estadoVivian.datos.recogida = original;
                         estadoVivian.paso = "entrega";
                         addMessage("📍 ¿Dirección de entrega?");
                         return;
                     case "entrega":
-                        if (msg.length < 5) { addMessage("Dame una dirección de entrega."); return; }
+                        if (msg.length < 2) { addMessage("Dime una dirección."); return; }
                         estadoVivian.datos.entrega = original;
-                        const o3 = geocodificarInteligente(estadoVivian.datos.recogida);
-                        const d3 = geocodificarInteligente(estadoVivian.datos.entrega);
-                        let r3 = "";
-                        if (o3 && d3) {
-                            const km = distanciaEntrePuntos(o3.lat, o3.lng, d3.lat, d3.lng);
-                            const price = calcularPrecioDistancia(km);
-                            r3 = `📏 ${km} km\n💰 ${price.toLocaleString()} CUP de referencia\n\n`;
-                        } else {
-                            r3 = `⚠️ No pude calcular la distancia.\n\n`;
-                        }
                         estadoVivian.paso = "turno";
-                        addMessage(r3 + "⏰ ¿Turno? (mañana/tarde)");
+                        const o2 = geocodificarInteligente(estadoVivian.datos.recogida);
+                        const d2 = geocodificarInteligente(estadoVivian.datos.entrega);
+                        let precioMsg = "";
+                        if (o2 && d2) {
+                            const dist = distanciaEntrePuntos(o2.lat, o2.lng, d2.lat, d2.lng);
+                            const price = calcularPrecioDistancia(dist);
+                            precioMsg = `\n📏 ${dist} km\n💰 Precio referencia: ${price.toLocaleString()} CUP`;
+                        }
+                        addMessage(`✅ ${estadoVivian.datos.recogida} → ${estadoVivian.datos.entrega}${precioMsg}\n\n⏰ ¿Turno? (mañana/tarde)`);
                         return;
                     case "turno":
                         if (msg.includes("mañana")) estadoVivian.datos.turno = "Mañana (7am)";
                         else if (msg.includes("tarde")) estadoVivian.datos.turno = "Tarde (2pm)";
                         else { addMessage("Elige: mañana o tarde"); return; }
                         
-                        const o4 = geocodificarInteligente(estadoVivian.datos.recogida);
-                        const d4 = geocodificarInteligente(estadoVivian.datos.entrega);
-                        const dist = (o4 && d4) ? distanciaEntrePuntos(o4.lat, o4.lng, d4.lat, d4.lng) : null;
+                        const o3 = geocodificarInteligente(estadoVivian.datos.recogida);
+                        const d3 = geocodificarInteligente(estadoVivian.datos.entrega);
+                        const dist = (o3 && d3) ? distanciaEntrePuntos(o3.lat, o3.lng, d3.lat, d3.lng) : null;
                         const priceFinal = dist ? calcularPrecioDistancia(dist) : null;
                         
-                        const msgWA2 = `🛵 *NUEVO PEDIDO (CHAT)*\n👤 ${estadoVivian.datos.nombre}\n📱 ${estadoVivian.datos.telefono}\n📍 ${estadoVivian.datos.recogida} → ${estadoVivian.datos.entrega}\n${priceFinal ? `💰 ${priceFinal.toLocaleString()} CUP\n📏 ${dist} km` : "💰 Precio a confirmar"}\n⏰ ${estadoVivian.datos.turno}\n\n⚠️ El mensajero confirma el servicio y el valor final.`;
+                        const msgWA = `🛵 *NUEVO PEDIDO (CHAT)*\n👤 ${estadoVivian.datos.nombre}\n📱 ${estadoVivian.datos.telefono}\n📍 ${estadoVivian.datos.recogida} → ${estadoVivian.datos.entrega}\n${priceFinal ? `💰 ${priceFinal.toLocaleString()} CUP\n📏 ${dist} km` : "💰 Precio a confirmar"}\n⏰ ${estadoVivian.datos.turno}`;
                         
-                        window.open(`https://wa.me/5356382909?text=${encodeURIComponent(msgWA2)}`, '_blank');
+                        window.open(`https://wa.me/5356382909?text=${encodeURIComponent(msgWA)}`, '_blank');
                         const nombreCliente = estadoVivian.datos.nombre;
                         estadoVivian = { paso: "inicio", datos: { nombre: "", telefono: "", recogida: "", entrega: "", turno: "Mañana (7am)" } };
-                        addMessage(`✅ ¡Gracias ${nombreCliente}! Tu solicitud está lista.\n\n📞 En breve un **mensajero real de El Resolvito** se comunicará contigo para confirmar todos los detalles y el precio exacto.\n\n💚 ¿Necesitas algo más? Escribe **solicitar** para otro pedido.`);
+                        addMessage(`✅ ¡Gracias ${nombreCliente}!\n\n📞 Un mensajero te contactará por WhatsApp para confirmar dirección exacta y precio final.\n\n💚 ¿Otro pedido? Escribe *solicitar*`);
                         setQuickOptions([{text:"📦 Nuevo pedido", value:"solicitar"}, {text:"💰 Ver tarifas", value:"ver tarifas"}]);
                         return;
                 }
             }
-
-            // Si llegamos aquí, usar IA Gemini para responder
-            const iaResponse = await preguntarAGemini(original);
             
+            // ========== SI NO ENTENDEMOS, USAR IA ==========
+            const iaResponse = await preguntarAGemini(original);
             if (iaResponse) {
                 addMessage(iaResponse);
-                setQuickOptions([{text:"📝 Solicitar", value:"solicitar"}, {text:"💰 Ver tarifas", value:"ver tarifas"}, {text:"📍 Cobertura", value:"cobertura"}]);
+                setQuickOptions([{text:"📦 Solicitar", value:"solicitar"}, {text:"💰 Ver tarifas", value:"ver tarifas"}, {text:"📍 Cobertura", value:"cobertura"}]);
             } else {
-                // Fallback si la IA falla
-                addMessage("🤖 ¡Hola! Soy Vivian, tu asistente.\n\nEscribe **solicitar** para empezar o directamente tu pedido completo, por ejemplo:\n*Juan 56382909 Vedado a Miramar*\n\nTambién puedes preguntarme por **tarifas**, **horarios** o **cobertura**.");
-                setQuickOptions([{text:"📝 Solicitar", value:"solicitar"}, {text:"💰 Ver tarifas", value:"ver tarifas"}, {text:"📍 Cobertura", value:"cobertura"}]);
+                addMessage("🤖 ¡Hola! Soy Vivian.\n\nDime desde dónde y hasta dónde, por ejemplo:\n*Vedado a Miramar*\n\nO escribe *solicitar* para guiarte paso a paso.");
+                setQuickOptions([{text:"📍 Vedado a Miramar", value:"Vedado a Miramar"}, {text:"📍 Luyano a Alamar", value:"Luyano a Alamar"}, {text:"📝 Solicitar paso a paso", value:"solicitar"}]);
             }
         }
 
@@ -966,8 +1112,8 @@ async function preguntarAGemini(mensajeUsuario) {
                 chatWindow.classList.toggle('active');
                 if (chatWindow.classList.contains('active') && chatMessages && chatMessages.children.length === 0) {
                     setTimeout(() => {
-                        addMessage("🤖 ¡Hola! Soy **Vivian**, tu asistente virtual con inteligencia artificial.\n\n📋 *¿Cómo empezamos?*\n\n1️⃣ Escribe **solicitar** y te guío paso a paso\n2️⃣ O escríbelo todo de una vez, por ejemplo:\n*Juan, 56382909, Vedado a Miramar*\n3️⃣ Pregúntame sobre **tarifas**, **horarios** o **cobertura**\n\n⚠️ El precio que calculo es de referencia. El valor final lo confirma el mensajero.");
-                        setQuickOptions([{text:"📝 Solicitar", value:"solicitar"}, {text:"💰 Ver tarifas", value:"ver tarifas"}, {text:"📍 Cobertura", value:"cobertura"}, {text:"🕒 Horarios", value:"horarios"}]);
+                        addMessage("🤖 ¡Hola! Soy **Vivian**, tu asistente.\n\n📋 *¿Cómo funciona?*\n\n1️⃣ El mapa te muestra la ubicación **aproximada** por municipio o reparto.\n\n2️⃣ El precio que calculo es **de referencia**. El mensajero lo confirma cuando te contacta.\n\n3️⃣ Para empezar, solo escríbeme lo que necesitas, por ejemplo:\n*\"quiero enviar un paquete para Luyano\"*\n\n*No hace falta la calle y número ahora. Con el reparto es suficiente.* 🚀");
+                        setQuickOptions([{text:"📦 Quiero un mensajero", value:"quiero un mensajero"}, {text:"💰 Ver tarifas", value:"ver tarifas"}, {text:"📍 Cobertura", value:"cobertura"}]);
                     }, 200);
                 }
             };
@@ -975,6 +1121,11 @@ async function preguntarAGemini(mensajeUsuario) {
         if (closeChatBtn) closeChatBtn.onclick = () => chatWindow.classList.remove('active');
         if (chatSendBtn) chatSendBtn.onclick = sendMessage;
         if (chatInputField) chatInputField.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMessage(); });
+        
+        // Pequeña mejora: mostrar indicador de que el mapa carga
+        setTimeout(() => {
+            if (map) map.invalidateSize();
+        }, 500);
     </script>
 </body>
 </html>
